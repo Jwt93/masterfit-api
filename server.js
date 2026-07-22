@@ -94,7 +94,7 @@ app.get('/api/health', async (req, res) => {
     timestamp: new Date().toISOString(),
     storage: 'mongodb',
     mongodb: mongoOk ? 'connected' : 'disconnected',
-    version: '2.0.0'
+    version: '2.1.0'
   });
 });
 
@@ -113,6 +113,7 @@ app.post('/api/clients', async (req, res) => {
       updatedAt: new Date().toISOString()
     };
 
+    // If a real MongoDB id was already given, always update that exact record.
     if (id && ObjectId.isValid(id)) {
       const result = await clientsCollection.findOneAndUpdate(
         { _id: new ObjectId(id) },
@@ -122,8 +123,29 @@ app.post('/api/clients', async (req, res) => {
       return res.json({ data: result });
     }
 
-    // Check for existing client by phone
-    const phone = formData.clientBasics?.phone;
+    const phone = formData.clientBasics?.phone || '';
+
+    // FIX: Do not create or match a record while the phone number is
+    // still incomplete (fewer than 7 digits). This prevents duplicate
+    // "junk" records from being created on every keystroke before the
+    // client finishes typing their phone number. We still return a
+    // success response with a temporary in-memory object (not saved)
+    // so the frontend doesn't error out — it just won't persist until
+    // the phone number is long enough or a real id exists.
+    const digitsOnly = phone.replace(/\D/g, '');
+    if (digitsOnly.length > 0 && digitsOnly.length < 7) {
+      return res.json({
+        data: {
+          _id: null,
+          branch,
+          formData,
+          updatedAt: new Date().toISOString(),
+          _pending: true
+        }
+      });
+    }
+
+    // Check for existing client by phone (only once phone is complete enough)
     if (phone) {
       const existing = await clientsCollection.findOne({
         'formData.clientBasics.phone': phone
@@ -421,20 +443,11 @@ async function start() {
 
   app.listen(PORT, '0.0.0.0', () => {
     console.log(`
-╔═══════════════════════════════════════════════════════════════╗
-║                                                               ║
-║   Master Fit - Full Stack Server (MongoDB)                    ║
-║   Running on port ${PORT}                                          ║
-║                                                               ║
-║   API:        http://localhost:${PORT}/api                       ║
-║   Frontend:   http://localhost:${PORT}                           ║
-║   Health:     http://localhost:${PORT}/api/health               ║
-║                                                               ║
-║   MongoDB:    ${MONGODB_URI.replace(/\/\/.*@/, '//<credentials>@')}  ║
-║   Database:   ${DB_NAME}                                       ║
-║   Static:     ${STATIC_DIR}                             ║
-║                                                               ║
-╚═══════════════════════════════════════════════════════════════╝
+Master Fit - Full Stack Server (MongoDB) - Running on port ${PORT}
+API: http://localhost:${PORT}/api
+Frontend: http://localhost:${PORT}
+Health: http://localhost:${PORT}/api/health
+Database: ${DB_NAME}
     `);
   });
 }
