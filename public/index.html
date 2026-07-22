@@ -3427,19 +3427,19 @@
     // ========================================
     // QR Code Generator
     // ========================================
-    function generateQRCode(text, container) {
-      if (typeof QRCode !== 'undefined') {
-        container.innerHTML = '';
-        QRCode.toCanvas(text, { width: 168, margin: 1 }, (err, canvas) => {
-          if (err) {
-            container.innerHTML = `<div style="width:168px;height:168px;background:#eee;margin:0 auto;display:flex;align-items:center;justify-content:center;color:#666;font-size:12px;text-align:center;padding:16px;border-radius:8px;">QR Code</div>`;
-            return;
-          }
-          container.appendChild(canvas);
-        });
-      } else {
-        container.innerHTML = `<div style="width:168px;height:168px;background:#eee;margin:0 auto;display:flex;align-items:center;justify-content:center;color:#666;font-size:12px;text-align:center;padding:16px;border-radius:8px;">QR: ${text.substring(0, 30)}...</div>`;
-      }
+function generateQRCode(text, container) {
+      container.innerHTML = '';
+      const size = 200;
+      const img = document.createElement('img');
+      img.src = `https://api.qrserver.com/v1/create-qr-code/?size=${size}x${size}&data=${encodeURIComponent(text)}&margin=10`;
+      img.width = size;
+      img.height = size;
+      img.alt = 'QR Code';
+      img.style.cssText = 'display:block;margin:0 auto;border-radius:8px;border:2px solid #eee;';
+      img.onerror = function() {
+        container.innerHTML = `<div style="width:${size}px;height:${size}px;background:#eee;margin:0 auto;display:flex;align-items:center;justify-content:center;color:#666;font-size:12px;text-align:center;padding:16px;border-radius:8px;">QR unavailable</div>`;
+      };
+      container.appendChild(img);
     }
 
     // ========================================
