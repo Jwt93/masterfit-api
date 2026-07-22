@@ -3819,6 +3819,7 @@ function generateQRCode(text, container) {
       
       // Staff login button
       document.getElementById('staffLoginBtn').addEventListener('click', () => {
+        AppState.previousPage = AppState.currentPage;
         navigateTo('staff-login');
       });
       
@@ -3834,12 +3835,17 @@ function generateQRCode(text, container) {
           // Load clients from API
           await renderStaffClientList();
           
-          const qrUrl = `https://smallapps.ai4money.work/webs/masterfit.html#branch=${AppState.branch}`;
+          const qrUrl = `https://masterfit-api-x0zc.onrender.com#branch=${AppState.branch}`;
           generateQRCode(qrUrl, document.getElementById('qrCode'));
           navigateTo('staff-panel');
         } else {
           document.getElementById('loginError').classList.add('show');
         }
+      });
+      
+      // Staff login back
+      document.getElementById('staffLoginBack').addEventListener('click', () => {
+        navigateTo(AppState.previousPage || 'client-basics');
       });
       
       // Staff login back
