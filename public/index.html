@@ -4431,5 +4431,82 @@ ${client.formData.postural?.observations?.join(', ') || 'None'}
     // Start app
     document.addEventListener('DOMContentLoaded', init);
   </script>
+<script>
+  // ===== STANDALONE MOBILE MENU (bypasses existing CSS entirely) =====
+  (function() {
+    function initSimpleMenu() {
+      var btn = document.getElementById('mobileMenuBtn');
+      if (!btn) { return; }
+
+      // Remove any old click listeners by cloning the button
+      var newBtn = btn.cloneNode(true);
+      btn.parentNode.replaceChild(newBtn, btn);
+      btn = newBtn;
+
+      // Build a fresh backdrop
+      var backdrop = document.createElement('div');
+      backdrop.id = 'simpleMenuBackdrop';
+      backdrop.style.cssText = 'display:none;position:fixed;top:0;left:0;width:100%;height:100%;background:rgba(0,0,0,0.5);z-index:99998;';
+      document.body.appendChild(backdrop);
+
+      // Build a fresh menu panel
+      var menu = document.createElement('div');
+      menu.id = 'simpleMenuPanel';
+      menu.style.cssText = 'display:none;flex-direction:column;position:fixed;top:0;left:0;width:80%;max-width:320px;height:100%;background:#ffffff;z-index:99999;overflow-y:auto;box-shadow:4px 0 20px rgba(0,0,0,0.3);';
+      document.body.appendChild(menu);
+
+      var pages = [
+        { id: 'client-basics', label: 'Client Basics 客户基础' },
+        { id: 'basic-info', label: 'Basic Info 基础信息' },
+        { id: 'contraindications', label: 'Health Declaration 健康声明' },
+        { id: 'pain-assessment', label: 'Pain Map 疼痛评估' },
+        { id: 'treatment-prefs', label: 'Treatment Prefs 治疗偏好' },
+        { id: 'postural', label: 'Body Observations 身体观察' },
+        { id: 'review', label: 'Review 确认提交' },
+        { id: 'inbox', label: 'Inbox 收件箱' }
+      ];
+
+      function closeMenu() {
+        menu.style.display = 'none';
+        backdrop.style.display = 'none';
+      }
+
+      function openMenu() {
+        menu.innerHTML = '';
+        pages.forEach(function(p) {
+          var item = document.createElement('div');
+          item.textContent = p.label;
+          item.style.cssText = 'padding:18px 24px;font-size:16px;color:#1a1a1a;border-bottom:1px solid #eeeeee;background:#ffffff;';
+          item.addEventListener('click', function() {
+            closeMenu();
+            if (typeof navigateTo === 'function') {
+              navigateTo(p.id);
+            }
+          });
+          menu.appendChild(item);
+        });
+        menu.style.display = 'flex';
+        backdrop.style.display = 'block';
+      }
+
+      btn.addEventListener('click', function(e) {
+        e.stopPropagation();
+        if (menu.style.display === 'flex') {
+          closeMenu();
+        } else {
+          openMenu();
+        }
+      });
+
+      backdrop.addEventListener('click', closeMenu);
+    }
+
+    if (document.readyState === 'loading') {
+      document.addEventListener('DOMContentLoaded', initSimpleMenu);
+    } else {
+      initSimpleMenu();
+    }
+  })();
+  </script>
 </body>
 </html>
