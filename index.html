@@ -1,0 +1,5156 @@
+<!DOCTYPE html>
+<!-- saved from url=(0051)https://smallapps.ai4money.work/webs/masterfit.html -->
+<html lang="zh"><head><meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+  <title>Master Fit 拉伸大师 - Client Intake</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com/">
+  <link rel="preconnect" href="https://fonts.gstatic.com/" crossorigin="">
+  <link href="./index_files/css2" rel="stylesheet">
+  <script src="./index_files/qrcode.min.js.下载"></script>
+  <script src="./index_files/chart.umd.min.js.下载"></script>
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    
+    :root {
+      --primary: #8B0000;
+      --primary-hover: #A52A2A;
+      --primary-light: rgba(139, 0, 0, 0.08);
+      --primary-glow: rgba(139, 0, 0, 0.25);
+      --bg-white: #FFFFFF;
+      --bg-dark: #1A1A1A;
+      --bg-light: #F8F9FA;
+      --bg-card: rgba(255, 255, 255, 0.95);
+      --bg-card-dark: rgba(30, 30, 30, 0.95);
+      --text-primary: #1A1A1A;
+      --text-secondary: #666666;
+      --text-muted: #999999;
+      --text-inverse: #FFFFFF;
+      --border: rgba(0, 0, 0, 0.1);
+      --border-focus: var(--primary);
+      --success: #22C55E;
+      --warning: #F59E0B;
+      --error: #EF4444;
+      --radius-sm: 8px;
+      --radius-md: 12px;
+      --radius-lg: 18px;
+      --shadow-sm: 0 2px 8px rgba(0,0,0,0.06);
+      --shadow-md: 0 4px 16px rgba(0,0,0,0.08);
+      --shadow-lg: 0 8px 32px rgba(0,0,0,0.12);
+      --shadow-glow: 0 0 20px var(--primary-glow);
+      --transition-fast: 150ms ease;
+      --transition-normal: 250ms ease;
+      --transition-slow: 350ms ease-out;
+      --font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', 'PingFang SC', 'Hiragino Sans GB', 'Microsoft YaHei', sans-serif;
+      --base-font-size: 15px;
+    }
+    
+    /* ========================================
+       ASSISTED MODE - 30-40% larger, more readable
+       ======================================== */
+    html.assisted-mode {
+      --base-font-size: 20px;
+    }
+    
+    html.assisted-mode body {
+      font-size: var(--base-font-size);
+      line-height: 1.8;
+    }
+    
+    /* Navigation in assisted mode */
+    html.assisted-mode .nav-inner {
+      height: 72px;
+    }
+    
+    html.assisted-mode .nav-logo {
+      font-size: 22px;
+    }
+    
+    html.assisted-mode .nav-logo svg {
+      width: 36px;
+      height: 36px;
+    }
+    
+    html.assisted-mode .nav-item {
+      padding: 14px 20px !important;
+      font-size: 15px !important;
+      border-radius: 10px;
+    }
+    
+    html.assisted-mode .nav-btn {
+      width: 48px;
+      height: 48px;
+    }
+    
+    html.assisted-mode .nav-btn svg {
+      width: 24px;
+      height: 24px;
+    }
+    
+    /* Buttons in assisted mode - 40-50% larger */
+    html.assisted-mode .btn {
+      padding: 16px 32px !important;
+      font-size: 17px !important;
+      border-radius: 14px;
+      min-height: 56px;
+    }
+    
+    html.assisted-mode .btn-sm {
+      padding: 12px 24px !important;
+      font-size: 15px !important;
+      min-height: 48px;
+    }
+    
+    /* Cards in assisted mode */
+    html.assisted-mode .form-card {
+      padding: 36px !important;
+      border-radius: 20px;
+    }
+    
+    /* Form fields in assisted mode */
+    html.assisted-mode .field-group {
+      margin-bottom: 28px !important;
+    }
+    
+    html.assisted-mode .field-label {
+      font-size: 15px;
+      margin-bottom: 10px;
+    }
+    
+    html.assisted-mode .input {
+      padding: 16px 18px;
+      font-size: 17px;
+      border-radius: 12px;
+      min-height: 56px;
+    }
+    
+    html.assisted-mode .tag-option {
+      padding: 12px 18px;
+      font-size: 15px;
+      border-radius: 24px;
+    }
+    
+    html.assisted-mode .radio-item, html.assisted-mode .checkbox-item {
+      padding: 8px 0;
+    }
+    
+    html.assisted-mode .radio-custom, html.assisted-mode .checkbox-custom {
+      width: 28px;
+      height: 28px;
+    }
+    
+    html.assisted-mode .radio-label, html.assisted-mode .checkbox-label {
+      font-size: 16px;
+    }
+    
+    /* Hide secondary/tooltip text in assisted mode */
+    html.assisted-mode .secondary-text,
+    html.assisted-mode .field-hint,
+    html.assisted-mode .card-subtitle,
+    html.assisted-mode .review-title,
+    html.assisted-mode .pain-chart-title {
+      display: none !important;
+    }
+    
+    /* Larger touch targets in assisted mode */
+    html.assisted-mode .branch-card {
+      padding: 56px 40px;
+      border-radius: 20px;
+    }
+    
+    html.assisted-mode .branch-card-icon {
+      width: 96px;
+      height: 96px;
+    }
+    
+    html.assisted-mode .branch-card-title {
+      font-size: 24px;
+    }
+    
+    html.assisted-mode .card-title {
+      font-size: 28px;
+    }
+    
+    html.assisted-mode .pain-point-card {
+      padding: 20px;
+      border-radius: 14px;
+    }
+    
+    html.assisted-mode .message-item {
+      padding: 20px;
+      border-radius: 14px;
+    }
+    
+    /* Page nav buttons in assisted mode */
+    html.assisted-mode .page-nav {
+      padding-top: 32px;
+      margin-top: 40px;
+    }
+    
+    html.assisted-mode .page-nav .btn {
+      min-width: 160px;
+    }
+    
+    /* Body diagram in assisted mode */
+    html.assisted-mode .body-diagram-container {
+      gap: 48px;
+      margin: 40px 0;
+    }
+    
+    html.assisted-mode .body-diagram {
+      width: 240px;
+      height: 540px;
+    }
+    
+    body {
+      font-family: var(--font-family);
+      font-size: var(--base-font-size);
+      line-height: 1.6;
+      color: var(--text-primary);
+      background: linear-gradient(135deg, #f5f5f5 0%, #ffffff 50%, #fafafa 100%);
+      min-height: 100vh;
+    }
+    
+    /* ========================================
+       DARK MODE - Near-black background, light text
+       ======================================== */
+    body.dark-mode {
+      --bg-white: #1A1A1A;
+      --bg-light: #1E1E1E;
+      --bg-card: rgba(35, 35, 35, 0.98);
+      --text-primary: #F0F0F0;
+      --text-secondary: #B0B0B0;
+      --text-muted: #808080;
+      --border: rgba(255, 255, 255, 0.12);
+      background: linear-gradient(135deg, #121212 0%, #1a1a1a 50%, #121212 100%);
+    }
+    
+    body.dark-mode .top-nav {
+      background: rgba(30, 30, 30, 0.95);
+      border-bottom-color: rgba(255, 255, 255, 0.1);
+    }
+    
+    body.dark-mode .nav-item:hover {
+      background: rgba(139, 0, 0, 0.2);
+    }
+    
+    body.dark-mode .nav-item.active {
+      background: rgba(139, 0, 0, 0.25);
+    }
+    
+    body.dark-mode .nav-btn:hover {
+      background: rgba(139, 0, 0, 0.2);
+    }
+    
+    body.dark-mode #resetFormBtn:hover {
+      background: rgba(239, 68, 68, 0.2);
+    }
+    
+    body.dark-mode .form-card {
+      background: var(--bg-card);
+      border-color: var(--border);
+    }
+    
+    body.dark-mode .input {
+      background: var(--bg-light);
+      border-color: var(--border);
+      color: var(--text-primary);
+    }
+    
+    body.dark-mode .input:focus {
+      background: rgba(50, 50, 50, 0.98);
+      border-color: var(--primary);
+    }
+    
+    body.dark-mode .radio-custom, body.dark-mode .checkbox-custom {
+      border-color: var(--text-muted);
+    }
+    
+    body.dark-mode .tag-option {
+      border-color: var(--border);
+      color: var(--text-secondary);
+    }
+    
+    body.dark-mode .tag-option:hover {
+      border-color: var(--primary);
+    }
+    
+    body.dark-mode .branch-card {
+      background: var(--bg-card);
+      border-color: var(--border);
+    }
+    
+    body.dark-mode .branch-card:hover {
+      border-color: var(--primary);
+    }
+    
+    body.dark-mode .client-item {
+      background: var(--bg-light);
+    }
+    
+    body.dark-mode .client-item:hover {
+      background: rgba(139, 0, 0, 0.15);
+    }
+    
+    body.dark-mode .message-item {
+      background: var(--bg-light);
+    }
+    
+    body.dark-mode .pain-chart-container {
+      background: var(--bg-light);
+    }
+    
+    body.dark-mode .qr-section {
+      background: var(--bg-light);
+    }
+    
+    body.dark-mode .signature-area {
+      border-color: var(--border);
+    }
+    
+    body.dark-mode .page-nav {
+      border-top-color: var(--border);
+    }
+    
+    body.dark-mode .review-section {
+      border-bottom-color: var(--border);
+    }
+    
+    body.dark-mode .review-tag {
+      background: rgba(139, 0, 0, 0.2);
+      color: #ff6b6b;
+    }
+    
+    body.dark-mode .pain-point-card {
+      background: var(--bg-light);
+      border-color: var(--border);
+    }
+    
+    body.dark-mode .modal {
+      background: var(--bg-card);
+    }
+    
+    body.dark-mode .modal-close {
+      background: var(--bg-light);
+    }
+    
+    body.dark-mode .ai-panel {
+      background: linear-gradient(135deg, rgba(139, 0, 0, 0.15) 0%, rgba(30, 30, 30, 0.95) 100%);
+      border-color: var(--primary);
+    }
+    
+    body.dark-mode .ai-suggestion {
+      background: var(--bg-light);
+    }
+    
+    body.dark-mode .login-error {
+      background: rgba(239, 68, 68, 0.15);
+    }
+    
+    body.dark-mode .staff-search .input {
+      background: var(--bg-light);
+      border-color: var(--border);
+      color: var(--text-primary);
+    }
+    
+    body.dark-mode .inbox-header {
+      border-bottom-color: var(--border);
+    }
+    
+    body.dark-mode .qr-code {
+      background: white;
+    }
+    
+    body.dark-mode .appointment-card {
+      background: linear-gradient(135deg, #6b0000 0%, #8B0000 100%);
+    }
+    
+    body.dark-mode .inbox-tab.active {
+      background: var(--primary);
+      color: white;
+    }
+    
+    body.dark-mode .inbox-back-btn {
+      color: var(--text-secondary);
+    }
+    
+    body.dark-mode .inbox-header {
+      border-bottom: 1px solid var(--border);
+    }
+    
+    body.dark-mode .success-icon {
+      background: var(--success);
+    }
+    
+    body.dark-mode .success-title {
+      color: var(--text-primary);
+    }
+    
+    body.dark-mode .success-message {
+      color: var(--text-secondary);
+    }
+    
+    body.dark-mode .pain-point-severity {
+      background: var(--primary);
+    }
+    
+    body.dark-mode #resetModal .modal {
+      background: var(--bg-card);
+    }
+    
+    body.dark-mode #resetModal .modal-title {
+      color: #ff6b6b;
+    }
+    
+    body.dark-mode .toast {
+      background: #333;
+      color: white;
+    }
+    
+    body.dark-mode .toast.success {
+      background: #16a34a;
+    }
+    
+    body.dark-mode .toast.error {
+      background: #dc2626;
+    }
+    
+    /* Navigation */
+    .top-nav {
+      position: sticky;
+      top: 0;
+      z-index: 1000;
+      background: var(--bg-card);
+      backdrop-filter: blur(20px);
+      -webkit-backdrop-filter: blur(20px);
+      border-bottom: 1px solid var(--border);
+      box-shadow: var(--shadow-sm);
+    }
+    
+    .nav-inner {
+      max-width: 1200px;
+      margin: 0 auto;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 0 24px;
+      height: 64px;
+    }
+    
+    .nav-logo {
+      font-size: 20px;
+      font-weight: 700;
+      color: var(--primary);
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+    
+    .nav-logo svg {
+      width: 32px;
+      height: 32px;
+    }
+    
+    .nav-links {
+      display: flex;
+      align-items: center;
+      gap: 4px;
+      flex: 1;
+      justify-content: center;
+    }
+    
+    .nav-item {
+      padding: 8px 14px;
+      font-size: 13px;
+      font-weight: 500;
+      color: var(--text-secondary);
+      text-decoration: none;
+      border-radius: var(--radius-sm);
+      transition: all var(--transition-fast);
+      position: relative;
+      cursor: pointer;
+      white-space: nowrap;
+    }
+    
+    .nav-item:hover {
+      color: var(--text-primary);
+      background: var(--primary-light);
+    }
+    
+    .nav-item.active {
+      color: var(--primary);
+      background: var(--primary-light);
+    }
+    
+    .nav-item.has-error::after {
+      content: '';
+      position: absolute;
+      top: 6px;
+      right: 6px;
+      width: 8px;
+      height: 8px;
+      background: var(--error);
+      border-radius: 50%;
+    }
+    
+    .nav-item.assisted-mode {
+      padding: 12px 18px !important;
+      font-size: 14px !important;
+    }
+    
+    .inbox-nav-item {
+      background: var(--primary-light) !important;
+      color: var(--primary) !important;
+      font-weight: 600 !important;
+    }
+    
+    .inbox-nav-item:hover {
+      background: var(--primary) !important;
+      color: white !important;
+    }
+    
+    body.dark-mode .inbox-nav-item {
+      background: rgba(139, 0, 0, 0.2) !important;
+      color: #ff6b6b !important;
+    }
+    
+    body.dark-mode .inbox-nav-item:hover {
+      background: var(--primary) !important;
+      color: white !important;
+    }
+    
+    .nav-controls {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+    
+    .nav-btn {
+      width: 40px;
+      height: 40px;
+      border: none;
+      background: transparent;
+      border-radius: var(--radius-sm);
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      color: var(--text-secondary);
+      transition: all var(--transition-fast);
+    }
+    
+    .nav-btn:hover {
+      background: var(--primary-light);
+      color: var(--primary);
+    }
+    
+    .nav-btn.active {
+      background: var(--primary);
+      color: white;
+    }
+    
+    .nav-btn svg {
+      width: 20px;
+      height: 20px;
+    }
+    
+    .mobile-menu-btn {
+      display: none;
+    }
+    
+    /* Mobile Navigation - Slide-out drawer with backdrop */
+    @media (max-width: 768px) {
+      .nav-inner {
+        height: 56px;
+        padding: 0 12px;
+      }
+      
+      .nav-logo {
+        font-size: 16px;
+        white-space: nowrap;
+        flex-shrink: 0;
+      }
+      
+      .nav-logo svg {
+        width: 28px;
+        height: 28px;
+      }
+      
+      .nav-controls {
+        gap: 4px;
+      }
+      
+      .nav-btn {
+        width: 36px;
+        height: 36px;
+      }
+      
+      .nav-links {
+        position: fixed;
+        top: 0;
+        left: 0;
+        right: 0;
+        bottom: 0;
+        background: var(--bg-white);
+        flex-direction: column;
+        align-items: stretch;
+        padding: 64px 16px 16px 16px;
+        gap: 0;
+        transform: translateX(-100%);
+        transition: transform var(--transition-normal);
+        z-index: 1001;
+        overflow-y: auto;
+      }
+      
+      .nav-links.open {
+        transform: translateX(0);
+      }
+      
+      /* Backdrop overlay */
+      .nav-backdrop {
+        display: none;
+        position: fixed;
+        top: 0;
+        left: 0;
+        right: 0;
+        bottom: 0;
+        background: rgba(0, 0, 0, 0.5);
+        z-index: 1000;
+      }
+      
+      .nav-backdrop.open {
+        display: block;
+      }
+      
+      .nav-item {
+        padding: 16px 20px;
+        font-size: 16px;
+        border-bottom: 1px solid var(--border);
+        background: var(--bg-white);
+      }
+      
+      .nav-item:first-child {
+        border-top: 1px solid var(--border);
+      }
+      
+      .mobile-menu-btn {
+        display: flex;
+      }
+    }
+    
+    body.dark-mode .nav-links {
+      background: #1a1a1a;
+    }
+    
+    body.dark-mode .nav-item {
+      background: #1a1a1a;
+      border-color: rgba(255,255,255,0.1);
+    }
+    
+    /* Main Content */
+    .main-content {
+      max-width: 800px;
+      margin: 0 auto;
+      padding: 32px 24px;
+      min-height: calc(100vh - 64px);
+    }
+    
+    .page {
+      display: none;
+      animation: fadeSlideIn var(--transition-slow);
+    }
+    
+    .page.active {
+      display: block;
+    }
+    
+    @keyframes fadeSlideIn {
+      from {
+        opacity: 0;
+        transform: translateY(20px);
+      }
+      to {
+        opacity: 1;
+        transform: translateY(0);
+      }
+    }
+    
+    /* Cards */
+    .form-card {
+      background: var(--bg-card);
+      border-radius: var(--radius-lg);
+      padding: 32px;
+      box-shadow: var(--shadow-md);
+      border: 1px solid var(--border);
+    }
+    
+    .card-title {
+      font-size: 24px;
+      font-weight: 700;
+      color: var(--text-primary);
+      margin-bottom: 8px;
+    }
+    
+    .card-subtitle {
+      font-size: 14px;
+      color: var(--text-secondary);
+      margin-bottom: 32px;
+    }
+    
+    /* Branch Selection */
+    .branch-grid {
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      gap: 24px;
+    }
+    
+    @media (max-width: 640px) {
+      .branch-grid {
+        grid-template-columns: 1fr;
+      }
+    }
+    
+    .branch-card {
+      background: var(--bg-card);
+      border: 2px solid var(--border);
+      border-radius: var(--radius-lg);
+      padding: 48px 32px;
+      text-align: center;
+      cursor: pointer;
+      transition: all var(--transition-normal);
+    }
+    
+    .branch-card:hover {
+      border-color: var(--primary);
+      box-shadow: var(--shadow-glow);
+      transform: translateY(-4px);
+    }
+    
+    .branch-card-icon {
+      width: 80px;
+      height: 80px;
+      margin: 0 auto 16px;
+      background: var(--primary-light);
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+    
+    .branch-card-icon svg {
+      width: 40px;
+      height: 40px;
+      color: var(--primary);
+    }
+    
+    .branch-card-title {
+      font-size: 20px;
+      font-weight: 700;
+      color: var(--text-primary);
+      margin-bottom: 4px;
+    }
+    
+    .branch-card-subtitle {
+      font-size: 14px;
+      color: var(--text-secondary);
+    }
+    
+    /* Form Elements */
+    .field-group {
+      margin-bottom: 24px;
+    }
+    
+    .field-label {
+      display: block;
+      font-size: 13px;
+      font-weight: 600;
+      color: var(--text-primary);
+      margin-bottom: 8px;
+      text-transform: uppercase;
+      letter-spacing: 0.5px;
+    }
+    
+    .field-label .required {
+      color: var(--error);
+      margin-left: 2px;
+    }
+    
+    .field-hint {
+      font-size: 12px;
+      color: var(--text-muted);
+      margin-top: 4px;
+    }
+    
+    .secondary-text {
+      font-size: 12px;
+      color: var(--text-muted);
+      margin-top: 4px;
+    }
+    
+    .input {
+      width: 100%;
+      padding: 14px 16px;
+      font-size: 15px;
+      font-family: inherit;
+      border: 2px solid var(--border);
+      border-radius: var(--radius-md);
+      background: var(--bg-light);
+      color: var(--text-primary);
+      transition: all var(--transition-fast);
+    }
+    
+    .input:focus {
+      outline: none;
+      border-color: var(--primary);
+      background: var(--bg-white);
+      box-shadow: 0 0 0 4px var(--primary-light);
+    }
+    
+    .input.error {
+      border-color: var(--error);
+    }
+    
+    .input::placeholder {
+      color: var(--text-muted);
+    }
+    
+    .input-row {
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      gap: 16px;
+    }
+    
+    @media (max-width: 640px) {
+      .input-row {
+        grid-template-columns: 1fr;
+      }
+    }
+    
+    /* Select */
+    .select {
+      appearance: none;
+      background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='24' height='24' viewBox='0 0 24 24' fill='none' stroke='%23666666' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpolyline points='6 9 12 15 18 9'%3E%3C/polyline%3E%3C/svg%3E");
+      background-repeat: no-repeat;
+      background-position: right 12px center;
+      background-size: 18px;
+      padding-right: 44px;
+    }
+    
+    /* Radio & Checkbox */
+    .radio-group, .checkbox-group {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 12px;
+    }
+    
+    .radio-item, .checkbox-item {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      cursor: pointer;
+    }
+    
+    .radio-input, .checkbox-input {
+      display: none;
+    }
+    
+    .radio-custom, .checkbox-custom {
+      width: 22px;
+      height: 22px;
+      border: 2px solid var(--border);
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      transition: all var(--transition-fast);
+      flex-shrink: 0;
+    }
+    
+    .checkbox-custom {
+      border-radius: 6px;
+    }
+    
+    .radio-input:checked + .radio-custom {
+      border-color: var(--primary);
+      background: var(--primary);
+    }
+    
+    .radio-input:checked + .radio-custom::after {
+      content: '';
+      width: 8px;
+      height: 8px;
+      background: white;
+      border-radius: 50%;
+    }
+    
+    .checkbox-input:checked + .checkbox-custom {
+      border-color: var(--primary);
+      background: var(--primary);
+    }
+    
+    .checkbox-input:checked + .checkbox-custom::after {
+      content: '';
+      width: 6px;
+      height: 10px;
+      border: solid white;
+      border-width: 0 2px 2px 0;
+      transform: rotate(45deg) translate(-1px, -1px);
+    }
+    
+    .radio-label, .checkbox-label {
+      font-size: 14px;
+      color: var(--text-primary);
+    }
+    
+    /* Tag Select (multi-select) */
+    .tag-select {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 8px;
+    }
+    
+    .tag-option {
+      padding: 8px 14px;
+      font-size: 13px;
+      border: 2px solid var(--border);
+      border-radius: 20px;
+      cursor: pointer;
+      transition: all var(--transition-fast);
+      user-select: none;
+    }
+    
+    .tag-option:hover {
+      border-color: var(--primary);
+    }
+    
+    .tag-option.selected {
+      background: var(--primary);
+      border-color: var(--primary);
+      color: white;
+    }
+    
+    /* Signature Pad */
+    .signature-area {
+      border: 2px dashed var(--border);
+      border-radius: var(--radius-md);
+      padding: 24px;
+      text-align: center;
+      margin-top: 16px;
+    }
+    
+    .signature-input {
+      font-size: 24px;
+      font-family: 'Brush Script MT', cursive;
+      border: none;
+      background: transparent;
+      width: 100%;
+      text-align: center;
+      color: var(--text-primary);
+    }
+    
+    .signature-input:focus {
+      outline: none;
+    }
+    
+    .signature-date {
+      margin-top: 16px;
+      font-size: 14px;
+      color: var(--text-secondary);
+    }
+    
+    /* Body Diagram */
+    .body-diagram-container {
+      display: flex;
+      gap: 32px;
+      justify-content: center;
+      flex-wrap: wrap;
+      margin: 32px 0;
+    }
+    
+    .body-diagram {
+      position: relative;
+      width: 200px;
+      height: 450px;
+    }
+    
+    .body-diagram svg {
+      width: 100%;
+      height: 100%;
+    }
+    
+    .body-zone {
+      fill: #e0e0e0;
+      stroke: #999;
+      stroke-width: 1;
+      cursor: pointer;
+      transition: all var(--transition-fast);
+    }
+    
+    .body-zone:hover {
+      fill: var(--primary-light);
+      stroke: var(--primary);
+    }
+    
+    .body-zone.active {
+      fill: var(--primary);
+      stroke: var(--primary);
+    }
+    
+    .body-label {
+      font-size: 10px;
+      fill: var(--text-secondary);
+      pointer-events: none;
+      text-anchor: middle;
+    }
+    
+    /* Pain Point Card */
+    .pain-points-list {
+      margin-top: 24px;
+    }
+    
+    .pain-point-card {
+      background: var(--bg-light);
+      border: 1px solid var(--border);
+      border-radius: var(--radius-md);
+      padding: 16px;
+      margin-bottom: 12px;
+      display: flex;
+      justify-content: space-between;
+      align-items: flex-start;
+    }
+    
+    .pain-point-info h4 {
+      font-size: 14px;
+      font-weight: 600;
+      color: var(--text-primary);
+      margin-bottom: 4px;
+    }
+    
+    .pain-point-info p {
+      font-size: 13px;
+      color: var(--text-secondary);
+    }
+    
+    .pain-point-severity {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      background: var(--primary);
+      color: white;
+      padding: 4px 10px;
+      border-radius: 12px;
+      font-size: 12px;
+      font-weight: 600;
+    }
+    
+    .pain-point-edit {
+      background: none;
+      border: none;
+      color: var(--primary);
+      cursor: pointer;
+      padding: 4px;
+    }
+    
+    /* Pain Modal */
+    .modal-overlay {
+      position: fixed;
+      inset: 0;
+      background: rgba(0, 0, 0, 0.5);
+      backdrop-filter: blur(4px);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      z-index: 2000;
+      opacity: 0;
+      visibility: hidden;
+      transition: all var(--transition-normal);
+    }
+    
+    .modal-overlay.active {
+      opacity: 1;
+      visibility: visible;
+    }
+    
+    .modal {
+      background: var(--bg-card);
+      border-radius: var(--radius-lg);
+      padding: 32px;
+      width: 90%;
+      max-width: 480px;
+      max-height: 90vh;
+      overflow-y: auto;
+      transform: translateY(20px);
+      transition: transform var(--transition-normal);
+    }
+    
+    .modal-overlay.active .modal {
+      transform: translateY(0);
+    }
+    
+    .modal-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 24px;
+    }
+    
+    .modal-title {
+      font-size: 18px;
+      font-weight: 700;
+      color: var(--text-primary);
+    }
+    
+    .modal-close {
+      width: 32px;
+      height: 32px;
+      border: none;
+      background: var(--bg-light);
+      border-radius: 50%;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      color: var(--text-secondary);
+    }
+    
+    .modal-close:hover {
+      background: var(--border);
+    }
+    
+    /* Slider */
+    .slider-container {
+      padding: 8px 0;
+    }
+    
+    .slider-value {
+      text-align: center;
+      font-size: 32px;
+      font-weight: 700;
+      color: var(--primary);
+      margin-bottom: 8px;
+    }
+    
+    .slider {
+      width: 100%;
+      height: 8px;
+      border-radius: 4px;
+      background: var(--border);
+      appearance: none;
+      cursor: pointer;
+    }
+    
+    .slider::-webkit-slider-thumb {
+      appearance: none;
+      width: 24px;
+      height: 24px;
+      background: var(--primary);
+      border-radius: 50%;
+      cursor: pointer;
+      box-shadow: var(--shadow-md);
+    }
+    
+    .slider::-moz-range-thumb {
+      width: 24px;
+      height: 24px;
+      background: var(--primary);
+      border-radius: 50%;
+      cursor: pointer;
+      border: none;
+    }
+    
+    .slider-labels {
+      display: flex;
+      justify-content: space-between;
+      font-size: 12px;
+      color: var(--text-muted);
+      margin-top: 4px;
+    }
+    
+    /* Buttons */
+    .btn {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      gap: 8px;
+      padding: 12px 24px;
+      font-size: 15px;
+      font-weight: 600;
+      font-family: inherit;
+      border: none;
+      border-radius: var(--radius-md);
+      cursor: pointer;
+      transition: all var(--transition-fast);
+    }
+    
+    .btn-primary {
+      background: var(--primary);
+      color: white;
+    }
+    
+    .btn-primary:hover {
+      background: var(--primary-hover);
+      box-shadow: var(--shadow-glow);
+    }
+    
+    .btn-primary:disabled {
+      background: var(--text-muted);
+      cursor: not-allowed;
+      box-shadow: none;
+    }
+    
+    .btn-secondary {
+      background: transparent;
+      color: var(--primary);
+      border: 2px solid var(--primary);
+    }
+    
+    .btn-secondary:hover {
+      background: var(--primary-light);
+    }
+    
+    .btn-ghost {
+      background: transparent;
+      color: var(--text-secondary);
+    }
+    
+    .btn-ghost:hover {
+      background: var(--bg-light);
+      color: var(--text-primary);
+    }
+    
+    .btn-sm {
+      padding: 8px 16px;
+      font-size: 13px;
+    }
+    
+    .btn-icon {
+      width: 40px;
+      height: 40px;
+      padding: 0;
+      border-radius: var(--radius-sm);
+    }
+    
+    /* Page Navigation */
+    .page-nav {
+      display: flex;
+      justify-content: space-between;
+      margin-top: 32px;
+      padding-top: 24px;
+      border-top: 1px solid var(--border);
+    }
+    
+    .page-nav .btn {
+      min-width: 120px;
+    }
+    
+    /* Review Section */
+    .review-section {
+      margin-bottom: 24px;
+      padding-bottom: 24px;
+      border-bottom: 1px solid var(--border);
+    }
+    
+    .review-section:last-child {
+      border-bottom: none;
+    }
+    
+    .review-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 12px;
+    }
+    
+    .review-title {
+      font-size: 14px;
+      font-weight: 600;
+      color: var(--text-secondary);
+      text-transform: uppercase;
+      letter-spacing: 0.5px;
+    }
+    
+    .review-edit-btn {
+      font-size: 13px;
+      color: var(--primary);
+      background: none;
+      border: none;
+      cursor: pointer;
+      font-weight: 500;
+    }
+    
+    .review-edit-btn:hover {
+      text-decoration: underline;
+    }
+    
+    .review-content {
+      font-size: 15px;
+      color: var(--text-primary);
+    }
+    
+    .review-item {
+      display: flex;
+      margin-bottom: 8px;
+    }
+    
+    .review-label {
+      width: 140px;
+      flex-shrink: 0;
+      color: var(--text-secondary);
+    }
+    
+    .review-value {
+      font-weight: 500;
+    }
+    
+    .review-tags {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 6px;
+      margin-top: 8px;
+    }
+    
+    .review-tag {
+      background: var(--primary-light);
+      color: var(--primary);
+      padding: 4px 10px;
+      border-radius: 12px;
+      font-size: 12px;
+      font-weight: 500;
+    }
+    
+    /* Success Screen */
+    .success-screen {
+      text-align: center;
+      padding: 48px 24px;
+    }
+    
+    .success-icon {
+      width: 80px;
+      height: 80px;
+      background: var(--success);
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      margin: 0 auto 24px;
+    }
+    
+    .success-icon svg {
+      width: 40px;
+      height: 40px;
+      color: white;
+    }
+    
+    .success-title {
+      font-size: 24px;
+      font-weight: 700;
+      color: var(--text-primary);
+      margin-bottom: 8px;
+    }
+    
+    .success-message {
+      font-size: 15px;
+      color: var(--text-secondary);
+      margin-bottom: 32px;
+    }
+    
+    /* Staff Login */
+    .login-card {
+      max-width: 400px;
+      margin: 0 auto;
+    }
+    
+    .login-form {
+      margin-top: 24px;
+    }
+    
+    .login-error {
+      background: rgba(239, 68, 68, 0.1);
+      color: var(--error);
+      padding: 12px 16px;
+      border-radius: var(--radius-sm);
+      margin-bottom: 16px;
+      font-size: 14px;
+      display: none;
+    }
+    
+    .login-error.show {
+      display: block;
+      animation: shake 0.5s ease;
+    }
+    
+    @keyframes shake {
+      0%, 100% { transform: translateX(0); }
+      20%, 60% { transform: translateX(-8px); }
+      40%, 80% { transform: translateX(8px); }
+    }
+    
+    /* Staff Panel */
+    .staff-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 24px;
+      flex-wrap: wrap;
+      gap: 16px;
+    }
+    
+    .staff-title {
+      font-size: 24px;
+      font-weight: 700;
+    }
+    
+    .staff-search {
+      display: flex;
+      gap: 12px;
+      margin-bottom: 24px;
+    }
+    
+    .staff-search .input {
+      flex: 1;
+      max-width: 400px;
+    }
+    
+    .client-list {
+      display: flex;
+      flex-direction: column;
+      gap: 12px;
+    }
+    
+    .client-item {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 16px;
+      background: var(--bg-light);
+      border-radius: var(--radius-md);
+      cursor: pointer;
+      transition: all var(--transition-fast);
+    }
+    
+    .client-item:hover {
+      background: var(--primary-light);
+    }
+    
+    .client-info h4 {
+      font-size: 15px;
+      font-weight: 600;
+      color: var(--text-primary);
+    }
+    
+    .client-info p {
+      font-size: 13px;
+      color: var(--text-secondary);
+    }
+    
+    .client-meta {
+      text-align: right;
+    }
+    
+    .client-date {
+      font-size: 12px;
+      color: var(--text-muted);
+    }
+    
+    .client-status {
+      display: inline-block;
+      padding: 2px 8px;
+      font-size: 11px;
+      font-weight: 600;
+      border-radius: 10px;
+      margin-top: 4px;
+    }
+    
+    .client-status.new {
+      background: var(--primary-light);
+      color: var(--primary);
+    }
+    
+    .client-status.returning {
+      background: rgba(34, 197, 94, 0.1);
+      color: var(--success);
+    }
+    
+    /* Client Inbox */
+    .inbox-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 24px;
+    }
+    
+    .inbox-tabs {
+      display: flex;
+      gap: 8px;
+    }
+    
+    .inbox-tab {
+      padding: 8px 16px;
+      font-size: 14px;
+      font-weight: 500;
+      border: none;
+      background: transparent;
+      color: var(--text-secondary);
+      cursor: pointer;
+      border-radius: var(--radius-sm);
+      transition: all var(--transition-fast);
+    }
+    
+    .inbox-tab.active {
+      background: var(--primary);
+      color: white;
+    }
+    
+    .message-list {
+      display: flex;
+      flex-direction: column;
+      gap: 12px;
+    }
+    
+    .message-item {
+      padding: 16px;
+      background: var(--bg-light);
+      border-radius: var(--radius-md);
+      border-left: 4px solid var(--primary);
+    }
+    
+    .message-header {
+      display: flex;
+      justify-content: space-between;
+      margin-bottom: 8px;
+    }
+    
+    .message-from {
+      font-size: 14px;
+      font-weight: 600;
+      color: var(--text-primary);
+    }
+    
+    .message-date {
+      font-size: 12px;
+      color: var(--text-muted);
+    }
+    
+    .message-body {
+      font-size: 14px;
+      color: var(--text-secondary);
+      line-height: 1.5;
+    }
+    
+    .pain-chart-container {
+      background: var(--bg-light);
+      border-radius: var(--radius-md);
+      padding: 24px;
+      margin-bottom: 24px;
+    }
+    
+    .pain-chart-title {
+      font-size: 16px;
+      font-weight: 600;
+      margin-bottom: 16px;
+    }
+    
+    .pain-chart {
+      height: 200px;
+      position: relative;
+    }
+    
+    .appointment-card {
+      background: linear-gradient(135deg, var(--primary) 0%, var(--primary-hover) 100%);
+      color: white;
+      padding: 20px;
+      border-radius: var(--radius-md);
+      margin-bottom: 24px;
+    }
+    
+    .appointment-title {
+      font-size: 14px;
+      opacity: 0.9;
+      margin-bottom: 4px;
+    }
+    
+    .appointment-datetime {
+      font-size: 20px;
+      font-weight: 700;
+    }
+    
+    /* QR Code Section */
+    .qr-section {
+      text-align: center;
+      padding: 32px;
+      background: var(--bg-light);
+      border-radius: var(--radius-md);
+    }
+    
+    .qr-code {
+      width: 200px;
+      height: 200px;
+      margin: 0 auto 16px;
+      background: white;
+      padding: 16px;
+      border-radius: var(--radius-md);
+    }
+    
+    .qr-code canvas {
+      width: 100% !important;
+      height: 100% !important;
+    }
+    
+    /* Assessment Forms */
+    .assessment-section {
+      margin-bottom: 32px;
+    }
+    
+    .assessment-title {
+      font-size: 18px;
+      font-weight: 700;
+      margin-bottom: 16px;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+    
+    .assessment-title::before {
+      content: '';
+      width: 4px;
+      height: 20px;
+      background: var(--primary);
+      border-radius: 2px;
+    }
+    
+    .rom-table {
+      width: 100%;
+      border-collapse: collapse;
+      margin-top: 16px;
+    }
+    
+    .rom-table th, .rom-table td {
+      padding: 12px;
+      text-align: left;
+      border-bottom: 1px solid var(--border);
+    }
+    
+    .rom-table th {
+      font-size: 12px;
+      font-weight: 600;
+      color: var(--text-secondary);
+      text-transform: uppercase;
+    }
+    
+    .rom-table input {
+      width: 100%;
+      padding: 8px;
+      border: 1px solid var(--border);
+      border-radius: var(--radius-sm);
+      font-size: 14px;
+    }
+    
+    /* Program Phases */
+    .phase-card {
+      background: var(--bg-light);
+      border-radius: var(--radius-md);
+      padding: 20px;
+      margin-bottom: 16px;
+    }
+    
+    .phase-header {
+      font-size: 16px;
+      font-weight: 700;
+      margin-bottom: 16px;
+      color: var(--primary);
+    }
+    
+    .phase-grid {
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      gap: 12px;
+    }
+    
+    @media (max-width: 640px) {
+      .phase-grid {
+        grid-template-columns: 1fr;
+      }
+    }
+    
+    /* Export Buttons */
+    .export-buttons {
+      display: flex;
+      gap: 12px;
+      margin-top: 24px;
+    }
+    
+    /* AI Assistant */
+    .ai-panel {
+      background: linear-gradient(135deg, var(--primary-light) 0%, rgba(139, 0, 0, 0.05) 100%);
+      border: 2px solid var(--primary);
+      border-radius: var(--radius-lg);
+      padding: 24px;
+      margin-top: 24px;
+    }
+    
+    .ai-header {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      margin-bottom: 16px;
+    }
+    
+    .ai-icon {
+      width: 40px;
+      height: 40px;
+      background: var(--primary);
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      color: white;
+    }
+    
+    .ai-title {
+      font-size: 16px;
+      font-weight: 700;
+    }
+    
+    .ai-subtitle {
+      font-size: 12px;
+      color: var(--text-secondary);
+    }
+    
+    .ai-suggestions {
+      display: flex;
+      flex-direction: column;
+      gap: 12px;
+    }
+    
+    .ai-suggestion {
+      background: white;
+      padding: 16px;
+      border-radius: var(--radius-md);
+      font-size: 14px;
+      line-height: 1.5;
+    }
+    
+    .ai-suggestion strong {
+      color: var(--primary);
+    }
+    
+    /* Toast */
+    .toast {
+      position: fixed;
+      bottom: 24px;
+      right: 24px;
+      background: var(--text-primary);
+      color: white;
+      padding: 14px 20px;
+      border-radius: var(--radius-md);
+      font-size: 14px;
+      font-weight: 500;
+      box-shadow: var(--shadow-lg);
+      transform: translateY(100px);
+      opacity: 0;
+      transition: all var(--transition-normal);
+      z-index: 3000;
+    }
+    
+    .toast.show {
+      transform: translateY(0);
+      opacity: 1;
+    }
+    
+    .toast.success {
+      background: var(--success);
+    }
+    
+    .toast.error {
+      background: var(--error);
+    }
+    
+    /* Print Styles */
+    @media print {
+      .top-nav, .page-nav, .nav-controls, .btn, .modal-overlay {
+        display: none !important;
+      }
+      
+      .main-content {
+        padding: 0;
+        max-width: 100%;
+      }
+      
+      .form-card {
+        box-shadow: none;
+        border: 1px solid #ddd;
+      }
+    }
+    
+    /* No chatbot - completely hidden */
+    .chatbot, .ai-chat, .chat-widget, [data-chat], .intercom-launcher, .messenger {
+      display: none !important;
+    }
+  </style>
+<style type="text/css">@font-face {
+  font-family: "xm-iconfont";
+  src: url('//at.alicdn.com/t/font_792691_ptvyboo0bno.eot?t=1574048839056');
+  /* IE9 */
+  src: url('//at.alicdn.com/t/font_792691_ptvyboo0bno.eot?t=1574048839056#iefix') format('embedded-opentype'), /* IE6-IE8 */ url('data:application/x-font-woff2;charset=utf-8;base64,d09GMgABAAAAAAksAAsAAAAAEYAAAAjeAAEAAAAAAAAAAAAAAAAAAAAAAAAAAAAAHEIGVgCEUgqTXI8lATYCJAM0CxwABCAFhG0HgTwbZQ4jEbaCkVIj+4sD3sS6BFAp9ka91ulVG4leTC/+h+3V+zyRYCTyREKkcZ+D5/u137lPdveLGJBMunoiNPOQPBMq0/FQtEKIkMRDZng69d+hOiQumAr7bJdBOEzMTU77s78mhbI58aCg7ebCs4LBTgCk+cD/4ZqWUHebipp7al3tyKOjwCV/hVyw9PdzaktxI7IMQs26/1N8gV4DI0bVut3UhCaflGGgwM3oTXg1IfRMbCsmrEnriJVeYM2eXHII4KdMMzL4OoACHgZBCTasITcReDUBE8kWPLMTCGoQaDV+eKpUPQI49r8vP6BTPIDCaiBSml3oOQX0voNPebv/u2P0AUfP1w0s5EADzYBZsNdByylo2eVq/NtRdgFpovQR5x2CIwmIZeik6/u0T/m/A7RJP00sCmmyksj/kwc+LC5BFBqDEMDDjwPiANDB9MpJTXwHmsO3YyBwWDA4OFwwJLRcRgAOBUYMDg0mHRwGTAYozsV0AgWYruDwwExDHfzwKWf4OurQ9jzQDtoF+wpistfBfluQ5bQiiJa4ZQoKhShLiMayBbyg05AIkYBoIBJEEApQy/FwYv4HchADIUBXl61dW6mpwIgyp7p8PrHddieSjhY9oqTxyPB/FGNYDklpfYh8VtaoqSgb0bKoGB17CuVUp9Ll2nS2UpNGMSw9hyirA7C6+QLyByIQS0sSSmxvArC5odZmYZMxZSiBR5OkQl0uiufxMH5eL8t3u0d4XKyuq6EMdcpNe2+oXA8p9yPa+4T1PM7+A54tc7tpl2vcAHAftnhZj2chy1CyaCRFsyMqQ5nkNnskEt2yxxZinPsOZjFm4+XWvKqLkfCGS1k4MNP82isxSMf7ZsGYvQVCNAeSSVtzWCxRdXGxyZlA2CvCEevuO7y9M2z2NWH8icydzq/qAJSp1lGvDWFp6Nw3xChJowPD+76nU+upQk6Kw9jI0Rgym9Ct8VlxMI3CSIaDCZja5tDYt0/EYra4tn0Kp3v8Rdezk8svcy1mKhoSvNcZz3LKlUe777Gmval0s7bzAc0k13LGk896V9DuvNn34N0ebKgItkQgOomuJtgQPChNI4cwa7CEWCvfk5QjJFlem6i3SfVShWi5LTFRG+JwdCNpSqbpRFwrtb1TbcRkJi/AbJJQOmfCdnswLNGVM7qqSRO1zO0Q0j5Vr3cYQ07HB0MX6KoIZhx+D9Djs2C5bXtVwvbgJHtSCIL7hjFJme4sZDdS5IlJdKUO1Qt8opn0trBafz3AX933kmCRgyMEWGZjMAkRKhwmIHJGR4ruwFCdWKYzrap2R/mvd2UKajzRAZu88pGAD90Y+02kTFCKrBSXwGGJ3wRcPCdIppTxSmHOfESRwIli0S5J/8AYDCxTGh4XZua4xvfvGx320rDK2qA8g5FlS7pWNLx71+BwgA/KZ5I0aeKmNeCNoNPl8qNHu8uHHzqaKc86fHi4vPuRI4ny+I/vjxw+clh4HXVCFvVnVFx07EHZwVhSRliTTMWSEi0h6YuS6DxCRmiin0B3L4ry6cvR0ijYexFdBL3wGQM0YOrUAZCBkLOBBtQ+xdk7omfgUv+u++admyUeXduyxLM+r/+49rPfhgEZor6GymToNYksNsZyC7ntwAH0928UpgMpxpF0ydNlsMMBw7QsxTCmu0Hf3F+/+vb99Yumhb+e9R0LBNm+4O+hu7lQ5bGjI9j5G88qQ5SLFyuEC7cwd25xoYo2j4eA4bhpM7TZhPtmc+uhVEVSMYXLWh0bfjI8dvUpvDUocPZmU4kwwOfc83wB5wPehrpD3waApbwW+fgRrZXcxw+mB/3woZT+8JFMYwRMIy2k/18qhqcKpjYeYSnIACaUoRDu0e3kQFh98R5fiI8oJqwwGZSJDSbehLzZs7zIeWTQ4UGOIs2c4j2/Q/tn7n7j9juO33On6WhURCT/wO6Y3QdmWFY0Ef6JUeGRggO7ZbtaZlh5RYKWXbLPBLc3l/5h4A0mu3ZXTZ+u6t6VHMAzZhxak50T+24NnRuaOmehRkXlqVR5lIpuwezUUDUdCuJysv8Z/0/8uNE1s7jIJIubFWnI/x7g4nAZx79yYpFoAOU3a9iwT1O/GxUxPY0ljVPv9EukI3qNrl/So2YfzasqHCroNjS0+w0tlPlsYfC6v/01ixquizJH1Kd/VK+OS3iS3rTJWmqsMPdU3B3oFyC9RSumWE/0gG36IjTysfH51IJ/5oOgNYu6p4yb5Fdufhr/Kjtu0oSyYP/WJQrz35aNFnMhtFcwb55NlNnH8Wdu1b+XZA9zqlZrhdPo/V3uBhiUlQ66h0LhbAmFYIncdFOpVMh6Fl7peqy5Z2ZdQBITO2x1Asj1dRFjIBMC3hbuUh8Ooc4W03EjAdo8UL/t0oUfyU8630bmMcw/vqDNAsC9BQD4OqCgH+ljy0UhJB8AAJA+8EmArxk5gnRLik90AElf8rBm+IMvBTWnucb3+0o0ARk+r0ZBv8sU01nnSmP45/H8Dp8C8X+iE9e+ZvXymK/sQJ5/DuqhYKebPnKmPqLYuDcIMWS2/Rjxp2s8Do821LVn6A/xMK1RKvBLK5gyDsZ5uQ6bYusmx2yqLFe4lECHDPcFhojmckuAbnCI6Cn308RI6AAJdtCICQLQyBHKhSgX5YowN6BBPIEB8VxuSfNncpAuutzPnCSiDHDEo+DsKQBPoJi4MpRktepIs2zjO5h84IEMM3ffECKSZU1ZHxfewEI4h494MuuUNNOBjuw18QKHAzEXaAcylS3m3baq9MpnKenYmfEUgCdbXTHEtTVKsvruNGv9/DuYfOAhcuKu9TeEiA9nNJTUDOUbbVkn3sv2eDJrEnVrpvcHOjJeqRsOcpYYLuxoBzKVtCOm3ZaKbtJcurw+e/zN6c7Pd6r4gqUo0WLEiiOueOITvwQkKCEJM9nO3F60y5HkqLhdqUyXZtK3lqwReQ+G40O92UhOt0x/KmKM+u7LTPMzoEBOCYtiUPfSjODiuFXjSDm2idzAoc4Tj9bs2eJYDOU7HQA=') format('woff2'), url('//at.alicdn.com/t/font_792691_ptvyboo0bno.woff?t=1574048839056') format('woff'), url('//at.alicdn.com/t/font_792691_ptvyboo0bno.ttf?t=1574048839056') format('truetype'), /* chrome, firefox, opera, Safari, Android, iOS 4.2+ */ url('//at.alicdn.com/t/font_792691_ptvyboo0bno.svg?t=1574048839056#iconfont') format('svg');
+  /* iOS 4.1- */
+}
+.xm-iconfont {
+  font-family: "xm-iconfont" !important;
+  font-size: 16px;
+  font-style: normal;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+.xm-icon-quanxuan:before {
+  content: "\e62c";
+}
+.xm-icon-caidan:before {
+  content: "\e610";
+}
+.xm-icon-fanxuan:before {
+  content: "\e837";
+}
+.xm-icon-pifu:before {
+  content: "\e668";
+}
+.xm-icon-qingkong:before {
+  content: "\e63e";
+}
+.xm-icon-sousuo:before {
+  content: "\e600";
+}
+.xm-icon-danx:before {
+  content: "\e62b";
+}
+.xm-icon-duox:before {
+  content: "\e613";
+}
+.xm-icon-close:before {
+  content: "\e601";
+}
+.xm-icon-expand:before {
+  content: "\e641";
+}
+.xm-icon-banxuan:before {
+  content: "\e60d";
+}
+</style><style type="text/css">@-webkit-keyframes xm-upbit {
+  from {
+    -webkit-transform: translate3d(0, 30px, 0);
+    opacity: 0.3;
+  }
+  to {
+    -webkit-transform: translate3d(0, 0, 0);
+    opacity: 1;
+  }
+}
+@keyframes xm-upbit {
+  from {
+    transform: translate3d(0, 30px, 0);
+    opacity: 0.3;
+  }
+  to {
+    transform: translate3d(0, 0, 0);
+    opacity: 1;
+  }
+}
+@-webkit-keyframes loader {
+  0% {
+    -webkit-transform: rotate(0deg);
+    transform: rotate(0deg);
+  }
+  100% {
+    -webkit-transform: rotate(360deg);
+    transform: rotate(360deg);
+  }
+}
+@keyframes loader {
+  0% {
+    -webkit-transform: rotate(0deg);
+    transform: rotate(0deg);
+  }
+  100% {
+    -webkit-transform: rotate(360deg);
+    transform: rotate(360deg);
+  }
+}
+xm-select {
+  background-color: #FFF;
+  position: relative;
+  border: 1px solid #E6E6E6;
+  border-radius: 2px;
+  display: block;
+  width: 100%;
+  cursor: pointer;
+  outline: none;
+}
+xm-select * {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+  font-size: 14px;
+  font-weight: 400;
+  text-overflow: ellipsis;
+  user-select: none;
+  -ms-user-select: none;
+  -moz-user-select: none;
+  -webkit-user-select: none;
+}
+xm-select:hover,
+xm-select:focus {
+  border-color: #C0C4CC;
+}
+xm-select > .xm-tips {
+  color: #999999;
+  padding: 0 10px;
+  position: absolute;
+  display: flex;
+  height: 100%;
+  align-items: center;
+}
+xm-select > .xm-icon {
+  display: inline-block;
+  overflow: hidden;
+  position: absolute;
+  width: 0;
+  height: 0;
+  right: 10px;
+  top: 50%;
+  margin-top: -3px;
+  cursor: pointer;
+  border: 6px dashed transparent;
+  border-top-color: #C2C2C2;
+  border-top-style: solid;
+  transition: all 0.3s;
+  -webkit-transition: all 0.3s;
+}
+xm-select > .xm-icon-expand {
+  margin-top: -9px;
+  transform: rotate(180deg);
+}
+xm-select > .xm-label.single-row {
+  position: absolute;
+  top: 0;
+  bottom: 0px;
+  left: 0px;
+  right: 30px;
+  overflow: auto hidden;
+}
+xm-select > .xm-label.single-row .scroll {
+  overflow-y: hidden;
+}
+xm-select > .xm-label.single-row .label-content {
+  flex-wrap: nowrap;
+  white-space: nowrap;
+}
+xm-select > .xm-label.auto-row .label-content {
+  flex-wrap: wrap;
+  padding-right: 30px !important;
+}
+xm-select > .xm-label.auto-row .xm-label-block > span {
+  white-space: unset;
+  height: 100%;
+}
+xm-select > .xm-label .scroll .label-content {
+  display: flex;
+  padding: 3px 10px;
+}
+xm-select > .xm-label .xm-label-block {
+  display: flex;
+  position: relative;
+  padding: 0px 5px;
+  margin: 2px 5px 2px 0;
+  border-radius: 3px;
+  align-items: baseline;
+  color: #FFF;
+}
+xm-select > .xm-label .xm-label-block > span {
+  display: flex;
+  color: #FFF;
+  white-space: nowrap;
+}
+xm-select > .xm-label .xm-label-block > i {
+  color: #FFF;
+  margin-left: 8px;
+  font-size: 12px;
+  cursor: pointer;
+  display: flex;
+}
+xm-select > .xm-label .xm-label-block.disabled {
+  background-color: #C2C2C2 !important;
+  cursor: no-drop !important;
+}
+xm-select > .xm-label .xm-label-block.disabled > i {
+  cursor: no-drop !important;
+}
+xm-select > .xm-body {
+  position: absolute;
+  left: 0;
+  top: 42px;
+  padding: 5px 0;
+  z-index: 999;
+  width: 100%;
+  min-width: fit-content;
+  border: 1px solid #E6E6E6;
+  background-color: #fff;
+  border-radius: 2px;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.12);
+  animation-name: xm-upbit;
+  animation-duration: 0.3s;
+  animation-fill-mode: both;
+}
+xm-select > .xm-body .scroll-body {
+  overflow-x: hidden;
+  overflow-y: auto;
+}
+xm-select > .xm-body .scroll-body::-webkit-scrollbar {
+  width: 8px;
+}
+xm-select > .xm-body .scroll-body::-webkit-scrollbar-track {
+  -webkit-border-radius: 2em;
+  -moz-border-radius: 2em;
+  -ms-border-radius: 2em;
+  border-radius: 2em;
+  background-color: #FFF;
+}
+xm-select > .xm-body .scroll-body::-webkit-scrollbar-thumb {
+  -webkit-border-radius: 2em;
+  -moz-border-radius: 2em;
+  -ms-border-radius: 2em;
+  border-radius: 2em;
+  background-color: #C2C2C2;
+}
+xm-select > .xm-body.up {
+  top: auto;
+  bottom: 42px;
+}
+xm-select > .xm-body.relative {
+  position: relative;
+  display: block !important;
+  top: 0;
+  box-shadow: none;
+  border: none;
+  animation-name: none;
+  animation-duration: 0;
+  min-width: 100%;
+}
+xm-select > .xm-body .xm-group {
+  cursor: default;
+}
+xm-select > .xm-body .xm-group-item {
+  display: inline-block;
+  cursor: pointer;
+  padding: 0 10px;
+  color: #999;
+  font-size: 12px;
+}
+xm-select > .xm-body .xm-option {
+  display: flex;
+  align-items: center;
+  position: relative;
+  padding: 0 10px;
+  cursor: pointer;
+}
+xm-select > .xm-body .xm-option-icon {
+  color: transparent;
+  display: flex;
+  border: 1px solid #E6E6E6;
+  border-radius: 3px;
+  justify-content: center;
+  align-items: center;
+}
+xm-select > .xm-body .xm-option-icon.xm-custom-icon {
+  color: unset;
+  border: unset;
+}
+xm-select > .xm-body .xm-option-icon-hidden {
+  margin-right: -10px;
+}
+xm-select > .xm-body .xm-option-icon.xm-icon-danx {
+  border-radius: 100%;
+}
+xm-select > .xm-body .xm-option-content {
+  display: flex;
+  position: relative;
+  padding-left: 15px;
+  overflow: hidden;
+  white-space: nowrap;
+  text-overflow: ellipsis;
+  ;
+  width: calc(100% - 20px);
+}
+xm-select > .xm-body .xm-option.hide-icon .xm-option-content {
+  padding-left: 0;
+}
+xm-select > .xm-body .xm-option.selected.hide-icon .xm-option-content {
+  color: #FFF !important;
+}
+xm-select > .xm-body .xm-option .loader {
+  width: 0.8em;
+  height: 0.8em;
+  margin-right: 6px;
+  color: #C2C2C2;
+}
+xm-select > .xm-body .xm-select-empty {
+  text-align: center;
+  color: #999;
+}
+xm-select > .xm-body .disabled {
+  cursor: no-drop;
+}
+xm-select > .xm-body .disabled:hover {
+  background-color: #FFF;
+}
+xm-select > .xm-body .disabled .xm-option-icon {
+  border-color: #C2C2C2 !important;
+}
+xm-select > .xm-body .disabled .xm-option-content {
+  color: #C2C2C2 !important;
+}
+xm-select > .xm-body .disabled.selected > .xm-option-icon {
+  color: #C2C2C2 !important;
+}
+xm-select > .xm-body .xm-search {
+  background-color: #FFF !important;
+  position: relative;
+  padding: 0 10px;
+  margin-bottom: 5px;
+  cursor: pointer;
+}
+xm-select > .xm-body .xm-search > i {
+  position: absolute;
+  color: ;
+}
+xm-select > .xm-body .xm-search-input {
+  border: none;
+  border-bottom: 1px solid #E6E6E6;
+  padding-left: 27px;
+  cursor: text;
+}
+xm-select > .xm-body .xm-paging {
+  padding: 0 10px;
+  display: flex;
+  margin-top: 5px;
+}
+xm-select > .xm-body .xm-paging > span:first-child {
+  border-radius: 2px 0 0 2px;
+}
+xm-select > .xm-body .xm-paging > span:last-child {
+  border-radius: 0 2px 2px 0;
+}
+xm-select > .xm-body .xm-paging > span {
+  display: flex;
+  flex: auto;
+  justify-content: center;
+  vertical-align: middle;
+  margin: 0 -1px 0 0;
+  background-color: #fff;
+  color: #333;
+  font-size: 12px;
+  border: 1px solid #e2e2e2;
+  flex-wrap: nowrap;
+  width: 100%;
+  overflow: hidden;
+  min-width: 50px;
+}
+xm-select > .xm-body .xm-toolbar {
+  padding: 0 10px;
+  display: flex;
+  margin: -3px 0;
+  cursor: default;
+}
+xm-select > .xm-body .xm-toolbar .toolbar-tag {
+  cursor: pointer;
+  display: flex;
+  margin-right: 20px;
+  color: ;
+  align-items: baseline;
+}
+xm-select > .xm-body .xm-toolbar .toolbar-tag:hover {
+  opacity: 0.8;
+}
+xm-select > .xm-body .xm-toolbar .toolbar-tag:active {
+  opacity: 1;
+}
+xm-select > .xm-body .xm-toolbar .toolbar-tag > i {
+  margin-right: 2px;
+  font-size: 14px;
+}
+xm-select > .xm-body .xm-toolbar .toolbar-tag:last-child {
+  margin-right: 0;
+}
+xm-select > .xm-body .xm-body-custom {
+  line-height: initial;
+  cursor: default;
+}
+xm-select > .xm-body .xm-body-custom * {
+  box-sizing: initial;
+}
+xm-select > .xm-body .xm-tree {
+  position: relative;
+}
+xm-select > .xm-body .xm-tree-icon {
+  display: inline-block;
+  margin-right: 3px;
+  cursor: pointer;
+  border: 6px dashed transparent;
+  border-left-color: #C2C2C2;
+  border-left-style: solid;
+  transition: all 0.3s;
+  -webkit-transition: all 0.3s;
+  z-index: 2;
+  visibility: hidden;
+}
+xm-select > .xm-body .xm-tree-icon.expand {
+  margin-top: 3px;
+  margin-right: 5px;
+  margin-left: -2px;
+  transform: rotate(90deg);
+}
+xm-select > .xm-body .xm-tree-icon.xm-visible {
+  visibility: visible;
+}
+xm-select > .xm-body .xm-tree .left-line {
+  position: absolute;
+  left: 13px;
+  width: 0;
+  z-index: 1;
+  border-left: 1px dotted #c0c4cc !important;
+}
+xm-select > .xm-body .xm-tree .top-line {
+  position: absolute;
+  left: 13px;
+  height: 0;
+  z-index: 1;
+  border-top: 1px dotted #c0c4cc !important;
+}
+xm-select > .xm-body .xm-tree .xm-tree-icon + .top-line {
+  margin-left: 1px;
+}
+xm-select > .xm-body .scroll-body > .xm-tree > .xm-option > .top-line,
+xm-select > .xm-body .scroll-body > .xm-option > .top-line {
+  width: 0 !important;
+}
+xm-select > .xm-body .xm-cascader-box {
+  position: absolute;
+  left: 0;
+  right: 0;
+  top: 0;
+  bottom: 0;
+  padding: 5px 0;
+  border: 1px solid #E6E6E6;
+  background-color: #fff;
+  border-radius: 2px;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.12);
+  margin: -1px;
+}
+xm-select > .xm-body .xm-cascader-box::before {
+  content: ' ';
+  position: absolute;
+  width: 0;
+  height: 0;
+  border: 6px solid transparent;
+  border-right-color: #E6E6E6;
+  top: 10px;
+  left: -12px;
+}
+xm-select > .xm-body .xm-cascader-box::after {
+  content: ' ';
+  position: absolute;
+  width: 0;
+  height: 0;
+  border: 6px solid transparent;
+  border-right-color: #fff;
+  top: 10px;
+  left: -11px;
+}
+xm-select > .xm-body .xm-cascader-scroll {
+  height: 100%;
+  overflow-x: hidden;
+  overflow-y: auto;
+}
+xm-select > .xm-body.cascader {
+  width: unset;
+  min-width: unset;
+}
+xm-select > .xm-body.cascader .xm-option-content {
+  padding-left: 8px;
+}
+xm-select > .xm-body.cascader .disabled .xm-right-arrow {
+  color: #C2C2C2 !important;
+}
+xm-select > .xm-body.cascader .hide-icon.disabled .xm-right-arrow {
+  color: #999 !important;
+}
+xm-select .xm-input {
+  cursor: pointer;
+  border-radius: 2px;
+  border-width: 1px;
+  border-style: solid;
+  border-color: #E6E6E6;
+  display: block;
+  width: 100%;
+  box-sizing: border-box;
+  background-color: #FFF;
+  line-height: 1.3;
+  padding-left: 10px;
+  outline: 0;
+  user-select: text;
+  -ms-user-select: text;
+  -moz-user-select: text;
+  -webkit-user-select: text;
+}
+xm-select .dis {
+  display: none;
+}
+xm-select .loading {
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background-color: rgba(255, 255, 255, 0.6);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+xm-select .loader {
+  border: 0.2em dotted currentcolor;
+  border-radius: 50%;
+  -webkit-animation: 1s loader linear infinite;
+  animation: 1s loader linear infinite;
+  display: inline-block;
+  width: 1em;
+  height: 1em;
+  color: inherit;
+  vertical-align: middle;
+  pointer-events: none;
+}
+xm-select .xm-select-default {
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  border: none;
+  visibility: hidden;
+}
+xm-select .xm-select-disabled {
+  position: absolute;
+  left: 0;
+  right: 0;
+  top: 0;
+  bottom: 0;
+  cursor: no-drop;
+  z-index: 2;
+  opacity: 0.3;
+  background-color: #FFF;
+}
+xm-select .item--divided {
+  border-top: 1px solid #ebeef5;
+  width: calc(100% - 20px);
+  cursor: initial;
+}
+xm-select .xm-right-arrow {
+  position: absolute;
+  color: ;
+  right: 5px;
+  top: -1px;
+  font-weight: 700;
+  transform: scale(0.6, 1);
+}
+xm-select .xm-right-arrow::after {
+  content: '>';
+}
+xm-select[size='large'] {
+  min-height: 40px;
+  line-height: 40px;
+}
+xm-select[size='large'] .xm-input {
+  height: 40px;
+}
+xm-select[size='large'] .xm-label .scroll .label-content {
+  line-height: 34px;
+}
+xm-select[size='large'] .xm-label .xm-label-block {
+  height: 30px;
+  line-height: 30px;
+}
+xm-select[size='large'] .xm-body .xm-option .xm-option-icon {
+  height: 20px;
+  width: 20px;
+  font-size: 20px;
+}
+xm-select[size='large'] .xm-paging > span {
+  height: 34px;
+  line-height: 34px;
+}
+xm-select[size='large'] .xm-tree .left-line {
+  height: 100%;
+  bottom: 20px;
+}
+xm-select[size='large'] .xm-tree .left-line-group {
+  height: calc(100% - 40px);
+}
+xm-select[size='large'] .xm-tree .xm-tree-icon.xm-hidden + .top-line {
+  top: 19px;
+}
+xm-select[size='large'] .item--divided {
+  margin: 10px;
+}
+xm-select {
+  min-height: 36px;
+  line-height: 36px;
+}
+xm-select .xm-input {
+  height: 36px;
+}
+xm-select .xm-label .scroll .label-content {
+  line-height: 30px;
+}
+xm-select .xm-label .xm-label-block {
+  height: 26px;
+  line-height: 26px;
+}
+xm-select .xm-body .xm-option .xm-option-icon {
+  height: 18px;
+  width: 18px;
+  font-size: 18px;
+}
+xm-select .xm-paging > span {
+  height: 30px;
+  line-height: 30px;
+}
+xm-select .xm-tree .left-line {
+  height: 100%;
+  bottom: 18px;
+}
+xm-select .xm-tree .left-line-group {
+  height: calc(100% - 36px);
+}
+xm-select .xm-tree .xm-tree-icon.xm-hidden + .top-line {
+  top: 17px;
+}
+xm-select .item--divided {
+  margin: 9px;
+}
+xm-select[size='small'] {
+  min-height: 32px;
+  line-height: 32px;
+}
+xm-select[size='small'] .xm-input {
+  height: 32px;
+}
+xm-select[size='small'] .xm-label .scroll .label-content {
+  line-height: 26px;
+}
+xm-select[size='small'] .xm-label .xm-label-block {
+  height: 22px;
+  line-height: 22px;
+}
+xm-select[size='small'] .xm-body .xm-option .xm-option-icon {
+  height: 16px;
+  width: 16px;
+  font-size: 16px;
+}
+xm-select[size='small'] .xm-paging > span {
+  height: 26px;
+  line-height: 26px;
+}
+xm-select[size='small'] .xm-tree .left-line {
+  height: 100%;
+  bottom: 16px;
+}
+xm-select[size='small'] .xm-tree .left-line-group {
+  height: calc(100% - 32px);
+}
+xm-select[size='small'] .xm-tree .xm-tree-icon.xm-hidden + .top-line {
+  top: 15px;
+}
+xm-select[size='small'] .item--divided {
+  margin: 8px;
+}
+xm-select[size='mini'] {
+  min-height: 28px;
+  line-height: 28px;
+}
+xm-select[size='mini'] .xm-input {
+  height: 28px;
+}
+xm-select[size='mini'] .xm-label .scroll .label-content {
+  line-height: 22px;
+}
+xm-select[size='mini'] .xm-label .xm-label-block {
+  height: 18px;
+  line-height: 18px;
+}
+xm-select[size='mini'] .xm-body .xm-option .xm-option-icon {
+  height: 14px;
+  width: 14px;
+  font-size: 14px;
+}
+xm-select[size='mini'] .xm-paging > span {
+  height: 22px;
+  line-height: 22px;
+}
+xm-select[size='mini'] .xm-tree .left-line {
+  height: 100%;
+  bottom: 14px;
+}
+xm-select[size='mini'] .xm-tree .left-line-group {
+  height: calc(100% - 28px);
+}
+xm-select[size='mini'] .xm-tree .xm-tree-icon.xm-hidden + .top-line {
+  top: 13px;
+}
+xm-select[size='mini'] .item--divided {
+  margin: 7px;
+}
+.layui-form-pane xm-select {
+  margin: -1px -1px -1px 0;
+}
+</style></head>
+<body>
+  <!-- Navigation -->
+  <nav class="top-nav" id="topNav" style="display: none;">
+    <div class="nav-inner">
+      <div class="nav-logo">
+        <svg viewBox="0 0 32 32" fill="none" xmlns="http://www.w3.org/2000/svg">
+          <circle cx="16" cy="16" r="14" stroke="currentColor" stroke-width="2"></circle>
+          <path d="M10 16C10 12.686 12.686 10 16 10V22C12.686 22 10 19.314 10 16Z" fill="currentColor"></path>
+          <circle cx="16" cy="16" r="3" fill="currentColor"></circle>
+        </svg>
+        <span>Master Fit</span>
+      </div>
+      
+      <div class="nav-links" id="navLinks"><div class="nav-item  has-error" data-page="client-basics">客户信息</div><div class="nav-item  has-error" data-page="basic-info">基本信息</div><div class="nav-item  has-error" data-page="contraindications">健康声明</div><div class="nav-item  " data-page="pain-assessment">疼痛图</div><div class="nav-item  " data-page="postural">体态</div><div class="nav-item  " data-page="review">确认</div><div class="nav-item inbox-nav-item" data-page="inbox">消息</div></div>
+      
+      <div class="nav-controls">
+        <button class="nav-btn" id="langToggle" title="Toggle Language">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+            <circle cx="12" cy="12" r="10"></circle>
+            <path d="M2 12h20M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10z"></path>
+          </svg>
+        </button>
+        <button class="nav-btn" id="darkModeToggle" title="Toggle Dark Mode">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+            <path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"></path>
+          </svg>
+        </button>
+        <button class="nav-btn" id="assistedToggle" title="Assisted Mode">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+            <circle cx="12" cy="12" r="3"></circle>
+            <path d="M12 1v4M12 19v4M4.22 4.22l2.83 2.83M16.95 16.95l2.83 2.83M1 12h4M19 12h4M4.22 19.78l2.83-2.83M16.95 7.05l2.83-2.83"></path>
+          </svg>
+        </button>
+        <button class="nav-btn" id="staffLoginBtn" title="Staff Login" style="display: none;">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+            <path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"></path>
+            <circle cx="12" cy="7" r="4"></circle>
+          </svg>
+        </button>
+        <button class="nav-btn" id="resetFormBtn" title="Reset Form" style="display: none; color: var(--error);">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+            <path d="M3 6h18M19 6v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6M8 6V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2"></path>
+          </svg>
+        </button>
+        <button class="nav-btn mobile-menu-btn" id="mobileMenuBtn">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+            <path d="M3 12h18M3 6h18M3 18h18"></path>
+          </svg>
+        </button>
+      </div>
+    </div>
+  </nav>
+  
+  <!-- Mobile menu backdrop overlay -->
+  <div class="nav-backdrop" id="navBackdrop"></div>
+
+  <!-- Main Content -->
+  <main class="main-content" id="mainContent">
+    <!-- Branch Selection -->
+    <div class="page active" id="page-branch">
+      <div class="form-card">
+        <h1 class="card-title" data-i18n="pages.branch.title">选择门店</h1>
+        <p class="card-subtitle" data-i18n="pages.branch.subtitle">请选择您前往的拉伸大师门店</p>
+        
+        <div class="branch-grid">
+          <div class="branch-card" data-branch="shenzhen">
+            <div class="branch-card-icon">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5">
+                <path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"></path>
+                <circle cx="12" cy="10" r="3"></circle>
+              </svg>
+            </div>
+            <h2 class="branch-card-title">深圳</h2>
+            <p class="branch-card-subtitle">Shenzhen</p>
+          </div>
+          
+          <div class="branch-card" data-branch="shanghai">
+            <div class="branch-card-icon">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5">
+                <path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"></path>
+                <circle cx="12" cy="10" r="3"></circle>
+              </svg>
+            </div>
+            <h2 class="branch-card-title">上海</h2>
+            <p class="branch-card-subtitle">Shanghai</p>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Page 1: Client Basics -->
+    <div class="page" id="page-client-basics">
+      <div class="form-card">
+        <h1 class="card-title" data-i18n="pages.clientBasics.title">客户基本信息</h1>
+        <p class="card-subtitle" data-i18n="pages.clientBasics.subtitle">请提供您的基本信息</p>
+        
+        <div class="field-group">
+          <label class="field-label">
+            <span data-i18n="fields.name">姓名</span>
+            <span class="required">*</span>
+          </label>
+          <input type="text" class="input" id="clientName" data-field="clientBasics.name" data-i18n-placeholder="fields.namePlaceholder" placeholder="请输入您的全名">
+        </div>
+        
+        <div class="field-group">
+          <label class="field-label">
+            <span data-i18n="fields.gender">性别</span>
+            <span class="required">*</span>
+          </label>
+          <div class="radio-group" data-field="clientBasics.gender">
+            <label class="radio-item">
+              <input type="radio" class="radio-input" name="gender" value="male">
+              <span class="radio-custom"></span>
+              <span class="radio-label" data-i18n="fields.male">男</span>
+            </label>
+            <label class="radio-item">
+              <input type="radio" class="radio-input" name="gender" value="female">
+              <span class="radio-custom"></span>
+              <span class="radio-label" data-i18n="fields.female">女</span>
+            </label>
+          </div>
+        </div>
+        
+        <div class="input-row">
+          <div class="field-group">
+            <label class="field-label">
+              <span data-i18n="fields.age">年龄</span>
+              <span class="required">*</span>
+            </label>
+            <input type="number" class="input" id="clientAge" data-field="clientBasics.age" min="1" max="120" data-i18n-placeholder="fields.agePlaceholder" placeholder="年龄">
+          </div>
+          
+          <div class="field-group">
+            <label class="field-label">
+              <span data-i18n="fields.phone">电话号码</span>
+              <span class="required">*</span>
+            </label>
+            <input type="tel" class="input" id="clientPhone" data-field="clientBasics.phone" data-i18n-placeholder="fields.phonePlaceholder" placeholder="电话号码">
+          </div>
+        </div>
+        
+        <div class="field-group">
+          <label class="field-label">
+            <span data-i18n="fields.clientType">客户类型</span>
+            <span class="required">*</span>
+          </label>
+          <div class="radio-group" data-field="clientBasics.clientType">
+            <label class="radio-item">
+              <input type="radio" class="radio-input" name="clientType" value="first-time">
+              <span class="radio-custom"></span>
+              <span class="radio-label" data-i18n="fields.firstTime">首次</span>
+            </label>
+            <label class="radio-item">
+              <input type="radio" class="radio-input" name="clientType" value="member">
+              <span class="radio-custom"></span>
+              <span class="radio-label" data-i18n="fields.member">会员</span>
+            </label>
+            <label class="radio-item">
+              <input type="radio" class="radio-input" name="clientType" value="referral">
+              <span class="radio-custom"></span>
+              <span class="radio-label" data-i18n="fields.referral">推荐</span>
+            </label>
+          </div>
+        </div>
+        
+        <div class="page-nav">
+          <div></div>
+          <button class="btn btn-primary" id="nextClientBasics" data-i18n="buttons.next">下一步</button>
+        </div>
+      </div>
+    </div>
+
+    <!-- Page 2: Basic Information -->
+    <div class="page" id="page-basic-info">
+      <div class="form-card">
+        <h1 class="card-title" data-i18n="pages.basicInfo.title">基本信息</h1>
+        <p class="card-subtitle" data-i18n="pages.basicInfo.subtitle">帮助我们了解您的生活习惯和健康历史</p>
+        
+        <div class="field-group">
+          <label class="field-label">
+            <span data-i18n="fields.workType">工作类型</span>
+            <span class="required">*</span>
+          </label>
+          <select class="input select" id="workType" data-field="basicInfo.workType">
+            <option value="" data-i18n="fields.selectOption">请选择...</option>
+            <option value="sedentary" data-i18n="fields.sedentary">久坐办公</option>
+            <option value="standing" data-i18n="fields.standing">长时间站立</option>
+            <option value="physical" data-i18n="fields.physical">高强度体力劳动</option>
+            <option value="other" data-i18n="fields.other">其他</option>
+          </select>
+        </div>
+        
+        <div class="field-group">
+          <label class="field-label">
+            <span data-i18n="fields.exerciseFreq">运动频率</span>
+            <span class="required">*</span>
+          </label>
+          <select class="input select" id="exerciseFreq" data-field="basicInfo.exerciseFreq">
+            <option value="" data-i18n="fields.selectOption">请选择...</option>
+            <option value="never" data-i18n="fields.never">几乎不</option>
+            <option value="monthly" data-i18n="fields.monthly">每月1次</option>
+            <option value="weekly" data-i18n="fields.weekly">每周1次</option>
+            <option value="2-3weekly" data-i18n="fields.2-3weekly">每周2-3次</option>
+            <option value="5+" data-i18n="fields.5plus">每周5次以上</option>
+          </select>
+        </div>
+        
+        <div class="field-group">
+          <label class="field-label">
+            <span data-i18n="fields.exerciseTypes">运动类型</span>
+            <span class="required">*</span>
+          </label>
+          <p class="field-hint secondary-text" data-i18n="fields.exerciseTypesHint">选择所有适用的</p>
+          <div class="tag-select" data-field="basicInfo.exerciseTypes">
+            <span class="tag-option" data-value="running" data-i18n="fields.running">跑步</span>
+            <span class="tag-option" data-value="fitness" data-i18n="fields.fitness">健身力量训练</span>
+            <span class="tag-option" data-value="cycling" data-i18n="fields.cycling">骑行</span>
+            <span class="tag-option" data-value="swimming" data-i18n="fields.swimming">游泳</span>
+            <span class="tag-option" data-value="ball" data-i18n="fields.ball">球类运动</span>
+            <span class="tag-option" data-value="yoga" data-i18n="fields.yoga">瑜伽</span>
+            <span class="tag-option" data-value="pilates" data-i18n="fields.pilates">普拉提</span>
+            <span class="tag-option" data-value="combat" data-i18n="fields.combat">格斗运动</span>
+            <span class="tag-option" data-value="other" data-i18n="fields.other">其他</span>
+          </div>
+        </div>
+        
+        <div class="field-group">
+          <label class="field-label">
+            <span data-i18n="fields.injuryHistory">受伤历史</span>
+            <span class="required">*</span>
+          </label>
+          <p class="field-hint secondary-text" data-i18n="fields.injuryHint">选择所有适用的</p>
+          <div class="tag-select" data-field="basicInfo.injuryHistory">
+            <span class="tag-option" data-value="muscle" data-i18n="fields.muscle">肌肉拉伤</span>
+            <span class="tag-option" data-value="tendon" data-i18n="fields.tendon">肌腱拉伤</span>
+            <span class="tag-option" data-value="meniscus" data-i18n="fields.meniscus">半月板损伤</span>
+            <span class="tag-option" data-value="ligament" data-i18n="fields.ligament">韧带损伤</span>
+            <span class="tag-option" data-value="rotator" data-i18n="fields.rotator">肩袖损伤</span>
+            <span class="tag-option" data-value="disc" data-i18n="fields.disc">腰椎间盘突出</span>
+            <span class="tag-option" data-value="fracture" data-i18n="fields.fracture">骨折</span>
+            <span class="tag-option" data-value="none" data-i18n="fields.none">无</span>
+            <span class="tag-option" data-value="other" data-i18n="fields.other">其他</span>
+          </div>
+        </div>
+        
+        <div class="field-group">
+          <label class="field-label">
+            <span data-i18n="fields.priorSurgery">既往手术</span>
+            <span class="required">*</span>
+          </label>
+          <div class="radio-group" data-field="basicInfo.priorSurgery">
+            <label class="radio-item">
+              <input type="radio" class="radio-input" name="priorSurgery" value="no">
+              <span class="radio-custom"></span>
+              <span class="radio-label" data-i18n="fields.no">无</span>
+            </label>
+            <label class="radio-item">
+              <input type="radio" class="radio-input" name="priorSurgery" value="partial">
+              <span class="radio-custom"></span>
+              <span class="radio-label" data-i18n="fields.partial">部分</span>
+            </label>
+            <label class="radio-item">
+              <input type="radio" class="radio-input" name="priorSurgery" value="yes">
+              <span class="radio-custom"></span>
+              <span class="radio-label" data-i18n="fields.yes">有</span>
+            </label>
+          </div>
+        </div>
+        
+        <div class="field-group">
+          <label class="field-label">
+            <span data-i18n="fields.previousTreatments">尝试过的治疗</span>
+          </label>
+          <p class="field-hint secondary-text" data-i18n="fields.treatmentsHint">选择所有适用的</p>
+          <div class="tag-select" data-field="basicInfo.previousTreatments">
+            <span class="tag-option" data-value="massage" data-i18n="fields.massage">按摩</span>
+            <span class="tag-option" data-value="acupuncture" data-i18n="fields.acupuncture">针灸</span>
+            <span class="tag-option" data-value="fascia" data-i18n="fields.fascia">筋膜刮痧</span>
+            <span class="tag-option" data-value="stretching" data-i18n="fields.stretching">被动拉伸</span>
+            <span class="tag-option" data-value="rehab" data-i18n="fields.rehab">运动康复</span>
+            <span class="tag-option" data-value="physio" data-i18n="fields.physio">仪器理疗</span>
+            <span class="tag-option" data-value="other" data-i18n="fields.other">其他</span>
+          </div>
+        </div>
+        
+        <div class="field-group">
+          <label class="field-label">
+            <span data-i18n="fields.doctorNotes">医生笔记/建议</span>
+          </label>
+          <textarea class="input" id="doctorNotes" data-field="basicInfo.doctorNotes" rows="3" data-i18n-placeholder="fields.doctorNotesPlaceholder" placeholder="输入医生的任何笔记或建议"></textarea>
+        </div>
+        
+        <div class="page-nav">
+          <button class="btn btn-ghost" id="backBasicInfo" data-i18n="buttons.back">返回</button>
+          <button class="btn btn-primary" id="nextBasicInfo" data-i18n="buttons.next">下一步</button>
+        </div>
+      </div>
+    </div>
+
+    <!-- Page 3: Contraindication Screening -->
+    <div class="page" id="page-contraindications">
+      <div class="form-card">
+        <h1 class="card-title" data-i18n="pages.contraindications.title">健康声明</h1>
+        <p class="card-subtitle" data-i18n="pages.contraindications.subtitle">请勾选适用于您的情况</p>
+        
+        <div class="field-group">
+          <label class="field-label">
+            <span data-i18n="fields.contraindications">禁忌症</span>
+          </label>
+          <p class="field-hint secondary-text" data-i18n="fields.contraindicationsHint">选择所有适用的</p>
+          <div class="tag-select" data-field="contraindications.conditions">
+            <span class="tag-option" data-value="pregnancy" data-i18n="fields.pregnancy">怀孕</span>
+            <span class="tag-option" data-value="highBP" data-i18n="fields.highBP">高血压</span>
+            <span class="tag-option" data-value="heart" data-i18n="fields.heart">心脏病</span>
+            <span class="tag-option" data-value="diabetes" data-i18n="fields.diabetes">糖尿病</span>
+            <span class="tag-option" data-value="osteoporosis" data-i18n="fields.osteoporosis">骨质疏松</span>
+            <span class="tag-option" data-value="fractureDislocation" data-i18n="fields.fractureDislocation">骨折或脱位</span>
+            <span class="tag-option" data-value="wound" data-i18n="fields.wound">开放性伤口</span>
+            <span class="tag-option" data-value="acuteInjury" data-i18n="fields.acuteInjury">48小时内急性损伤</span>
+            <span class="tag-option" data-value="thrombosis" data-i18n="fields.thrombosis">静脉血栓</span>
+            <span class="tag-option" data-value="skinDisease" data-i18n="fields.skinDisease">皮肤病</span>
+            <span class="tag-option" data-value="bruising" data-i18n="fields.bruising">易瘀青</span>
+            <span class="tag-option" data-value="osteochondritis" data-i18n="fields.osteochondritis">骨软骨炎</span>
+            <span class="tag-option" data-value="autoimmune" data-i18n="fields.autoimmune">自身免疫性疾病</span>
+            <span class="tag-option" data-value="implant" data-i18n="fields.implant">体内有金属板/植入物</span>
+            <span class="tag-option" data-value="neuropathic" data-i18n="fields.neuropathic">神经性疼痛</span>
+            <span class="tag-option" data-value="tumor" data-i18n="fields.tumor">恶性肿瘤</span>
+            <span class="tag-option" data-value="other" data-i18n="fields.other">其他</span>
+          </div>
+        </div>
+        
+        <div class="field-group">
+          <div class="signature-area">
+            <label class="checkbox-item" style="justify-content: flex-start; margin-bottom: 16px;">
+              <input type="checkbox" class="checkbox-input" id="clientStatementAgree">
+              <span class="checkbox-custom"></span>
+              <span class="checkbox-label" style="text-align: left; font-size: 13px;" data-i18n="fields.statementAgree">客户声明：对于上述未勾选的项目，我确认没有相关症状。我理解治疗后1-7天内可能出现正常的肌肉酸痛或局部淤青。如果3-5天内没有改善，我将及时联系门店。</span>
+            </label>
+            
+            <input type="text" class="signature-input" id="clientSignature" data-field="contraindications.signature" data-i18n-placeholder="fields.signaturePlaceholder" placeholder="输入您的名字作为签名">
+            
+            <div class="signature-date" id="signatureDate">2026/7/22</div>
+          </div>
+        </div>
+        
+        <div class="page-nav">
+          <button class="btn btn-ghost" id="backContraindications" data-i18n="buttons.back">返回</button>
+          <button class="btn btn-primary" id="nextContraindications" data-i18n="buttons.next">下一步</button>
+        </div>
+      </div>
+    </div>
+
+    <!-- Page 4: Pain Assessment -->
+    <div class="page" id="page-pain-assessment">
+      <div class="form-card">
+        <h1 class="card-title" data-i18n="pages.painAssessment.title">疼痛评估</h1>
+        <p class="card-subtitle" data-i18n="pages.painAssessment.subtitle">点击身体图示标注疼痛或不适的部位</p>
+        
+        <div class="body-diagram-container">
+          <!-- Front View -->
+          <div class="body-diagram">
+            <svg viewBox="0 0 200 450" id="bodyFront">
+              <!-- Head -->
+              <ellipse class="body-zone" data-zone="head" cx="100" cy="30" rx="25" ry="28"></ellipse>
+              <!-- Neck -->
+              <rect class="body-zone" data-zone="neck" x="88" y="55" width="24" height="20" rx="4"></rect>
+              <!-- Left Shoulder -->
+              <ellipse class="body-zone" data-zone="leftShoulder" cx="60" cy="90" rx="18" ry="12"></ellipse>
+              <!-- Right Shoulder -->
+              <ellipse class="body-zone" data-zone="rightShoulder" cx="140" cy="90" rx="18" ry="12"></ellipse>
+              <!-- Chest -->
+              <path class="body-zone" data-zone="chest" d="M70 75 L130 75 L135 130 L65 130 Z"></path>
+              <!-- Left Upper Arm -->
+              <rect class="body-zone" data-zone="leftUpperArm" x="35" y="95" width="20" height="50" rx="8"></rect>
+              <!-- Right Upper Arm -->
+              <rect class="body-zone" data-zone="rightUpperArm" x="145" y="95" width="20" height="50" rx="8"></rect>
+              <!-- Left Elbow -->
+              <ellipse class="body-zone" data-zone="leftElbow" cx="45" cy="150" rx="10" ry="10"></ellipse>
+              <!-- Right Elbow -->
+              <ellipse class="body-zone" data-zone="rightElbow" cx="155" cy="150" rx="10" ry="10"></ellipse>
+              <!-- Left Forearm -->
+              <rect class="body-zone" data-zone="leftForearm" x="32" y="158" width="18" height="50" rx="7"></rect>
+              <!-- Right Forearm -->
+              <rect class="body-zone" data-zone="rightForearm" x="150" y="158" width="18" height="50" rx="7"></rect>
+              <!-- Left Wrist -->
+              <ellipse class="body-zone" data-zone="leftWrist" cx="41" cy="215" rx="8" ry="8"></ellipse>
+              <!-- Right Wrist -->
+              <ellipse class="body-zone" data-zone="rightWrist" cx="159" cy="215" rx="8" ry="8"></ellipse>
+              <!-- Left Hand -->
+              <ellipse class="body-zone" data-zone="leftHand" cx="41" cy="235" rx="12" ry="15"></ellipse>
+              <!-- Right Hand -->
+              <ellipse class="body-zone" data-zone="rightHand" cx="159" cy="235" rx="12" ry="15"></ellipse>
+              <!-- Abdomen/Upper Back -->
+              <path class="body-zone" data-zone="upperBack" d="M68 130 L132 130 L130 180 L70 180 Z"></path>
+              <!-- Lower Back -->
+              <path class="body-zone" data-zone="lowerBack" d="M72 180 L128 180 L125 220 L75 220 Z"></path>
+              <!-- Left Hip -->
+              <ellipse class="body-zone" data-zone="leftHip" cx="80" cy="240" rx="20" ry="15"></ellipse>
+              <!-- Right Hip -->
+              <ellipse class="body-zone" data-zone="rightHip" cx="120" cy="240" rx="20" ry="15"></ellipse>
+              <!-- Glutes -->
+              <ellipse class="body-zone" data-zone="glutes" cx="100" cy="260" rx="35" ry="15"></ellipse>
+              <!-- Left Thigh -->
+              <rect class="body-zone" data-zone="leftThigh" x="65" y="275" width="25" height="70" rx="10"></rect>
+              <!-- Right Thigh -->
+              <rect class="body-zone" data-zone="rightThigh" x="110" y="275" width="25" height="70" rx="10"></rect>
+              <!-- Left Knee -->
+              <ellipse class="body-zone" data-zone="leftKnee" cx="77" cy="350" rx="14" ry="14"></ellipse>
+              <!-- Right Knee -->
+              <ellipse class="body-zone" data-zone="rightKnee" cx="123" cy="350" rx="14" ry="14"></ellipse>
+              <!-- Left Calf -->
+              <rect class="body-zone" data-zone="leftCalf" x="63" y="362" width="22" height="55" rx="9"></rect>
+              <!-- Right Calf -->
+              <rect class="body-zone" data-zone="rightCalf" x="115" y="362" width="22" height="55" rx="9"></rect>
+              <!-- Left Ankle -->
+              <ellipse class="body-zone" data-zone="leftAnkle" cx="74" cy="420" rx="10" ry="10"></ellipse>
+              <!-- Right Ankle -->
+              <ellipse class="body-zone" data-zone="rightAnkle" cx="126" cy="420" rx="10" ry="10"></ellipse>
+              <!-- Left Foot -->
+              <ellipse class="body-zone" data-zone="leftFoot" cx="70" cy="440" rx="15" ry="10"></ellipse>
+              <!-- Right Foot -->
+              <ellipse class="body-zone" data-zone="rightFoot" cx="130" cy="440" rx="15" ry="10"></ellipse>
+            </svg>
+          </div>
+        </div>
+        
+        <div class="pain-points-list" id="painPointsList"></div>
+        
+        <div class="page-nav">
+          <button class="btn btn-ghost" id="backPainAssessment" data-i18n="buttons.back">返回</button>
+          <button class="btn btn-primary" id="nextPainAssessment" data-i18n="buttons.next">下一步</button>
+        </div>
+      </div>
+    </div>
+
+    <!-- Page 5: Postural Observations -->
+    <div class="page" id="page-postural">
+      <div class="form-card">
+        <h1 class="card-title" data-i18n="pages.postural.title">体态观察</h1>
+        <p class="card-subtitle" data-i18n="pages.postural.subtitle">请选择您注意到的任何体态或身体问题</p>
+        
+        <div class="field-group">
+          <label class="field-label">
+            <span data-i18n="fields.postural">体态观察</span>
+          </label>
+          <p class="field-hint secondary-text" data-i18n="fields.posturalHint">选择所有适用的</p>
+          <div class="tag-select" data-field="postural.observations">
+            <span class="tag-option" data-value="forwardHead" data-i18n="fields.forwardHead">头部前倾</span>
+            <span class="tag-option" data-value="roundedShoulders" data-i18n="fields.roundedShoulders">圆肩</span>
+            <span class="tag-option" data-value="forwardHumerus" data-i18n="fields.forwardHumerus">肱骨前移</span>
+            <span class="tag-option" data-value="posteriorPelvic" data-i18n="fields.posteriorPelvic">骨盆后倾</span>
+            <span class="tag-option" data-value="xoLegs" data-i18n="fields.xoLegs">XO型腿</span>
+            <span class="tag-option" data-value="dowagers" data-i18n="fields.dowagers">颈椎富贵包</span>
+            <span class="tag-option" data-value="hunchedBack" data-i18n="fields.hunchedBack">驼背</span>
+            <span class="tag-option" data-value="scoliosis" data-i18n="fields.scoliosis">脊柱侧弯</span>
+            <span class="tag-option" data-value="xLegs" data-i18n="fields.xLegs">X型腿</span>
+            <span class="tag-option" data-value="kneeHyper" data-i18n="fields.kneeHyper">膝过伸</span>
+            <span class="tag-option" data-value="highLowShoulders" data-i18n="fields.highLowShoulders">高低肩</span>
+            <span class="tag-option" data-value="wingedScapula" data-i18n="fields.wingedScapula">翼状肩胛</span>
+            <span class="tag-option" data-value="anteriorPelvic" data-i18n="fields.anteriorPelvic">骨盆前倾</span>
+            <span class="tag-option" data-value="oLegs" data-i18n="fields.oLegs">O型腿</span>
+            <span class="tag-option" data-value="flatFeet" data-i18n="fields.flatFeet">扁平足</span>
+            <span class="tag-option" data-value="other" data-i18n="fields.other">其他</span>
+          </div>
+        </div>
+        
+        <div class="page-nav">
+          <button class="btn btn-ghost" id="backPostural" data-i18n="buttons.back">返回</button>
+          <button class="btn btn-primary" id="nextPostural" data-i18n="buttons.next">下一步</button>
+        </div>
+      </div>
+    </div>
+
+    <!-- Page 6: Review & Submit -->
+    <div class="page" id="page-review">
+      <div class="form-card">
+        <h1 class="card-title" data-i18n="pages.review.title">确认您的信息</h1>
+        <p class="card-subtitle" data-i18n="pages.review.subtitle">请在提交前核实所有信息</p>
+        
+        <div class="review-section">
+          <div class="review-header">
+            <span class="review-title" data-i18n="pages.clientBasics.title">客户基本信息</span>
+            <button class="review-edit-btn" data-goto="client-basics" data-i18n="buttons.edit">编辑</button>
+          </div>
+          <div class="review-content" id="reviewClientBasics"></div>
+        </div>
+        
+        <div class="review-section">
+          <div class="review-header">
+            <span class="review-title" data-i18n="pages.basicInfo.title">基本信息</span>
+            <button class="review-edit-btn" data-goto="basic-info" data-i18n="buttons.edit">编辑</button>
+          </div>
+          <div class="review-content" id="reviewBasicInfo"></div>
+        </div>
+        
+        <div class="review-section">
+          <div class="review-header">
+            <span class="review-title" data-i18n="pages.contraindications.title">健康声明</span>
+            <button class="review-edit-btn" data-goto="contraindications" data-i18n="buttons.edit">编辑</button>
+          </div>
+          <div class="review-content" id="reviewContraindications"></div>
+        </div>
+        
+        <div class="review-section">
+          <div class="review-header">
+            <span class="review-title" data-i18n="pages.painAssessment.title">疼痛评估</span>
+            <button class="review-edit-btn" data-goto="pain-assessment" data-i18n="buttons.edit">编辑</button>
+          </div>
+          <div class="review-content" id="reviewPainAssessment"></div>
+        </div>
+        
+        <div class="review-section">
+          <div class="review-header">
+            <span class="review-title" data-i18n="pages.postural.title">体态观察</span>
+            <button class="review-edit-btn" data-goto="postural" data-i18n="buttons.edit">编辑</button>
+          </div>
+          <div class="review-content" id="reviewPostural"></div>
+        </div>
+        
+        <div class="page-nav">
+          <button class="btn btn-ghost" id="backReview" data-i18n="buttons.back">返回</button>
+          <button class="btn btn-primary" id="submitForm" disabled="" data-i18n="buttons.submit">提交</button>
+        </div>
+      </div>
+    </div>
+
+    <!-- Success Screen -->
+    <div class="page" id="page-success">
+      <div class="form-card">
+        <div class="success-screen">
+          <div class="success-icon">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+              <polyline points="20 6 9 17 4 12"></polyline>
+            </svg>
+          </div>
+          <h2 class="success-title" data-i18n="pages.success.title">提交完成！</h2>
+          <p class="success-message" data-i18n="pages.success.message">感谢您填写信息表。我们的工作人员将审核您的信息并尽快与您联系。</p>
+          <button class="btn btn-primary" id="viewInboxBtn" data-i18n="buttons.viewInbox">查看我的消息</button>
+        </div>
+      </div>
+    </div>
+
+    <!-- Client Inbox -->
+    <div class="page" id="page-inbox">
+      <div class="form-card">
+        <div class="inbox-header">
+          <h1 class="card-title" data-i18n="pages.inbox.title">我的消息</h1>
+          <button class="btn btn-ghost btn-sm inbox-back-btn" id="inboxBackBtn" data-i18n="buttons.back">返回</button>
+        </div>
+        
+        <div class="appointment-card" id="nextAppointment" style="display: none;">
+          <div class="appointment-title" data-i18n="fields.nextAppointment">下次预约</div>
+          <div class="appointment-datetime" id="appointmentDateTime"></div>
+        </div>
+        
+        <div class="pain-chart-container">
+          <h3 class="pain-chart-title" data-i18n="fields.painTrend">疼痛趋势</h3>
+          <div class="pain-chart" id="painChart"></div>
+        </div>
+        
+        <div class="inbox-tabs">
+          <button class="inbox-tab active" data-tab="messages" data-i18n="fields.messages">消息</button>
+        </div>
+        
+        <div class="message-list" id="messageList"></div>
+      </div>
+    </div>
+
+    <!-- Staff Login -->
+    <div class="page" id="page-staff-login">
+      <div class="form-card login-card">
+        <h1 class="card-title" data-i18n="pages.staffLogin.title">员工登录</h1>
+        <p class="card-subtitle" data-i18n="pages.staffLogin.subtitle">输入密码以访问员工面板</p>
+        
+        <div class="login-error" id="loginError" data-i18n="pages.staffLogin.error">密码错误，请重试。</div>
+        
+        <div class="login-form">
+          <div class="field-group">
+            <label class="field-label">
+              <span data-i18n="fields.password">密码</span>
+            </label>
+            <input type="password" class="input" id="staffPassword" data-i18n-placeholder="fields.passwordPlaceholder" placeholder="输入密码">
+          </div>
+          <button class="btn btn-primary" style="width: 100%;" id="staffLoginSubmit" data-i18n="buttons.login">登录</button>
+          <button class="btn btn-ghost" style="width: 100%; margin-top: 12px;" id="staffLoginBack" data-i18n="buttons.cancel">取消</button>
+        </div>
+      </div>
+    </div>
+
+    <!-- Staff Panel -->
+    <div class="page" id="page-staff-panel">
+      <div class="form-card">
+        <div class="staff-header">
+          <h1 class="staff-title" data-i18n="pages.staffPanel.title">员工面板</h1>
+          <button class="btn btn-ghost btn-sm" id="logoutBtn" data-i18n="buttons.logout">退出</button>
+        </div>
+        
+        <div class="staff-search">
+          <input type="text" class="input" id="clientSearch" data-i18n-placeholder="fields.searchPlaceholder" placeholder="按姓名或电话搜索...">
+          <button class="btn btn-primary btn-sm" id="searchBtn" data-i18n="buttons.search">搜索</button>
+        </div>
+        
+        <div class="client-list" id="staffClientList"></div>
+        
+        <div id="clientDetail" style="display: none;"></div>
+        
+        <div class="export-buttons" id="exportButtons" style="display: none;">
+          <button class="btn btn-secondary btn-sm" id="exportPdf" data-i18n="buttons.exportPdf">导出PDF</button>
+          <button class="btn btn-secondary btn-sm" id="exportExcel" data-i18n="buttons.exportExcel">导出Excel</button>
+        </div>
+        
+        <div class="qr-section" id="qrSection">
+          <h3 class="pain-chart-title" data-i18n="fields.checkinQR">前台签到二维码</h3>
+          <p class="secondary-text" data-i18n="fields.qrHint">打印此二维码并放置在前台供客户扫描</p>
+          <div class="qr-code" id="qrCode"></div>
+          <button class="btn btn-secondary btn-sm" id="printQR" data-i18n="buttons.printQR">打印二维码</button>
+        </div>
+        
+        <!-- AI Assistant -->
+        <div class="ai-panel" id="aiPanel" style="display: none;">
+          <div class="ai-header">
+            <div class="ai-icon">
+              <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                <path d="M12 2a10 10 0 0 1 10 10c0 5.52-4.48 10-10 10S2 17.52 2 12 6.48 2 12 2z"></path>
+                <path d="M12 8v4M12 16h.01"></path>
+              </svg>
+            </div>
+            <div>
+              <div class="ai-title" data-i18n="pages.ai.title">AI治疗助手</div>
+              <div class="ai-subtitle" data-i18n="pages.ai.subtitle">仅限员工使用 - 帮助起草评估和建议</div>
+            </div>
+          </div>
+          <div class="ai-suggestions" id="aiSuggestions">
+            <div class="ai-suggestion" data-i18n="pages.ai.ready">选择客户以查看AI驱动的评估建议。</div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </main>
+
+  <!-- Pain Point Modal -->
+  <div class="modal-overlay" id="painModal">
+    <div class="modal">
+      <div class="modal-header">
+        <h3 class="modal-title" id="painModalTitle">Add Pain Point</h3>
+        <button class="modal-close" id="painModalClose">
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+            <path d="M18 6L6 18M6 6l12 12"></path>
+          </svg>
+        </button>
+      </div>
+      
+      <div class="field-group">
+        <label class="field-label">
+          <span data-i18n="fields.severity">严重程度</span>
+          <span class="required">*</span>
+        </label>
+        <div class="slider-container">
+          <div class="slider-value" id="severityValue">5</div>
+          <input type="range" class="slider" id="severitySlider" min="0" max="10" value="5">
+          <div class="slider-labels">
+            <span data-i18n="fields.noPain">无痛</span>
+            <span data-i18n="fields.worstPain">最痛</span>
+          </div>
+        </div>
+      </div>
+      
+      <div class="field-group">
+        <label class="field-label">
+          <span data-i18n="fields.painType">疼痛类型</span>
+        </label>
+        <div class="tag-select" id="painTypeSelect">
+          <span class="tag-option" data-value="sharp" data-i18n="fields.sharp">刺痛/麻木</span>
+          <span class="tag-option" data-value="soreness" data-i18n="fields.soreness">酸痛/钝痛</span>
+          <span class="tag-option" data-value="rest" data-i18n="fields.restPain">静息痛</span>
+        </div>
+      </div>
+      
+      <div class="field-group">
+        <label class="field-label">
+          <span data-i18n="fields.duration">持续时间</span>
+        </label>
+        <input type="text" class="input" id="painDuration" data-i18n-placeholder="fields.durationPlaceholder" placeholder="如：2周、3个月">
+      </div>
+      
+      <div class="field-group">
+        <label class="field-label">
+          <span data-i18n="fields.trigger">诱发动作</span>
+        </label>
+        <input type="text" class="input" id="painTrigger" data-i18n-placeholder="fields.triggerPlaceholder" placeholder="如：提重物、弯腰">
+      </div>
+      
+      <button class="btn btn-primary" style="width: 100%;" id="savePainPoint" data-i18n="buttons.save">保存</button>
+    </div>
+  </div>
+
+  <!-- Assessment Modal -->
+  <div class="modal-overlay" id="assessmentModal">
+    <div class="modal" style="max-width: 600px;">
+      <div class="modal-header">
+        <h3 class="modal-title" id="assessmentModalTitle">Client Assessment</h3>
+        <button class="modal-close" id="assessmentModalClose">
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+            <path d="M18 6L6 18M6 6l12 12"></path>
+          </svg>
+        </button>
+      </div>
+      
+      <div id="assessmentContent"></div>
+    </div>
+  </div>
+
+  <!-- Reset Confirmation Modal -->
+  <div class="modal-overlay" id="resetModal">
+    <div class="modal" style="max-width: 420px; text-align: center;">
+      <div class="modal-header">
+        <h3 class="modal-title" style="color: var(--primary);">⚠️ Reset Form</h3>
+        <button class="modal-close" id="resetModalClose">
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+            <path d="M18 6L6 18M6 6l12 12"></path>
+          </svg>
+        </button>
+      </div>
+      <div style="padding: 8px 0 24px; text-align: left;">
+        <p style="margin-bottom: 16px; line-height: 1.6; color: var(--text-primary);">
+          <strong>English:</strong> Are you sure you want to reset the form? All entered information will be cleared and cannot be recovered.
+        </p>
+        <p style="margin-bottom: 16px; line-height: 1.6; color: var(--text-primary);">
+          <strong>中文：</strong>您确定要重置表单吗？所有已填写的信息将被清除且无法恢复。
+        </p>
+        <div style="display: flex; gap: 12px; margin-top: 24px;">
+          <button class="btn btn-primary" id="resetConfirmBtn" style="flex: 1;">Confirm 确认</button>
+          <button class="btn btn-ghost" id="resetCancelBtn" style="flex: 1;">Cancel 取消</button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Toast -->
+  <div class="toast" id="toast"></div>
+
+  <script>
+    // ========================================
+    // i18n Dictionary
+    // ========================================
+    const i18n = {
+      en: {
+        nav: {
+          branch: 'Branch',
+          clientBasics: 'Client Basics',
+          basicInfo: 'Basic Info',
+          contraindications: 'Health',
+          painAssessment: 'Pain Map',
+          postural: 'Posture',
+          review: 'Review'
+        },
+        pages: {
+          branch: {
+            title: 'Select Your Location',
+            subtitle: 'Please choose the Master Fit branch you are visiting'
+          },
+          clientBasics: {
+            title: 'Client Basics',
+            subtitle: 'Please provide your basic information'
+          },
+          basicInfo: {
+            title: 'Basic Information',
+            subtitle: 'Help us understand your lifestyle and health history'
+          },
+          contraindications: {
+            title: 'Health Declaration',
+            subtitle: 'Please check any conditions that apply to you'
+          },
+          painAssessment: {
+            title: 'Pain Assessment',
+            subtitle: 'Tap on the body diagram to indicate areas of pain or discomfort'
+          },
+          postural: {
+            title: 'Body Observations',
+            subtitle: 'Please select any postural or body issues you have noticed'
+          },
+          review: {
+            title: 'Review Your Information',
+            subtitle: 'Please verify all information before submitting'
+          },
+          success: {
+            title: 'Submission Complete!',
+            message: 'Thank you for completing the intake form. Our staff will review your information and contact you shortly.'
+          },
+          inbox: {
+            title: 'My Messages'
+          },
+          staffLogin: {
+            title: 'Staff Login',
+            subtitle: 'Enter your password to access the staff panel',
+            error: 'Incorrect password. Please try again.'
+          },
+          staffPanel: {
+            title: 'Staff Panel'
+          },
+          ai: {
+            title: 'AI Treatment Assistant',
+            subtitle: 'Staff only - Helps draft assessments and suggestions',
+            ready: 'Select a client to see AI-powered assessment suggestions.'
+          }
+        },
+        fields: {
+          name: 'Name',
+          namePlaceholder: 'Enter your full name',
+          gender: 'Gender',
+          male: 'Male',
+          female: 'Female',
+          age: 'Age',
+          agePlaceholder: 'Age',
+          phone: 'Phone Number',
+          phonePlaceholder: 'Phone number',
+          clientType: 'Client Type',
+          firstTime: 'First-time',
+          member: 'Member',
+          referral: 'Referral',
+          workType: 'Work Type',
+          selectOption: 'Please select...',
+          sedentary: 'Sedentary office',
+          standing: 'Standing long periods',
+          physical: 'High-intensity physical labor',
+          other: 'Other',
+          exerciseFreq: 'Exercise Frequency',
+          never: 'Almost never',
+          monthly: '1x per month',
+          weekly: '1x per week',
+          '2-3weekly': '2-3x per week',
+          '5plus': '5+ times per week',
+          exerciseTypes: 'Exercise Types',
+          exerciseTypesHint: 'Select all that apply',
+          running: 'Running',
+          fitness: 'Fitness & strength training',
+          cycling: 'Cycling',
+          swimming: 'Swimming',
+          ball: 'Ball sports',
+          yoga: 'Yoga',
+          pilates: 'Pilates',
+          combat: 'Combat sports',
+          injuryHistory: 'Past Injury History',
+          injuryHint: 'Select all that apply',
+          muscle: 'Muscle strain',
+          tendon: 'Tendon strain',
+          meniscus: 'Meniscus injury',
+          ligament: 'Ligament injury',
+          rotator: 'Rotator cuff injury',
+          disc: 'Lumbar disc herniation',
+          fracture: 'Fracture',
+          none: 'None',
+          priorSurgery: 'Prior Surgery',
+          no: 'No',
+          partial: 'Partial',
+          yes: 'Yes',
+          previousTreatments: 'Previous Treatments Tried',
+          treatmentsHint: 'Select all that apply',
+          massage: 'Massage',
+          acupuncture: 'Acupuncture',
+          fascia: 'Fascia scraping',
+          stretching: 'Passive stretching',
+          rehab: 'Sports rehab',
+          physio: 'Instrument-based physiotherapy',
+          doctorNotes: "Doctor's Notes / Recommendations",
+          doctorNotesPlaceholder: 'Enter any notes or recommendations from your doctor',
+          contraindications: 'Contraindications',
+          contraindicationsHint: 'Select all that apply',
+          pregnancy: 'Pregnancy',
+          highBP: 'High blood pressure',
+          heart: 'Heart disease',
+          diabetes: 'Diabetes',
+          osteoporosis: 'Osteoporosis',
+          fractureDislocation: 'Fracture or dislocation',
+          wound: 'Open wound',
+          acuteInjury: 'Acute injury within 48 hours',
+          thrombosis: 'Venous thrombosis',
+          skinDisease: 'Skin disease',
+          bruising: 'Easy bruising',
+          osteochondritis: 'Osteochondritis',
+          autoimmune: 'Autoimmune disease',
+          implant: 'Metal plate/implant in body',
+          neuropathic: 'Neuropathic pain',
+          tumor: 'Malignant tumor',
+          statementAgree: 'Client Statement: For any items not checked above, I confirm I have no related symptoms. I understand that after treatment, normal muscle soreness or localized bruising may occur for 1-7 days. If this does not improve within 3-5 days, I will contact the store promptly.',
+          signaturePlaceholder: 'Type your name as signature',
+          severity: 'Severity',
+          noPain: 'No Pain',
+          worstPain: 'Worst Pain',
+          painType: 'Pain Type',
+          sharp: 'Sharp/stabbing or numbing',
+          soreness: 'Soreness-dull ache',
+          restPain: 'Pain even at rest',
+          duration: 'Duration',
+          durationPlaceholder: 'e.g., 2 weeks, 3 months',
+          trigger: 'Triggering Movement',
+          triggerPlaceholder: 'e.g., lifting, bending',
+          postural: 'Postural Observations',
+          posturalHint: 'Select all that apply',
+          forwardHead: 'Forward head posture',
+          roundedShoulders: 'Rounded shoulders',
+          forwardHumerus: 'Forward-shifted humerus',
+          posteriorPelvic: 'Posterior pelvic tilt',
+          xoLegs: 'XO-shaped legs',
+          dowagers: "Dowager's hump",
+          hunchedBack: 'Hunched back',
+          scoliosis: 'Scoliosis',
+          xLegs: 'X-shaped legs',
+          kneeHyper: 'Knee hyperextension',
+          highLowShoulders: 'High-low shoulders',
+          wingedScapula: 'Winged scapula',
+          anteriorPelvic: 'Anterior pelvic tilt',
+          oLegs: 'O-shaped legs',
+          flatFeet: 'Flat feet',
+          password: 'Password',
+          passwordPlaceholder: 'Enter password',
+          searchPlaceholder: 'Search by name or phone...',
+          messages: 'Messages',
+          painTrend: 'Pain Progress',
+          nextAppointment: 'Next Appointment',
+          checkinQR: 'Front Desk Check-in QR Code',
+          qrHint: 'Print this QR code and place it at the front desk for clients to scan',
+          edit: 'Edit',
+          date: 'Date'
+        },
+        buttons: {
+          next: 'Next',
+          back: 'Back',
+          submit: 'Submit',
+          edit: 'Edit',
+          save: 'Save',
+          cancel: 'Cancel',
+          login: 'Login',
+          logout: 'Logout',
+          search: 'Search',
+          viewInbox: 'View My Inbox',
+          exportPdf: 'Export PDF',
+          exportExcel: 'Export Excel',
+          printQR: 'Print QR Code',
+          sendMessage: 'Send Message',
+          scheduleAppointment: 'Schedule Appointment'
+        },
+        messages: {
+          saved: 'Progress saved',
+          submitError: 'Please fill in all required fields',
+          loginSuccess: 'Login successful',
+          messageSent: 'Message sent to client',
+          appointmentScheduled: 'Appointment scheduled'
+        },
+        zones: {
+          head: 'Head',
+          neck: 'Neck',
+          leftShoulder: 'Left Shoulder',
+          rightShoulder: 'Right Shoulder',
+          leftUpperArm: 'Left Upper Arm',
+          rightUpperArm: 'Right Upper Arm',
+          leftElbow: 'Left Elbow',
+          rightElbow: 'Right Elbow',
+          leftForearm: 'Left Forearm',
+          rightForearm: 'Right Forearm',
+          leftWrist: 'Left Wrist',
+          rightWrist: 'Right Wrist',
+          leftHand: 'Left Hand',
+          rightHand: 'Right Hand',
+          chest: 'Chest',
+          upperBack: 'Upper Back',
+          lowerBack: 'Lower Back',
+          leftHip: 'Left Hip',
+          rightHip: 'Right Hip',
+          glutes: 'Glutes',
+          leftThigh: 'Left Thigh',
+          rightThigh: 'Right Thigh',
+          leftKnee: 'Left Knee',
+          rightKnee: 'Right Knee',
+          leftCalf: 'Left Calf',
+          rightCalf: 'Right Calf',
+          leftAnkle: 'Left Ankle',
+          rightAnkle: 'Right Ankle',
+          leftFoot: 'Left Foot',
+          rightFoot: 'Right Foot'
+        }
+      },
+      zh: {
+        nav: {
+          branch: '门店',
+          clientBasics: '客户信息',
+          basicInfo: '基本信息',
+          contraindications: '健康声明',
+          painAssessment: '疼痛图',
+          postural: '体态',
+          review: '确认'
+        },
+        pages: {
+          branch: {
+            title: '选择门店',
+            subtitle: '请选择您前往的拉伸大师门店'
+          },
+          clientBasics: {
+            title: '客户基本信息',
+            subtitle: '请提供您的基本信息'
+          },
+          basicInfo: {
+            title: '基本信息',
+            subtitle: '帮助我们了解您的生活习惯和健康历史'
+          },
+          contraindications: {
+            title: '健康声明',
+            subtitle: '请勾选适用于您的情况'
+          },
+          painAssessment: {
+            title: '疼痛评估',
+            subtitle: '点击身体图示标注疼痛或不适的部位'
+          },
+          postural: {
+            title: '体态观察',
+            subtitle: '请选择您注意到的任何体态或身体问题'
+          },
+          review: {
+            title: '确认您的信息',
+            subtitle: '请在提交前核实所有信息'
+          },
+          success: {
+            title: '提交完成！',
+            message: '感谢您填写信息表。我们的工作人员将审核您的信息并尽快与您联系。'
+          },
+          inbox: {
+            title: '我的消息'
+          },
+          staffLogin: {
+            title: '员工登录',
+            subtitle: '输入密码以访问员工面板',
+            error: '密码错误，请重试。'
+          },
+          staffPanel: {
+            title: '员工面板'
+          },
+          ai: {
+            title: 'AI治疗助手',
+            subtitle: '仅限员工使用 - 帮助起草评估和建议',
+            ready: '选择客户以查看AI驱动的评估建议。'
+          }
+        },
+        fields: {
+          name: '姓名',
+          namePlaceholder: '请输入您的全名',
+          gender: '性别',
+          male: '男',
+          female: '女',
+          age: '年龄',
+          agePlaceholder: '年龄',
+          phone: '电话号码',
+          phonePlaceholder: '电话号码',
+          clientType: '客户类型',
+          firstTime: '首次',
+          member: '会员',
+          referral: '推荐',
+          workType: '工作类型',
+          selectOption: '请选择...',
+          sedentary: '久坐办公',
+          standing: '长时间站立',
+          physical: '高强度体力劳动',
+          other: '其他',
+          exerciseFreq: '运动频率',
+          never: '几乎不',
+          monthly: '每月1次',
+          weekly: '每周1次',
+          '2-3weekly': '每周2-3次',
+          '5plus': '每周5次以上',
+          exerciseTypes: '运动类型',
+          exerciseTypesHint: '选择所有适用的',
+          running: '跑步',
+          fitness: '健身力量训练',
+          cycling: '骑行',
+          swimming: '游泳',
+          ball: '球类运动',
+          yoga: '瑜伽',
+          pilates: '普拉提',
+          combat: '格斗运动',
+          injuryHistory: '受伤历史',
+          injuryHint: '选择所有适用的',
+          muscle: '肌肉拉伤',
+          tendon: '肌腱拉伤',
+          meniscus: '半月板损伤',
+          ligament: '韧带损伤',
+          rotator: '肩袖损伤',
+          disc: '腰椎间盘突出',
+          fracture: '骨折',
+          none: '无',
+          priorSurgery: '既往手术',
+          no: '无',
+          partial: '部分',
+          yes: '有',
+          previousTreatments: '尝试过的治疗',
+          treatmentsHint: '选择所有适用的',
+          massage: '按摩',
+          acupuncture: '针灸',
+          fascia: '筋膜刮痧',
+          stretching: '被动拉伸',
+          rehab: '运动康复',
+          physio: '仪器理疗',
+          doctorNotes: '医生笔记/建议',
+          doctorNotesPlaceholder: '输入医生的任何笔记或建议',
+          contraindications: '禁忌症',
+          contraindicationsHint: '选择所有适用的',
+          pregnancy: '怀孕',
+          highBP: '高血压',
+          heart: '心脏病',
+          diabetes: '糖尿病',
+          osteoporosis: '骨质疏松',
+          fractureDislocation: '骨折或脱位',
+          wound: '开放性伤口',
+          acuteInjury: '48小时内急性损伤',
+          thrombosis: '静脉血栓',
+          skinDisease: '皮肤病',
+          bruising: '易瘀青',
+          osteochondritis: '骨软骨炎',
+          autoimmune: '自身免疫性疾病',
+          implant: '体内有金属板/植入物',
+          neuropathic: '神经性疼痛',
+          tumor: '恶性肿瘤',
+          statementAgree: '客户声明：对于上述未勾选的项目，我确认没有相关症状。我理解治疗后1-7天内可能出现正常的肌肉酸痛或局部淤青。如果3-5天内没有改善，我将及时联系门店。',
+          signaturePlaceholder: '输入您的名字作为签名',
+          severity: '严重程度',
+          noPain: '无痛',
+          worstPain: '最痛',
+          painType: '疼痛类型',
+          sharp: '刺痛/麻木',
+          soreness: '酸痛/钝痛',
+          restPain: '静息痛',
+          duration: '持续时间',
+          durationPlaceholder: '如：2周、3个月',
+          trigger: '诱发动作',
+          triggerPlaceholder: '如：提重物、弯腰',
+          postural: '体态观察',
+          posturalHint: '选择所有适用的',
+          forwardHead: '头部前倾',
+          roundedShoulders: '圆肩',
+          forwardHumerus: '肱骨前移',
+          posteriorPelvic: '骨盆后倾',
+          xoLegs: 'XO型腿',
+          dowagers: '颈椎富贵包',
+          hunchedBack: '驼背',
+          scoliosis: '脊柱侧弯',
+          xLegs: 'X型腿',
+          kneeHyper: '膝过伸',
+          highLowShoulders: '高低肩',
+          wingedScapula: '翼状肩胛',
+          anteriorPelvic: '骨盆前倾',
+          oLegs: 'O型腿',
+          flatFeet: '扁平足',
+          password: '密码',
+          passwordPlaceholder: '输入密码',
+          searchPlaceholder: '按姓名或电话搜索...',
+          messages: '消息',
+          painTrend: '疼痛趋势',
+          nextAppointment: '下次预约',
+          checkinQR: '前台签到二维码',
+          qrHint: '打印此二维码并放置在前台供客户扫描',
+          edit: '编辑',
+          date: '日期'
+        },
+        buttons: {
+          next: '下一步',
+          back: '返回',
+          submit: '提交',
+          edit: '编辑',
+          save: '保存',
+          cancel: '取消',
+          login: '登录',
+          logout: '退出',
+          search: '搜索',
+          viewInbox: '查看我的消息',
+          exportPdf: '导出PDF',
+          exportExcel: '导出Excel',
+          printQR: '打印二维码',
+          sendMessage: '发送消息',
+          scheduleAppointment: '预约'
+        },
+        messages: {
+          saved: '进度已保存',
+          submitError: '请填写所有必填项',
+          loginSuccess: '登录成功',
+          messageSent: '消息已发送至客户',
+          appointmentScheduled: '预约已安排'
+        },
+        zones: {
+          head: '头部',
+          neck: '颈部',
+          leftShoulder: '左肩',
+          rightShoulder: '右肩',
+          leftUpperArm: '左上臂',
+          rightUpperArm: '右上臂',
+          leftElbow: '左肘',
+          rightElbow: '右肘',
+          leftForearm: '左前臂',
+          rightForearm: '右前臂',
+          leftWrist: '左腕',
+          rightWrist: '右腕',
+          leftHand: '左手',
+          rightHand: '右手',
+          chest: '胸部',
+          upperBack: '上背部',
+          lowerBack: '下背部',
+          leftHip: '左髋',
+          rightHip: '右髋',
+          glutes: '臀部',
+          leftThigh: '左大腿',
+          rightThigh: '右大腿',
+          leftKnee: '左膝',
+          rightKnee: '右膝',
+          leftCalf: '左小腿',
+          rightCalf: '右小腿',
+          leftAnkle: '左踝',
+          rightAnkle: '右踝',
+          leftFoot: '左脚',
+          rightFoot: '右脚'
+        }
+      }
+    };
+
+    // ========================================
+    // API Configuration
+    // ========================================
+    // IMPORTANT: Set this to your deployed API URL
+    // For local testing: 'http://localhost:3000'
+    // For production: 'https://your-api-url.onrender.com'
+    // 
+    // For this demo, the API is running on the same server
+    const API_BASE = (window.location.hostname === 'localhost' || window.location.hostname === '127.0.0.1')
+      ? 'http://localhost:3000'
+      : 'https://masterfit-api.onrender.com';
+    
+    // API Helper Functions
+    async function apiCall(endpoint, method = 'GET', body = null) {
+      const options = {
+        method,
+        headers: {
+          'Content-Type': 'application/json',
+        },
+      };
+      
+      if (body) {
+        options.body = JSON.stringify(body);
+      }
+      
+      try {
+        const response = await fetch(`${API_BASE}${endpoint}`, options);
+        const data = await response.json();
+        
+        if (!response.ok) {
+          throw new Error(data.message || 'API Error');
+        }
+        
+        return data;
+      } catch (error) {
+        console.error('API call failed:', error);
+        // Fall back to localStorage if API unavailable
+        return { error: error.message, fallback: true };
+      }
+    }
+    
+    // ========================================
+    // Application State
+    // ========================================
+    const AppState = {
+      branch: localStorage.getItem('mf_branch') || null,
+      language: localStorage.getItem('mf_language') || (navigator.language.startsWith('zh') ? 'zh' : 'en'),
+      assistedMode: localStorage.getItem('mf_assisted') === 'true',
+      darkMode: localStorage.getItem('mf_darkmode') === 'true',
+      currentPage: 'branch',
+      isStaffLoggedIn: false,
+      staffBranch: null,
+      formData: {
+        clientBasics: {},
+        basicInfo: {},
+        contraindications: {},
+        painAssessment: { points: [] },
+        postural: {}
+      },
+      clientInbox: [],
+      staffClients: [],
+      selectedClientId: null,
+      currentPainZone: null,
+      editingPainIndex: -1,
+      isClientLoggedIn: false,
+      clientPhone: null,
+      currentClientId: null // Server-side client ID for updates
+    };
+
+    // ========================================
+    // Utility Functions
+    // ========================================
+    function t(key) {
+      const keys = key.split('.');
+      let value = i18n[AppState.language];
+      for (const k of keys) {
+        value = value?.[k];
+      }
+      return value || key;
+    }
+
+    function showToast(message, type = 'info') {
+      const toast = document.getElementById('toast');
+      toast.textContent = message;
+      toast.className = `toast show ${type}`;
+      setTimeout(() => {
+        toast.className = 'toast';
+      }, 4000);
+    }
+
+    async function saveToStorage() {
+      // Always save to localStorage for offline support
+      localStorage.setItem('mf_formData', JSON.stringify(AppState.formData));
+      localStorage.setItem('mf_branch', AppState.branch || '');
+      
+      // Try to save to API
+      if (AppState.formData.clientBasics?.phone) {
+        const clientData = {
+          branch: AppState.branch,
+          formData: AppState.formData
+        };
+        
+        if (AppState.currentClientId) {
+          clientData.id = AppState.currentClientId;
+        }
+        
+        const result = await apiCall('/api/clients', 'POST', clientData);
+        if (!result.error || result.fallback) {
+          if (result.data?._id) {
+            AppState.currentClientId = result.data._id;
+          }
+        }
+      }
+    }
+
+    async function loadFromStorage() {
+      // Load from localStorage first
+      const savedForm = localStorage.getItem('mf_formData');
+      if (savedForm) {
+        AppState.formData = JSON.parse(savedForm);
+      }
+      const savedBranch = localStorage.getItem('mf_branch');
+      if (savedBranch) {
+        AppState.branch = savedBranch;
+      }
+      
+      // Try to load from API
+      if (AppState.formData.clientBasics?.phone) {
+        const result = await apiCall(`/api/clients/phone/${AppState.formData.clientBasics.phone}`);
+        if (!result.error && result.data) {
+          // Use server data
+          AppState.formData = result.data.formData || AppState.formData;
+          AppState.currentClientId = result.data._id;
+        }
+      }
+      
+      // Load staff clients from API if logged in
+      if (AppState.isStaffLoggedIn && AppState.staffBranch) {
+        await loadStaffClients();
+      }
+    }
+    
+    async function loadStaffClients() {
+      const result = await apiCall(`/api/clients?branch=${AppState.staffBranch}`);
+      if (!result.error && result.data) {
+        AppState.staffClients = result.data;
+      }
+    }
+    
+    async function loadClientMessages(phone) {
+      const result = await apiCall(`/api/messages/${phone}`);
+      if (!result.error && result.data) {
+        AppState.clientInbox = result.data;
+        return result.data;
+      }
+      return [];
+    }
+    
+    async function sendClientMessage(clientPhone, message, from = 'Staff') {
+      const result = await apiCall('/api/messages', 'POST', {
+        clientPhone,
+        from,
+        message,
+        type: 'feedback'
+      });
+      return result;
+    }
+    
+    async function syncToDingTalk(clientData) {
+      const result = await apiCall('/api/dingtalk/sync', 'POST', { client: clientData });
+      return result;
+    }
+
+    function updateLanguage() {
+      document.documentElement.lang = AppState.language;
+      localStorage.setItem('mf_language', AppState.language);
+      
+      // Update all elements with data-i18n attribute
+      document.querySelectorAll('[data-i18n]').forEach(el => {
+        const key = el.getAttribute('data-i18n');
+        el.textContent = t(key);
+      });
+      
+      // Update all elements with data-i18n-placeholder attribute
+      document.querySelectorAll('[data-i18n-placeholder]').forEach(el => {
+        const key = el.getAttribute('data-i18n-placeholder');
+        el.placeholder = t(key);
+      });
+      
+      // Update all elements with data-i18n-title attribute
+      document.querySelectorAll('[data-i18n-title]').forEach(el => {
+        const key = el.getAttribute('data-i18n-title');
+        el.title = t(key);
+      });
+      
+      // Update branch card titles and subtitles (hardcoded in HTML)
+      const branchCards = document.querySelectorAll('.branch-card');
+      if (branchCards.length >= 2) {
+        branchCards[0].querySelector('.branch-card-title').textContent = AppState.language === 'zh' ? '深圳' : 'Shenzhen';
+        branchCards[0].querySelector('.branch-card-subtitle').textContent = AppState.language === 'zh' ? 'Shenzhen' : '深圳';
+        branchCards[1].querySelector('.branch-card-title').textContent = AppState.language === 'zh' ? '上海' : 'Shanghai';
+        branchCards[1].querySelector('.branch-card-subtitle').textContent = AppState.language === 'zh' ? 'Shanghai' : '上海';
+      }
+      
+      // Update signature date
+      const signatureDate = document.getElementById('signatureDate');
+      if (signatureDate) {
+        signatureDate.textContent = new Date().toLocaleDateString(AppState.language === 'zh' ? 'zh-CN' : 'en-US');
+      }
+      
+      // Re-render nav items to update language
+      updateNavItems();
+    }
+
+    function toggleAssistedMode() {
+      // Always read current state from localStorage to ensure toggle works on first click
+      const newAssisted = !AppState.assistedMode;
+      AppState.assistedMode = newAssisted;
+      localStorage.setItem('mf_assisted', newAssisted.toString());
+      document.documentElement.classList.toggle('assisted-mode', newAssisted);
+      updateNavItems();
+    }
+
+    function toggleDarkMode() {
+      // Always read current state from localStorage to ensure toggle works on first click
+      const newDark = !AppState.darkMode;
+      AppState.darkMode = newDark;
+      localStorage.setItem('mf_darkmode', newDark.toString());
+      document.body.classList.toggle('dark-mode', newDark);
+    }
+
+    function validateForm() {
+      let isValid = true;
+      const required = {
+        clientBasics: ['name', 'gender', 'age', 'phone', 'clientType'],
+        basicInfo: ['workType', 'exerciseFreq', 'exerciseTypes', 'injuryHistory', 'priorSurgery'],
+        contraindications: ['signature']
+      };
+      
+      // Check client basics
+      for (const field of required.clientBasics) {
+        if (field === 'gender' || field === 'clientType') {
+          const val = AppState.formData.clientBasics?.[field];
+          if (!val) isValid = false;
+        } else {
+          const val = AppState.formData.clientBasics?.[field];
+          if (!val || (typeof val === 'string' && !val.trim())) isValid = false;
+        }
+      }
+      
+      // Check basic info
+      for (const field of required.basicInfo) {
+        if (field === 'exerciseTypes' || field === 'injuryHistory') {
+          const val = AppState.formData.basicInfo?.[field];
+          if (!val || val.length === 0) isValid = false;
+        } else {
+          const val = AppState.formData.basicInfo?.[field];
+          if (!val) isValid = false;
+        }
+      }
+      
+      // Check signature
+      if (!AppState.formData.contraindications?.signature) {
+        isValid = false;
+      }
+      
+      const submitBtn = document.getElementById('submitForm');
+      if (submitBtn) {
+        submitBtn.disabled = !isValid;
+      }
+      
+      updateNavItems();
+      return isValid;
+    }
+
+    function updateNavItems() {
+      const nav = document.getElementById('navLinks');
+      if (!nav) return;
+      
+      const pages = [
+        { id: 'client-basics', labelKey: 'nav.clientBasics', required: ['clientBasics'] },
+        { id: 'basic-info', labelKey: 'nav.basicInfo', required: ['basicInfo'] },
+        { id: 'contraindications', labelKey: 'nav.contraindications', required: ['contraindications'] },
+        { id: 'pain-assessment', labelKey: 'nav.painAssessment', required: [] },
+        { id: 'postural', labelKey: 'nav.postural', required: [] },
+        { id: 'review', labelKey: 'nav.review', required: [] }
+      ];
+      
+      nav.innerHTML = pages.map(page => {
+        const hasError = page.required.some(req => {
+          const data = AppState.formData[req] || {};
+          if (req === 'clientBasics') {
+            return !data.name || !data.gender || !data.age || !data.phone || !data.clientType;
+          }
+          if (req === 'basicInfo') {
+            return !data.workType || !data.exerciseFreq || !data.exerciseTypes?.length || !data.injuryHistory?.length || !data.priorSurgery;
+          }
+          if (req === 'contraindications') {
+            return !data.signature;
+          }
+          return false;
+        });
+        
+        return `<div class="nav-item ${AppState.currentPage === page.id ? 'active' : ''} ${hasError ? 'has-error' : ''}" data-page="${page.id}">${t(page.labelKey)}</div>`;
+      }).join('');
+      
+      // Add Inbox nav item for client access
+      nav.innerHTML += `<div class="nav-item inbox-nav-item" data-page="inbox">${t('fields.messages')}</div>`;
+      
+      // Add click handlers - using event delegation for reliability
+      nav.onclick = function(e) {
+        const item = e.target.closest('.nav-item');
+        if (!item) return;
+        
+        const pageId = item.getAttribute('data-page');
+        if (!pageId) return;
+        
+        // Close mobile menu
+        nav.classList.remove('open');
+        
+        // If clicking Inbox, check if client is logged in
+        if (pageId === 'inbox') {
+          const phone = AppState.formData.clientBasics?.phone || AppState.clientPhone;
+          if (phone) {
+            const savedInbox = localStorage.getItem('mf_inbox_' + phone);
+            AppState.clientInbox = savedInbox ? JSON.parse(savedInbox) : [];
+            AppState.clientPhone = phone;
+            AppState.isClientLoggedIn = true;
+            renderInbox();
+          } else {
+            const promptMsg = AppState.language === 'zh' ? '请输入您的电话号码查看消息：' : 'Enter your phone number to view messages:';
+            const inputPhone = prompt(promptMsg);
+            if (inputPhone) {
+              const savedInbox = localStorage.getItem('mf_inbox_' + inputPhone);
+              AppState.clientInbox = savedInbox ? JSON.parse(savedInbox) : [];
+              AppState.clientPhone = inputPhone;
+              AppState.isClientLoggedIn = true;
+              renderInbox();
+            } else {
+              return;
+            }
+          }
+        }
+        
+        navigateTo(pageId);
+      };
+    }
+
+    function navigateTo(pageId) {
+      document.querySelectorAll('.page').forEach(p => p.classList.remove('active'));
+      const page = document.getElementById('page-' + pageId);
+      if (page) {
+        page.classList.add('active');
+        AppState.currentPage = pageId;
+        updateNavItems();
+        window.scrollTo(0, 0);
+        
+        if (pageId === 'review') {
+          updateReviewPage();
+        }
+      }
+    }
+
+    function updateReviewPage() {
+      const reviewClientBasics = document.getElementById('reviewClientBasics');
+      const reviewBasicInfo = document.getElementById('reviewBasicInfo');
+      const reviewContraindications = document.getElementById('reviewContraindications');
+      const reviewPainAssessment = document.getElementById('reviewPainAssessment');
+      const reviewPostural = document.getElementById('reviewPostural');
+      
+      const cb = AppState.formData.clientBasics || {};
+      reviewClientBasics.innerHTML = `
+        <div class="review-item"><span class="review-label">${t('fields.name')}:</span><span class="review-value">${cb.name || '-'}</span></div>
+        <div class="review-item"><span class="review-label">${t('fields.gender')}:</span><span class="review-value">${cb.gender ? t('fields.' + cb.gender) : '-'}</span></div>
+        <div class="review-item"><span class="review-label">${t('fields.age')}:</span><span class="review-value">${cb.age || '-'}</span></div>
+        <div class="review-item"><span class="review-label">${t('fields.phone')}:</span><span class="review-value">${cb.phone || '-'}</span></div>
+        <div class="review-item"><span class="review-label">${t('fields.clientType')}:</span><span class="review-value">${cb.clientType ? t('fields.' + cb.clientType) : '-'}</span></div>
+      `;
+      
+      const bi = AppState.formData.basicInfo || {};
+      reviewBasicInfo.innerHTML = `
+        <div class="review-item"><span class="review-label">${t('fields.workType')}:</span><span class="review-value">${bi.workType ? t('fields.' + bi.workType) : '-'}</span></div>
+        <div class="review-item"><span class="review-label">${t('fields.exerciseFreq')}:</span><span class="review-value">${bi.exerciseFreq ? t('fields.' + bi.exerciseFreq) : '-'}</span></div>
+        <div class="review-item"><span class="review-label">${t('fields.exerciseTypes')}:</span></div>
+        <div class="review-tags">${(bi.exerciseTypes || []).map(e => `<span class="review-tag">${t('fields.' + e)}</span>`).join('')}</div>
+        <div class="review-item"><span class="review-label">${t('fields.injuryHistory')}:</span></div>
+        <div class="review-tags">${(bi.injuryHistory || []).map(e => `<span class="review-tag">${t('fields.' + e)}</span>`).join('')}</div>
+        <div class="review-item"><span class="review-label">${t('fields.priorSurgery')}:</span><span class="review-value">${bi.priorSurgery ? t('fields.' + bi.priorSurgery) : '-'}</span></div>
+      `;
+      
+      const ci = AppState.formData.contraindications || {};
+      reviewContraindications.innerHTML = `
+        <div class="review-item"><span class="review-label">${t('fields.contraindications')}:</span></div>
+        <div class="review-tags">${(ci.conditions || []).map(c => `<span class="review-tag">${t('fields.' + c)}</span>`).join('')}</div>
+        <div class="review-item"><span class="review-label">${t('fields.signature')}:</span><span class="review-value">${ci.signature || '-'}</span></div>
+      `;
+      
+      const pa = AppState.formData.painAssessment || {};
+      const painPoints = pa.points || [];
+      if (painPoints.length > 0) {
+        reviewPainAssessment.innerHTML = painPoints.map(p => `
+          <div class="review-item">
+            <span class="review-label">${t('zones.' + p.zone)}:</span>
+            <span class="review-value">${t('fields.severity')}: ${p.severity}/10</span>
+          </div>
+        `).join('');
+      } else {
+        reviewPainAssessment.innerHTML = '<span class="review-value">-</span>';
+      }
+      
+      const po = AppState.formData.postural || {};
+      reviewPostural.innerHTML = po.observations?.length > 0 
+        ? `<div class="review-tags">${po.observations.map(o => `<span class="review-tag">${t('fields.' + o)}</span>`).join('')}</div>`
+        : '<span class="review-value">-</span>';
+    }
+
+    // ========================================
+    // QR Code Generator
+    // ========================================
+    function generateQRCode(text, container) {
+      if (typeof QRCode !== 'undefined') {
+        container.innerHTML = '';
+        QRCode.toCanvas(text, { width: 168, margin: 1 }, (err, canvas) => {
+          if (err) {
+            container.innerHTML = `<div style="width:168px;height:168px;background:#eee;margin:0 auto;display:flex;align-items:center;justify-content:center;color:#666;font-size:12px;text-align:center;padding:16px;border-radius:8px;">QR Code</div>`;
+            return;
+          }
+          container.appendChild(canvas);
+        });
+      } else {
+        container.innerHTML = `<div style="width:168px;height:168px;background:#eee;margin:0 auto;display:flex;align-items:center;justify-content:center;color:#666;font-size:12px;text-align:center;padding:16px;border-radius:8px;">QR: ${text.substring(0, 30)}...</div>`;
+      }
+    }
+
+    // ========================================
+    // Pain Chart (Chart.js)
+    // ========================================
+    let painChartInstance = null;
+    
+    function renderPainChart(painHistory) {
+      const container = document.getElementById('painChart');
+      if (!container) return;
+      
+      if (typeof Chart === 'undefined') {
+        container.innerHTML = '<p style="text-align:center;color:var(--text-muted);">Chart library loading...</p>';
+        return;
+      }
+      
+      if (!painHistory || painHistory.length === 0) {
+        container.innerHTML = '<p style="text-align:center;color:var(--text-muted);">No pain history data yet</p>';
+        return;
+      }
+      
+      // Destroy existing chart
+      if (painChartInstance) {
+        painChartInstance.destroy();
+      }
+      
+      const labels = painHistory.map((p, i) => `Visit ${i + 1}`);
+      const data = painHistory.map(p => p.severity);
+      
+      const ctx = document.createElement('canvas');
+      container.innerHTML = '';
+      container.appendChild(ctx);
+      
+      painChartInstance = new Chart(ctx, {
+        type: 'line',
+        data: {
+          labels: labels,
+          datasets: [{
+            label: 'Pain Severity',
+            data: data,
+            borderColor: '#8B0000',
+            backgroundColor: 'rgba(139, 0, 0, 0.1)',
+            fill: true,
+            tension: 0.3,
+            pointBackgroundColor: '#8B0000',
+            pointBorderColor: '#fff',
+            pointBorderWidth: 2,
+            pointRadius: 6
+          }]
+        },
+        options: {
+          responsive: true,
+          maintainAspectRatio: false,
+          scales: {
+            y: {
+              beginAtZero: true,
+              max: 10,
+              title: {
+                display: true,
+                text: 'Severity (0-10)'
+              },
+              grid: {
+                color: 'rgba(0,0,0,0.05)'
+              }
+            },
+            x: {
+              title: {
+                display: true,
+                text: 'Visit'
+              },
+              grid: {
+                color: 'rgba(0,0,0,0.05)'
+              }
+            }
+          },
+          plugins: {
+            legend: {
+              display: false
+            }
+          }
+        }
+      });
+    }
+
+    // ========================================
+    // Staff Panel Functions
+    // ========================================
+    async function renderStaffClientList() {
+      const list = document.getElementById('staffClientList');
+      const search = document.getElementById('clientSearch')?.value.toLowerCase() || '';
+      
+      // Try to fetch from API first
+      await loadStaffClients();
+      
+      const filtered = AppState.staffClients.filter(c => {
+        if (AppState.staffBranch && c.branch !== AppState.staffBranch) return false;
+        if (search) {
+          const name = (c.formData?.clientBasics?.name || '').toLowerCase();
+          const phone = (c.formData?.clientBasics?.phone || '').toLowerCase();
+          return name.includes(search) || phone.includes(search);
+        }
+        return true;
+      });
+      
+      if (filtered.length === 0 && !search) {
+        list.innerHTML = '<p style="text-align:center;color:var(--text-muted);padding:24px;">No clients yet. Submissions will appear here.</p>';
+        return;
+      }
+      
+      list.innerHTML = filtered.map(client => {
+        const cb = client.formData?.clientBasics || {};
+        const date = new Date(client.createdAt || client.updatedAt).toLocaleDateString(AppState.language === 'zh' ? 'zh-CN' : 'en-US');
+        const isNew = client.formData?.clientBasics?.clientType === 'first-time';
+        const clientId = client._id || client.id;
+        return `
+          <div class="client-item" data-client-id="${clientId}">
+            <div class="client-info">
+              <h4>${cb.name || 'Unknown'}</h4>
+              <p>${cb.phone || '-'}</p>
+            </div>
+            <div class="client-meta">
+              <div class="client-date">${date}</div>
+              <span class="client-status ${isNew ? 'new' : 'returning'}">${isNew ? t('fields.firstTime') : t('fields.member')}</span>
+            </div>
+          </div>
+        `;
+      }).join('');
+      
+      if (filtered.length === 0) {
+        list.innerHTML = '<p style="text-align:center;color:var(--text-muted);padding:24px;">No clients found</p>';
+      }
+      
+      // Add click handlers
+      list.querySelectorAll('.client-item').forEach(item => {
+        item.addEventListener('click', () => {
+          const clientId = item.getAttribute('data-client-id');
+          showClientDetail(clientId);
+        });
+      });
+    }
+
+    async function showClientDetail(clientId) {
+      // Try to fetch from API first
+      let client = AppState.staffClients.find(c => (c._id || c.id) === clientId);
+      
+      if (!client) {
+        const result = await apiCall(`/api/clients/${clientId}`);
+        if (!result.error && result.data) {
+          client = result.data;
+        }
+      }
+      
+      if (!client) return;
+      
+      AppState.selectedClientId = clientId;
+      const detail = document.getElementById('clientDetail');
+      const exportBtns = document.getElementById('exportButtons');
+      const aiPanel = document.getElementById('aiPanel');
+      
+      detail.style.display = 'block';
+      exportBtns.style.display = 'flex';
+      aiPanel.style.display = 'block';
+      
+      const cb = client.formData?.clientBasics || {};
+      const bi = client.formData?.basicInfo || {};
+      const pa = client.formData?.painAssessment || {};
+      
+      detail.innerHTML = `
+        <div class="assessment-section">
+          <h3 class="assessment-title">${t('pages.clientBasics.title')}</h3>
+          <div class="review-item"><span class="review-label">${t('fields.name')}:</span><span class="review-value">${cb.name || '-'}</span></div>
+          <div class="review-item"><span class="review-label">${t('fields.phone')}:</span><span class="review-value">${cb.phone || '-'}</span></div>
+          <div class="review-item"><span class="review-label">${t('fields.clientType')}:</span><span class="review-value">${cb.clientType ? t('fields.' + cb.clientType) : '-'}</span></div>
+        </div>
+        
+        <div class="assessment-section">
+          <h3 class="assessment-title">${t('pages.basicInfo.title')}</h3>
+          <div class="review-item"><span class="review-label">${t('fields.workType')}:</span><span class="review-value">${bi.workType ? t('fields.' + bi.workType) : '-'}</span></div>
+          <div class="review-item"><span class="review-label">${t('fields.exerciseFreq')}:</span><span class="review-value">${bi.exerciseFreq ? t('fields.' + bi.exerciseFreq) : '-'}</span></div>
+        </div>
+        
+        <div class="assessment-section">
+          <h3 class="assessment-title">${t('pages.painAssessment.title')}</h3>
+          ${(pa.points || []).map(p => `
+            <div class="review-item"><span class="review-label">${t('zones.' + p.zone)}:</span><span class="review-value">${t('fields.severity')}: ${p.severity}/10</span></div>
+          `).join('') || '<p>No pain points recorded</p>'}
+        </div>
+        
+        <div class="assessment-section">
+          <h3 class="assessment-title">${t('pages.staffPanel.title')}</h3>
+          <button class="btn btn-primary btn-sm" id="sendMsgBtn">${t('buttons.sendMessage')}</button>
+          <button class="btn btn-secondary btn-sm" id="scheduleBtn">${t('buttons.scheduleAppointment')}</button>
+        </div>
+      `;
+      
+      // Update AI suggestions
+      const aiSuggestions = document.getElementById('aiSuggestions');
+      const painPoints = pa.points || [];
+      const injuryHistory = bi.injuryHistory || [];
+      
+      let aiContent = '<div class="ai-suggestion">';
+      
+      if (painPoints.length > 0) {
+        const highPain = painPoints.filter(p => p.severity >= 7);
+        const mediumPain = painPoints.filter(p => p.severity >= 4 && p.severity < 7);
+        
+        if (highPain.length > 0) {
+          aiContent += `<strong>High Priority:</strong> ${highPain.map(p => t('zones.' + p.zone)).join(', ')} areas show severe pain (${highPain[0].severity}/10). Recommend immediate attention andgentle treatment approach.<br><br>`;
+        }
+        
+        if (mediumPain.length > 0) {
+          aiContent += `<strong>Moderate Priority:</strong> ${mediumPain.map(p => t('zones.' + p.zone)).join(', ')} areas show moderate discomfort.<br><br>`;
+        }
+        
+        const suggestedPlan = painPoints.length >= 3 ? 'Comprehensive Improvement' : 'Pain Resolution';
+        aiContent += `<strong>Suggested Program:</strong> ${suggestedPlan} phase recommended. Focus on ${painPoints[0].zone ? t('zones.' + painPoints[0].zone) : 'affected areas'} as primary treatment area.<br><br>`;
+      } else {
+        aiContent += `<strong>Note:</strong> No acute pain points detected. Consider maintenance and prevention-focused program.<br><br>`;
+      }
+      
+      if (injuryHistory.includes('disc') || injuryHistory.includes('meniscus')) {
+        aiContent += `<strong>⚠️ Caution:</strong> History of ${t('fields.' + injuryHistory.find(i => i === 'disc' || i === 'meniscus'))} detected. Ensure proper assessment before intensive treatment.<br>`;
+      }
+      
+      aiContent += '</div>';
+      aiSuggestions.innerHTML = aiContent;
+      
+      // Add event listeners
+      document.getElementById('sendMsgBtn')?.addEventListener('click', async () => {
+        const msg = prompt('Enter message for client:');
+        if (msg) {
+          // Send via API
+          await sendClientMessage(cb.phone, msg, 'Staff');
+          
+          // Also save to localStorage for offline
+          const inbox = JSON.parse(localStorage.getItem('mf_inbox_' + cb.phone) || '[]');
+          inbox.push({
+            id: Date.now(),
+            from: 'Staff',
+            message: msg,
+            date: new Date().toISOString(),
+            type: 'feedback'
+          });
+          localStorage.setItem('mf_inbox_' + cb.phone, JSON.stringify(inbox));
+          showToast(t('messages.messageSent'), 'success');
+        }
+      });
+      
+      document.getElementById('scheduleBtn')?.addEventListener('click', async () => {
+        const dateStr = prompt('Enter appointment date (YYYY-MM-DD):');
+        if (dateStr) {
+          // Save to API
+          await apiCall('/api/appointments', 'POST', {
+            clientPhone: cb.phone,
+            date: dateStr,
+            branch: AppState.staffBranch
+          });
+          
+          // Also save locally
+          const appointment = {
+            id: Date.now(),
+            clientId: clientId,
+            date: dateStr,
+            reminderSent: false
+          };
+          client.appointment = appointment;
+          localStorage.setItem('mf_clients', JSON.stringify(AppState.staffClients));
+          showToast(t('messages.appointmentScheduled'), 'success');
+        }
+      });
+    }
+
+    // ========================================
+    // Event Handlers
+    // ========================================
+    function initEventHandlers() {
+      // Branch selection
+      document.querySelectorAll('.branch-card').forEach(card => {
+        card.addEventListener('click', () => {
+          AppState.branch = card.getAttribute('data-branch');
+          localStorage.setItem('mf_branch', AppState.branch);
+          document.getElementById('topNav').style.display = 'block';
+          document.getElementById('staffLoginBtn').style.display = 'flex';
+          document.getElementById('resetFormBtn').style.display = 'flex';
+          updateNavItems();
+          navigateTo('client-basics');
+        });
+      });
+      
+      // Language toggle - re-read state from localStorage to ensure first click always works
+      const langToggle = document.getElementById('langToggle');
+      if (langToggle) {
+        langToggle.addEventListener('click', () => {
+          // Always read current state from localStorage first
+          const newLang = AppState.language === 'en' ? 'zh' : 'en';
+          AppState.language = newLang;
+          // Update state
+          AppState.language = newLang;
+          localStorage.setItem('mf_language', newLang);
+          // Update DOM
+          document.documentElement.lang = newLang;
+          // Re-render all translatable elements
+          document.querySelectorAll('[data-i18n]').forEach(el => {
+            const key = el.getAttribute('data-i18n');
+            el.textContent = t(key);
+          });
+          document.querySelectorAll('[data-i18n-placeholder]').forEach(el => {
+            const key = el.getAttribute('data-i18n-placeholder');
+            el.placeholder = t(key);
+          });
+          document.querySelectorAll('[data-i18n-title]').forEach(el => {
+            const key = el.getAttribute('data-i18n-title');
+            el.title = t(key);
+          });
+          // Update branch cards
+          const branchCards = document.querySelectorAll('.branch-card');
+          if (branchCards.length >= 2) {
+            branchCards[0].querySelector('.branch-card-title').textContent = newLang === 'zh' ? '深圳' : 'Shenzhen';
+            branchCards[0].querySelector('.branch-card-subtitle').textContent = newLang === 'zh' ? 'Shenzhen' : '深圳';
+            branchCards[1].querySelector('.branch-card-title').textContent = newLang === 'zh' ? '上海' : 'Shanghai';
+            branchCards[1].querySelector('.branch-card-subtitle').textContent = newLang === 'zh' ? 'Shanghai' : '上海';
+          }
+          // Update signature date
+          const signatureDate = document.getElementById('signatureDate');
+          if (signatureDate) {
+            signatureDate.textContent = new Date().toLocaleDateString(newLang === 'zh' ? 'zh-CN' : 'en-US');
+          }
+          // Re-render nav items
+          updateNavItems();
+        });
+      }
+      
+      // Dark mode toggle
+      document.getElementById('darkModeToggle').addEventListener('click', () => {
+        toggleDarkMode();
+      });
+      
+      // Assisted mode toggle
+      document.getElementById('assistedToggle').addEventListener('click', () => {
+        toggleAssistedMode();
+      });
+      
+      // Mobile menu toggle
+      const mobileMenuBtn = document.getElementById('mobileMenuBtn');
+      const navBackdrop = document.getElementById('navBackdrop');
+      if (mobileMenuBtn) {
+        mobileMenuBtn.addEventListener('click', (e) => {
+          e.stopPropagation();
+          const navLinks = document.getElementById('navLinks');
+          if (navLinks) {
+            const isOpen = navLinks.classList.toggle('open');
+            if (navBackdrop) {
+              navBackdrop.classList.toggle('open', isOpen);
+            }
+          }
+        });
+      }
+      
+      // Close mobile menu when clicking backdrop
+      if (navBackdrop) {
+        navBackdrop.addEventListener('click', () => {
+          const navLinks = document.getElementById('navLinks');
+          if (navLinks) {
+            navLinks.classList.remove('open');
+          }
+          navBackdrop.classList.remove('open');
+        });
+      }
+      
+      // Close mobile menu on navigation
+      const originalNavigateTo = navigateTo;
+      navigateTo = function(pageId) {
+        document.getElementById('navLinks')?.classList.remove('open');
+        document.getElementById('navBackdrop')?.classList.remove('open');
+        originalNavigateTo(pageId);
+      };
+      
+      // Staff login button
+      document.getElementById('staffLoginBtn').addEventListener('click', () => {
+        navigateTo('staff-login');
+      });
+      
+      // Staff login submit
+      document.getElementById('staffLoginSubmit').addEventListener('click', async () => {
+        const password = document.getElementById('staffPassword').value;
+        if (password.toLowerCase() === 'masterfit') {
+          AppState.isStaffLoggedIn = true;
+          AppState.staffBranch = AppState.branch;
+          document.getElementById('loginError').classList.remove('show');
+          showToast(t('messages.loginSuccess'), 'success');
+          
+          // Load clients from API
+          await renderStaffClientList();
+          
+          const qrUrl = `https://smallapps.ai4money.work/webs/masterfit.html#branch=${AppState.branch}`;
+          generateQRCode(qrUrl, document.getElementById('qrCode'));
+          navigateTo('staff-panel');
+        } else {
+          document.getElementById('loginError').classList.add('show');
+        }
+      });
+      
+      // Staff login back
+      document.getElementById('staffLoginBack').addEventListener('click', () => {
+        navigateTo(AppState.currentPage);
+      });
+      
+      // Logout
+      document.getElementById('logoutBtn').addEventListener('click', () => {
+        AppState.isStaffLoggedIn = false;
+        AppState.staffBranch = null;
+        AppState.selectedClientId = null;
+        document.getElementById('clientDetail').style.display = 'none';
+        document.getElementById('exportButtons').style.display = 'none';
+        document.getElementById('aiPanel').style.display = 'none';
+        navigateTo('client-basics');
+      });
+      
+      // Reset form button - show confirmation modal
+      document.getElementById('resetFormBtn')?.addEventListener('click', () => {
+        document.getElementById('resetModal').classList.add('active');
+      });
+      
+      // Search
+      document.getElementById('searchBtn').addEventListener('click', () => {
+        renderStaffClientList();
+      });
+      
+      // Print QR
+      document.getElementById('printQR')?.addEventListener('click', () => {
+        window.print();
+      });
+      
+      // Review edit buttons
+      document.querySelectorAll('.review-edit-btn').forEach(btn => {
+        btn.addEventListener('click', () => {
+          const pageId = btn.getAttribute('data-goto');
+          navigateTo(pageId);
+        });
+      });
+      
+      // Form field handlers
+      document.querySelectorAll('[data-field]').forEach(field => {
+        const fieldPath = field.getAttribute('data-field');
+        
+        if (field.classList.contains('tag-select')) {
+          field.querySelectorAll('.tag-option').forEach(tag => {
+            tag.addEventListener('click', () => {
+              tag.classList.toggle('selected');
+              const values = [];
+              field.querySelectorAll('.tag-option.selected').forEach(t => {
+                values.push(t.getAttribute('data-value'));
+              });
+              const [section, name] = fieldPath.split('.');
+              if (!AppState.formData[section]) AppState.formData[section] = {};
+              AppState.formData[section][name] = values;
+              saveToStorage();
+              validateForm();
+            });
+          });
+        } else if (field.classList.contains('radio-group')) {
+          field.querySelectorAll('.radio-input').forEach(input => {
+            input.addEventListener('change', () => {
+              const [section, name] = fieldPath.split('.');
+              if (!AppState.formData[section]) AppState.formData[section] = {};
+              AppState.formData[section][name] = input.value;
+              saveToStorage();
+              validateForm();
+            });
+          });
+        } else {
+          field.addEventListener('input', () => {
+            const [section, name] = fieldPath.split('.');
+            if (!AppState.formData[section]) AppState.formData[section] = {};
+            AppState.formData[section][name] = field.value;
+            saveToStorage();
+            validateForm();
+          });
+        }
+      });
+      
+      // Navigation buttons
+      document.getElementById('nextClientBasics')?.addEventListener('click', () => {
+        navigateTo('basic-info');
+      });
+      
+      document.getElementById('backBasicInfo')?.addEventListener('click', () => {
+        navigateTo('client-basics');
+      });
+      
+      document.getElementById('nextBasicInfo')?.addEventListener('click', () => {
+        navigateTo('contraindications');
+      });
+      
+      document.getElementById('backContraindications')?.addEventListener('click', () => {
+        navigateTo('basic-info');
+      });
+      
+      document.getElementById('nextContraindications')?.addEventListener('click', () => {
+        navigateTo('pain-assessment');
+      });
+      
+      document.getElementById('backPainAssessment')?.addEventListener('click', () => {
+        navigateTo('contraindications');
+      });
+      
+      document.getElementById('nextPainAssessment')?.addEventListener('click', () => {
+        navigateTo('postural');
+      });
+      
+      document.getElementById('backPostural')?.addEventListener('click', () => {
+        navigateTo('pain-assessment');
+      });
+      
+      document.getElementById('nextPostural')?.addEventListener('click', () => {
+        navigateTo('review');
+      });
+      
+      document.getElementById('backReview')?.addEventListener('click', () => {
+        navigateTo('postural');
+      });
+      
+      // Body zone clicks
+      document.querySelectorAll('.body-zone').forEach(zone => {
+        zone.addEventListener('click', () => {
+          const zoneName = zone.getAttribute('data-zone');
+          AppState.currentPainZone = zoneName;
+          AppState.editingPainIndex = -1;
+          document.getElementById('painModalTitle').textContent = t('zones.' + zoneName);
+          document.getElementById('severitySlider').value = 5;
+          document.getElementById('severityValue').textContent = '5';
+          document.getElementById('painDuration').value = '';
+          document.getElementById('painTrigger').value = '';
+          document.querySelectorAll('#painTypeSelect .tag-option').forEach(t => t.classList.remove('selected'));
+          document.getElementById('painModal').classList.add('active');
+        });
+      });
+      
+      // Severity slider
+      document.getElementById('severitySlider')?.addEventListener('input', (e) => {
+        document.getElementById('severityValue').textContent = e.target.value;
+      });
+      
+      // Save pain point
+      document.getElementById('savePainPoint')?.addEventListener('click', () => {
+        const severity = parseInt(document.getElementById('severitySlider').value);
+        const types = [];
+        document.querySelectorAll('#painTypeSelect .tag-option.selected').forEach(t => {
+          types.push(t.getAttribute('data-value'));
+        });
+        const duration = document.getElementById('painDuration').value;
+        const trigger = document.getElementById('painTrigger').value;
+        
+        const painPoint = {
+          zone: AppState.currentPainZone,
+          severity,
+          types,
+          duration,
+          trigger,
+          date: new Date().toISOString()
+        };
+        
+        if (AppState.editingPainIndex >= 0) {
+          AppState.formData.painAssessment.points[AppState.editingPainIndex] = painPoint;
+        } else {
+          AppState.formData.painAssessment.points.push(painPoint);
+        }
+        
+        saveToStorage();
+        updatePainPointsList();
+        document.getElementById('painModal').classList.remove('active');
+        validateForm();
+      });
+      
+      // Close pain modal
+      document.getElementById('painModalClose')?.addEventListener('click', () => {
+        document.getElementById('painModal').classList.remove('active');
+      });
+      
+      // Reset modal handlers
+      document.getElementById('resetModalClose')?.addEventListener('click', () => {
+        document.getElementById('resetModal').classList.remove('active');
+      });
+      
+      document.getElementById('resetCancelBtn')?.addEventListener('click', () => {
+        document.getElementById('resetModal').classList.remove('active');
+      });
+      
+      document.getElementById('resetConfirmBtn')?.addEventListener('click', () => {
+        // Clear all form data
+        AppState.formData = {
+          clientBasics: {},
+          basicInfo: {},
+          contraindications: {},
+          painAssessment: { points: [] },
+          postural: {}
+        };
+        AppState.currentClientId = null;
+        AppState.clientPhone = null;
+        AppState.isClientLoggedIn = false;
+        AppState.clientInbox = [];
+        
+        // Clear localStorage
+        localStorage.removeItem('mf_formData');
+        localStorage.removeItem('mf_clientPhone');
+        
+        // Reset form fields in DOM
+        document.getElementById('clientName').value = '';
+        document.getElementById('clientAge').value = '';
+        document.getElementById('clientPhone').value = '';
+        document.querySelectorAll('input[name="gender"]').forEach(r => r.checked = false);
+        document.querySelectorAll('input[name="clientType"]').forEach(r => r.checked = false);
+        document.getElementById('workType').value = '';
+        document.getElementById('exerciseFreq').value = '';
+        document.getElementById('doctorNotes').value = '';
+        document.querySelectorAll('.tag-select').forEach(container => {
+          container.querySelectorAll('.tag-option').forEach(tag => tag.classList.remove('selected'));
+        });
+        document.getElementById('clientStatementAgree').checked = false;
+        document.getElementById('clientSignature').value = '';
+        document.getElementById('signatureDate').textContent = '';
+        
+        // Clear pain points display
+        const painPointsList = document.getElementById('painPointsList');
+        if (painPointsList) painPointsList.innerHTML = '';
+        
+        // Close modal
+        document.getElementById('resetModal').classList.remove('active');
+        
+        // Navigate to first page
+        navigateTo('client-basics');
+        
+        // Re-validate
+        validateForm();
+      });
+      
+      // Submit form
+      document.getElementById('submitForm')?.addEventListener('click', async () => {
+        const clientData = {
+          branch: AppState.branch,
+          formData: JSON.parse(JSON.stringify(AppState.formData))
+        };
+        
+        if (AppState.currentClientId) {
+          clientData.id = AppState.currentClientId;
+        }
+        
+        // Save to API
+        const result = await apiCall('/api/clients', 'POST', clientData);
+        
+        if (result.data?._id) {
+          AppState.currentClientId = result.data._id;
+        }
+        
+        // Also save to localStorage for offline
+        const localClient = {
+          id: 'client_' + Date.now(),
+          branch: AppState.branch,
+          createdAt: new Date().toISOString(),
+          formData: JSON.parse(JSON.stringify(AppState.formData))
+        };
+        
+        // Add to local staffClients for immediate display
+        const existingIndex = AppState.staffClients.findIndex(c => 
+          c.formData?.clientBasics?.phone === AppState.formData.clientBasics?.phone
+        );
+        if (existingIndex >= 0) {
+          AppState.staffClients[existingIndex] = { ...AppState.staffClients[existingIndex], ...localClient };
+        } else {
+          AppState.staffClients.push(localClient);
+        }
+        localStorage.setItem('mf_clients', JSON.stringify(AppState.staffClients));
+        
+        // Sync to DingTalk
+        await syncToDingTalk(localClient);
+        
+        navigateTo('success');
+      });
+      
+      // View inbox
+      document.getElementById('viewInboxBtn')?.addEventListener('click', () => {
+        const phone = AppState.formData.clientBasics?.phone;
+        if (phone) {
+          const savedInbox = localStorage.getItem('mf_inbox_' + phone);
+          AppState.clientInbox = savedInbox ? JSON.parse(savedInbox) : [];
+          AppState.clientPhone = phone;
+          AppState.isClientLoggedIn = true;
+        }
+        renderInbox();
+        navigateTo('inbox');
+      });
+      
+      // Inbox back
+      document.getElementById('inboxBackBtn')?.addEventListener('click', () => {
+        navigateTo('success');
+      });
+      
+      // Signature date
+      document.getElementById('signatureDate').textContent = new Date().toLocaleDateString(AppState.language === 'zh' ? 'zh-CN' : 'en-US');
+      
+      // Client statement checkbox
+      document.getElementById('clientStatementAgree')?.addEventListener('change', (e) => {
+        AppState.formData.contraindications.statementAgreed = e.target.checked;
+        saveToStorage();
+        validateForm();
+      });
+      
+      // Signature input
+      document.getElementById('clientSignature')?.addEventListener('input', (e) => {
+        AppState.formData.contraindications.signature = e.target.value;
+        saveToStorage();
+        validateForm();
+      });
+      
+      // Export PDF (simple implementation)
+      document.getElementById('exportPdf')?.addEventListener('click', () => {
+        const client = AppState.staffClients.find(c => c.id === AppState.selectedClientId);
+        if (!client) return;
+        
+        const content = `
+Client Intake Form - Master Fit
+================================
+Date: ${new Date(client.createdAt).toLocaleDateString()}
+Branch: ${client.branch}
+
+CLIENT BASICS
+Name: ${client.formData.clientBasics?.name}
+Gender: ${client.formData.clientBasics?.gender}
+Age: ${client.formData.clientBasics?.age}
+Phone: ${client.formData.clientBasics?.phone}
+Type: ${client.formData.clientBasics?.clientType}
+
+BASIC INFORMATION
+Work Type: ${client.formData.basicInfo?.workType}
+Exercise Frequency: ${client.formData.basicInfo?.exerciseFreq}
+Exercise Types: ${client.formData.basicInfo?.exerciseTypes?.join(', ')}
+Injury History: ${client.formData.basicInfo?.injuryHistory?.join(', ')}
+Prior Surgery: ${client.formData.basicInfo?.priorSurgery}
+
+PAIN ASSESSMENT
+${(client.formData.painAssessment?.points || []).map(p => `- ${p.zone}: Severity ${p.severity}/10`).join('\n')}
+
+POSTURAL OBSERVATIONS
+${client.formData.postural?.observations?.join(', ') || 'None'}
+        `.trim();
+        
+        const blob = new Blob([content], { type: 'text/plain' });
+        const url = URL.createObjectURL(blob);
+        const a = document.createElement('a');
+        a.href = url;
+        a.download = `client_${client.id}.txt`;
+        a.click();
+        URL.revokeObjectURL(url);
+      });
+      
+      // Export Excel (simple CSV)
+      document.getElementById('exportExcel')?.addEventListener('click', () => {
+        const client = AppState.staffClients.find(c => c.id === AppState.selectedClientId);
+        if (!client) return;
+        
+        const csv = [
+          ['Field', 'Value'],
+          ['Name', client.formData.clientBasics?.name],
+          ['Gender', client.formData.clientBasics?.gender],
+          ['Age', client.formData.clientBasics?.age],
+          ['Phone', client.formData.clientBasics?.phone],
+          ['Client Type', client.formData.clientBasics?.clientType],
+          ['Work Type', client.formData.basicInfo?.workType],
+          ['Exercise Frequency', client.formData.basicInfo?.exerciseFreq],
+          ['Exercise Types', client.formData.basicInfo?.exerciseTypes?.join('; ')],
+          ['Injury History', client.formData.basicInfo?.injuryHistory?.join('; ')],
+          ['Prior Surgery', client.formData.basicInfo?.priorSurgery],
+          ['Pain Points', (client.formData.painAssessment?.points || []).map(p => `${p.zone}(${p.severity})`).join('; ')],
+          ['Postural', client.formData.postural?.observations?.join('; ')]
+        ].map(row => row.join(',')).join('\n');
+        
+        const blob = new Blob([csv], { type: 'text/csv' });
+        const url = URL.createObjectURL(blob);
+        const a = document.createElement('a');
+        a.href = url;
+        a.download = `client_${client.id}.csv`;
+        a.click();
+        URL.revokeObjectURL(url);
+      });
+    }
+
+    function updatePainPointsList() {
+      const list = document.getElementById('painPointsList');
+      const points = AppState.formData.painAssessment?.points || [];
+      
+      list.innerHTML = points.map((p, i) => `
+        <div class="pain-point-card">
+          <div class="pain-point-info">
+            <h4>${t('zones.' + p.zone)}</h4>
+            <p>${p.types?.map(tp => t('fields.' + tp)).join(', ') || '-'} | ${p.duration || '-'}</p>
+          </div>
+          <div style="display:flex;align-items:center;gap:8px;">
+            <span class="pain-point-severity">${p.severity}/10</span>
+            <button class="pain-point-edit" data-index="${i}">
+              <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                <path d="M11 4H4a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2v-7"/>
+                <path d="M18.5 2.5a2.121 2.121 0 0 1 3 3L12 15l-4 1 1-4 9.5-9.5z"/>
+              </svg>
+            </button>
+          </div>
+        </div>
+      `).join('');
+      
+      list.querySelectorAll('.pain-point-edit').forEach(btn => {
+        btn.addEventListener('click', () => {
+          const index = parseInt(btn.getAttribute('data-index'));
+          const point = points[index];
+          AppState.editingPainIndex = index;
+          AppState.currentPainZone = point.zone;
+          document.getElementById('painModalTitle').textContent = t('zones.' + point.zone);
+          document.getElementById('severitySlider').value = point.severity;
+          document.getElementById('severityValue').textContent = point.severity;
+          document.getElementById('painDuration').value = point.duration || '';
+          document.getElementById('painTrigger').value = point.trigger || '';
+          document.querySelectorAll('#painTypeSelect .tag-option').forEach(t => {
+            t.classList.toggle('selected', point.types?.includes(t.getAttribute('data-value')));
+          });
+          document.getElementById('painModal').classList.add('active');
+        });
+      });
+    }
+
+    async function renderInbox() {
+      // Always reload messages from API to ensure freshness
+      const phone = AppState.clientPhone || AppState.formData.clientBasics?.phone;
+      if (phone) {
+        AppState.clientPhone = phone;
+        // Try to load from API
+        const messages = await loadClientMessages(phone);
+        if (messages.length === 0) {
+          // Fall back to localStorage
+          const savedInbox = localStorage.getItem('mf_inbox_' + phone);
+          AppState.clientInbox = savedInbox ? JSON.parse(savedInbox) : [];
+        }
+      }
+      
+      const messages = AppState.clientInbox;
+      const messageList = document.getElementById('messageList');
+      
+      if (messages.length === 0) {
+        messageList.innerHTML = '<p style="text-align:center;color:var(--text-muted);padding:24px;">No messages yet</p>';
+      } else {
+        messageList.innerHTML = messages.map(m => `
+          <div class="message-item">
+            <div class="message-header">
+              <span class="message-from">${m.from || m.fromName || 'Staff'}</span>
+              <span class="message-date">${new Date(m.createdAt || m.date).toLocaleDateString()}</span>
+            </div>
+            <div class="message-body">${m.message}</div>
+          </div>
+        `).join('');
+      }
+      
+      // Render pain trend
+      const painHistory = AppState.formData.painAssessment?.points?.map(p => ({
+        severity: p.severity,
+        date: p.date
+      })) || [];
+      renderPainChart(painHistory.length > 0 ? painHistory : []);
+      
+      // Show appointment if exists
+      if (phone) {
+        const result = await apiCall(`/api/appointments/${phone}`);
+        if (!result.error && result.data) {
+          document.getElementById('nextAppointment').style.display = 'block';
+          document.getElementById('appointmentDateTime').textContent = result.data.date + (result.data.time ? ' ' + result.data.time : '');
+        } else {
+          // Check local storage
+          const client = AppState.staffClients.find(c => c.formData?.clientBasics?.phone === phone);
+          if (client?.appointment) {
+            document.getElementById('nextAppointment').style.display = 'block';
+            document.getElementById('appointmentDateTime').textContent = client.appointment.date;
+          } else {
+            document.getElementById('nextAppointment').style.display = 'none';
+          }
+        }
+      } else {
+        document.getElementById('nextAppointment').style.display = 'none';
+      }
+    }
+
+    // ========================================
+    // Initialize Application
+    // ========================================
+    async function init() {
+      // CRITICAL: Re-sync state from localStorage before anything else
+      // This fixes the "first click does nothing" bug
+      AppState.language = localStorage.getItem('mf_language') || (navigator.language.startsWith('zh') ? 'zh' : 'en');
+      AppState.darkMode = localStorage.getItem('mf_darkmode') === 'true';
+      AppState.assistedMode = localStorage.getItem('mf_assisted') === 'true';
+      
+      // Load saved state
+      await loadFromStorage();
+      
+      // Apply all visual states synchronously
+      document.documentElement.lang = AppState.language;
+      document.body.classList.toggle('dark-mode', AppState.darkMode);
+      document.documentElement.classList.toggle('assisted-mode', AppState.assistedMode);
+      
+      // Initialize event handlers FIRST, before any DOM updates
+      initEventHandlers();
+      
+      // Now apply translations (this also calls updateNavItems)
+      updateLanguage();
+      
+      // Handle hash routing
+      const hash = window.location.hash.replace('#', '');
+      if (hash && hash.startsWith('branch=')) {
+        AppState.branch = hash.replace('branch=', '');
+        localStorage.setItem('mf_branch', AppState.branch);
+        document.getElementById('topNav').style.display = 'block';
+        document.getElementById('staffLoginBtn').style.display = 'flex';
+        updateNavItems();
+        navigateTo('client-basics');
+      } else if (AppState.branch) {
+        document.getElementById('topNav').style.display = 'block';
+        document.getElementById('staffLoginBtn').style.display = 'flex';
+        updateNavItems();
+      }
+      
+      // Restore form field values
+      restoreFormValues();
+      
+      // Initial validation
+      validateForm();
+    }
+
+    function restoreFormValues() {
+      // Client basics
+      const cb = AppState.formData.clientBasics || {};
+      if (cb.name) document.getElementById('clientName').value = cb.name;
+      if (cb.age) document.getElementById('clientAge').value = cb.age;
+      if (cb.phone) document.getElementById('clientPhone').value = cb.phone;
+      if (cb.gender) {
+        const radio = document.querySelector(`input[name="gender"][value="${cb.gender}"]`);
+        if (radio) radio.checked = true;
+      }
+      if (cb.clientType) {
+        const radio = document.querySelector(`input[name="clientType"][value="${cb.clientType}"]`);
+        if (radio) radio.checked = true;
+      }
+      
+      // Basic info
+      const bi = AppState.formData.basicInfo || {};
+      if (bi.workType) document.getElementById('workType').value = bi.workType;
+      if (bi.exerciseFreq) document.getElementById('exerciseFreq').value = bi.exerciseFreq;
+      if (bi.doctorNotes) document.getElementById('doctorNotes').value = bi.doctorNotes;
+      
+      // Restore tag selections
+      ['exerciseTypes', 'injuryHistory', 'previousTreatments'].forEach(field => {
+        const values = bi[field] || [];
+        const container = document.querySelector(`[data-field="basicInfo.${field}"]`);
+        if (container) {
+          container.querySelectorAll('.tag-option').forEach(tag => {
+            tag.classList.toggle('selected', values.includes(tag.getAttribute('data-value')));
+          });
+        }
+      });
+      
+      // Contraindications
+      const ci = AppState.contraindications || AppState.formData.contraindications || {};
+      const ciContainer = document.querySelector('[data-field="contraindications.conditions"]');
+      if (ciContainer && ci.conditions) {
+        ciContainer.querySelectorAll('.tag-option').forEach(tag => {
+          tag.classList.toggle('selected', ci.conditions.includes(tag.getAttribute('data-value')));
+        });
+      }
+      if (ci.signature) document.getElementById('clientSignature').value = ci.signature;
+      if (ci.statementAgreed) document.getElementById('clientStatementAgree').checked = true;
+      
+      // Postural
+      const po = AppState.formData.postural || {};
+      const poContainer = document.querySelector('[data-field="postural.observations"]');
+      if (poContainer && po.observations) {
+        poContainer.querySelectorAll('.tag-option').forEach(tag => {
+          tag.classList.toggle('selected', po.observations.includes(tag.getAttribute('data-value')));
+        });
+      }
+      
+      // Pain points
+      updatePainPointsList();
+    }
+
+    // Start app
+    document.addEventListener('DOMContentLoaded', init);
+  </script>
+
+
+</body></html>
