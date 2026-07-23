@@ -4514,5 +4514,340 @@ ${client.formData.postural?.observations?.join(', ') || 'None'}
     }
   })();
   </script>
+<script>
+  // ===== FACE ID / WEBAUTHN STANDALONE MODULE =====
+  (function() {
+
+    var STORAGE_KEY = 'mf_passkey_phones';
+
+    // Check if WebAuthn is supported
+    function isSupported() {
+      return window.PublicKeyCredential !== undefined &&
+             typeof window.PublicKeyCredential === 'function';
+    }
+
+    // Convert string to Uint8Array
+    function strToUint8(str) {
+      return new TextEncoder().encode(str);
+    }
+
+    // Convert ArrayBuffer to base64
+    function bufToBase64(buf) {
+      return btoa(String.fromCharCode.apply(null, new Uint8Array(buf)));
+    }
+
+    // Convert base64 to ArrayBuffer
+    function base64ToBuf(b64) {
+      var bin = atob(b64);
+      var arr = new Uint8Array(bin.length);
+      for (var i = 0; i < bin.length; i++) arr[i] = bin.charCodeAt(i);
+      return arr.buffer;
+    }
+
+    // Get stored passkey map { credentialIdBase64: phone }
+    function getPasskeyMap() {
+      try { return JSON.parse(localStorage.getItem(STORAGE_KEY) || '{}'); }
+      catch(e) { return {}; }
+    }
+
+    function savePasskeyMap(map) {
+      localStorage.setItem(STORAGE_KEY, JSON.stringify(map));
+    }
+
+    // Show a simple modal with message and buttons
+    function showModal(title, message, buttons) {
+      var existing = document.getElementById('faceIdModal');
+      if (existing) existing.remove();
+
+      var overlay = document.createElement('div');
+      overlay.id = 'faceIdModal';
+      overlay.style.cssText = 'position:fixed;top:0;left:0;width:100%;height:100%;background:rgba(0,0,0,0.5);z-index:999999;display:flex;align-items:center;justify-content:center;padding:20px;box-sizing:border-box;';
+
+      var box = document.createElement('div');
+      box.style.cssText = 'background:#fff;border-radius:16px;padding:28px 24px;max-width:340px;width:100%;box-shadow:0 8px 32px rgba(0,0,0,0.2);';
+
+      var titleEl = document.createElement('h3');
+      titleEl.style.cssText = 'margin:0 0 12px;font-size:18px;color:#8B0000;font-family:sans-serif;';
+      titleEl.textContent = title;
+
+      var msgEl = document.createElement('p');
+      msgEl.style.cssText = 'margin:0 0 20px;font-size:15px;color:#333;line-height:1.5;font-family:sans-serif;';
+      msgEl.innerHTML = message;
+
+      var btnRow = document.createElement('div');
+      btnRow.style.cssText = 'display:flex;gap:12px;flex-wrap:wrap;';
+
+      buttons.forEach(function(b) {
+        var btn = document.createElement('button');
+        btn.textContent = b.label;
+        btn.style.cssText = 'flex:1;min-width:100px;padding:12px;border-radius:8px;border:none;font-size:15px;cursor:pointer;font-family:sans-serif;' +
+          (b.primary ? 'background:#8B0000;color:#fff;' : 'background:#f0f0f0;color:#333;');
+        btn.addEventListener('click', function() {
+          overlay.remove();
+          if (b.onClick) b.onClick();
+        });
+        btnRow.appendChild(btn);
+      });
+
+      box.appendChild(titleEl);
+      box.appendChild(msgEl);
+      box.appendChild(btnRow);
+      overlay.appendChild(box);
+      document.body.appendChild(overlay);
+    }
+
+    // Register Face ID for a phone number
+    async function registerFaceId(phone, retryCount) {
+      retryCount = retryCount || 0;
+      try {
+        var challenge = new Uint8Array(32);
+        crypto.getRandomValues(challenge);
+
+        var credential = await navigator.credentials.create({
+          publicKey: {
+            challenge: challenge,
+            rp: { name: 'Master Fit', id: window.location.hostname },
+            user: {
+              id: strToUint8(phone),
+              name: phone,
+              displayName: 'Master Fit Client'
+            },
+            pubKeyCredParams: [
+              { alg: -7, type: 'public-key' },
+              { alg: -257, type: 'public-key' }
+            ],
+            authenticatorSelection: {
+              authenticatorAttachment: 'platform',
+              userVerification: 'required'
+            },
+            timeout: 60000
+          }
+        });
+
+        // Save credential ID mapped to phone
+        var map = getPasskeyMap();
+        map[bufToBase64(credential.rawId)] = phone;
+        savePasskeyMap(map);
+
+        showModal(
+          'Face ID 已设置 ✓',
+          'Face ID set up successfully! You can now log in with Face ID next time.<br><br>面容ID设置成功！下次可直接使用面容ID登录。',
+          [{ label: 'OK 好的', primary: true, onClick: function(){} }]
+        );
+
+      } catch(err) {
+        if (retryCount >= 2) {
+          showModal(
+            'Face ID Unavailable',
+            'Face ID setup is not available on this device or browser. You can still use your phone number to access your records.<br><br>此设备或浏览器不支持面容ID，您仍可使用手机号访问记录。',
+            [{ label: 'OK 好的', primary: true, onClick: function(){} }]
+          );
+          return;
+        }
+
+        showModal(
+          'Face ID Failed / 设置失败',
+          'Face ID setup failed. Please try again.<br><br>面容ID设置失败，请重试。 (' + (retryCount + 1) + '/3)',
+          [
+            { label: 'Try Again 重试', primary: true, onClick: function() { registerFaceId(phone, retryCount + 1); } },
+            { label: 'Skip 跳过', primary: false, onClick: function(){} }
+          ]
+        );
+      }
+    }
+
+    // Authenticate with Face ID — returns phone number or null
+    async function authenticateWithFaceId() {
+      try {
+        var map = getPasskeyMap();
+        var credIds = Object.keys(map);
+        if (credIds.length === 0) return null;
+
+        var challenge = new Uint8Array(32);
+        crypto.getRandomValues(challenge);
+
+        var allowCredentials = credIds.map(function(id) {
+          return { type: 'public-key', id: base64ToBuf(id) };
+        });
+
+        var assertion = await navigator.credentials.get({
+          publicKey: {
+            challenge: challenge,
+            allowCredentials: allowCredentials,
+            userVerification: 'required',
+            timeout: 60000
+          }
+        });
+
+        var usedId = bufToBase64(assertion.rawId);
+        return map[usedId] || null;
+
+      } catch(err) {
+        return null;
+      }
+    }
+
+    // Prompt to set up Face ID after form submission
+    function promptFaceIdSetup(phone) {
+      if (!isSupported()) return;
+      if (!phone || phone.length < 7) return;
+
+      // Check if already set up for this phone
+      var map = getPasskeyMap();
+      var alreadySetUp = Object.values(map).indexOf(phone) !== -1;
+      if (alreadySetUp) return;
+
+      setTimeout(function() {
+        showModal(
+          'Enable Face ID? / 开启面容ID？',
+          'Would you like to enable Face ID for faster access next time? No more typing your phone number!<br><br>是否开启面容ID，下次无需输入手机号即可快速登录？',
+          [
+            {
+              label: 'Yes, Enable 开启',
+              primary: true,
+              onClick: function() { registerFaceId(phone); }
+            },
+            {
+              label: 'Not Now 暂不',
+              primary: false,
+              onClick: function() {}
+            }
+          ]
+        );
+      }, 1500); // slight delay so it doesn't pop up before the success screen
+    }
+
+    // Add Face ID button to branch selection / phone entry screen
+    function addFaceIdButton() {
+      if (!isSupported()) return;
+
+      var map = getPasskeyMap();
+      if (Object.keys(map).length === 0) return; // no passkeys registered yet
+
+      // Wait for DOM to be ready and find the phone input
+      var attempts = 0;
+      var interval = setInterval(function() {
+        attempts++;
+        if (attempts > 20) { clearInterval(interval); return; }
+
+        var phoneInput = document.getElementById('clientPhone');
+        if (!phoneInput) return;
+        clearInterval(interval);
+
+        // Don't add twice
+        if (document.getElementById('faceIdLoginBtn')) return;
+
+        var btn = document.createElement('button');
+        btn.id = 'faceIdLoginBtn';
+        btn.innerHTML = '&#x1F9B7; Use Face ID / 使用面容ID';
+        btn.style.cssText = 'display:block;width:100%;margin-top:12px;padding:14px;background:transparent;border:2px solid #8B0000;border-radius:8px;color:#8B0000;font-size:15px;cursor:pointer;font-family:sans-serif;font-weight:500;';
+
+        btn.addEventListener('click', async function() {
+          btn.textContent = 'Scanning... 扫描中...';
+          btn.disabled = true;
+
+          var phone = await authenticateWithFaceId();
+
+          if (phone) {
+            // Fill in the phone number and trigger pre-fill
+            phoneInput.value = phone;
+            phoneInput.dispatchEvent(new Event('input', { bubbles: true }));
+            phoneInput.dispatchEvent(new Event('change', { bubbles: true }));
+            phoneInput.dispatchEvent(new Event('blur', { bubbles: true }));
+
+            showModal(
+              'Welcome Back! 欢迎回来！',
+              'Recognized! Your previous information has been loaded.<br><br>身份验证成功！已加载您上次填写的信息。',
+              [{ label: 'Continue 继续', primary: true, onClick: function(){} }]
+            );
+          } else {
+            showModal(
+              'Face ID Failed / 识别失败',
+              'Face ID recognition failed. Please try again or enter your phone number manually.<br><br>面容ID识别失败，请重试或手动输入手机号。',
+              [
+                {
+                  label: 'Try Again 重试',
+                  primary: true,
+                  onClick: async function() {
+                    var phone2 = await authenticateWithFaceId();
+                    if (phone2) {
+                      phoneInput.value = phone2;
+                      phoneInput.dispatchEvent(new Event('blur', { bubbles: true }));
+                    }
+                  }
+                },
+                { label: 'Use Phone Number 使用手机号', primary: false, onClick: function(){} }
+              ]
+            );
+          }
+
+          btn.innerHTML = '&#x1F9B7; Use Face ID / 使用面容ID';
+          btn.disabled = false;
+        });
+
+        // Insert button after phone input's parent field group
+        var fieldGroup = phoneInput.closest('.field-group') || phoneInput.parentNode;
+        fieldGroup.parentNode.insertBefore(btn, fieldGroup.nextSibling);
+
+      }, 300);
+    }
+
+    // Hook into form submission to offer Face ID setup
+    function hookFormSubmission() {
+      // Watch for successful submissions by observing navigation changes
+      var lastPage = '';
+      setInterval(function() {
+        // If we just navigated to the review page or branch selection after submit
+        var activePage = document.querySelector('.page.active');
+        if (!activePage) return;
+
+        var pageId = activePage.id;
+        if (pageId === lastPage) return;
+        lastPage = pageId;
+
+        if (pageId === 'page-client-basics' || pageId === 'page-branch') {
+          // Page changed to start — add Face ID button if applicable
+          setTimeout(addFaceIdButton, 500);
+        }
+      }, 500);
+
+      // Also intercept submit button click
+      document.addEventListener('click', function(e) {
+        var btn = e.target.closest('#submitBtn');
+        if (!btn) return;
+
+        setTimeout(function() {
+          var phone = '';
+          var phoneInput = document.getElementById('clientPhone');
+          if (phoneInput) phone = phoneInput.value;
+
+          // Try AppState as fallback
+          if (!phone && window.AppState && window.AppState.formData) {
+            phone = (window.AppState.formData.clientBasics || {}).phone || '';
+          }
+
+          if (phone && phone.length >= 7) {
+            promptFaceIdSetup(phone);
+          }
+        }, 2000);
+      }, true);
+    }
+
+    // Init
+    function init() {
+      if (!isSupported()) return; // silently do nothing on unsupported browsers
+      hookFormSubmission();
+      // Try to add Face ID button on initial load too (for return visitors)
+      setTimeout(addFaceIdButton, 1000);
+    }
+
+    if (document.readyState === 'loading') {
+      document.addEventListener('DOMContentLoaded', init);
+    } else {
+      init();
+    }
+
+  })();
+  </script>
 </body>
 </html>
