@@ -3386,12 +3386,9 @@
       `;
       
     const bi = AppState.formData.basicInfo || {};
-      const exerciseFreqMap = { 'never': 'fields.never', '1-month': 'fields.1month', '1-week': 'fields.1week', '2-3-week': 'fields.23week', '5+': 'fields.5plus' };
-      const workTypeMap = { 'sedentary': 'fields.sedentary', 'standing': 'fields.standing', 'physical': 'fields.physical', 'other': 'fields.other' };
       reviewBasicInfo.innerHTML = `
-        <div class="review-item"><span class="review-label">${t('fields.workType')}:</span><span class="review-value">${bi.workType ? t(workTypeMap[bi.workType] || 'fields.' + bi.workType) : '-'}</span></div>
-       <div class="review-item"><span class="review-label">${t('fields.exerciseFreq')}:</span><span class="review-value">${bi.exerciseFreq ? t(exerciseFreqMap[bi.exerciseFreq] || 'fields.' + bi.exerciseFreq) : '-'}</span></div>
-      `;
+        <div class="review-item"><span class="review-label">${t('fields.workType')}:</span><span class="review-value">${bi.workType ? t('fields.' + bi.workType) : '-'}</span></div>
+        <div class="review-item"><span class="review-label">${t('fields.exerciseFreq')}:</span><span class="review-value">${bi.exerciseFreq ? t('fields.' + bi.exerciseFreq) : '-'}</span></div>
       
       const ci = AppState.formData.contraindications || {};
       reviewContraindications.innerHTML = `
