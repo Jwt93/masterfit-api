@@ -3396,7 +3396,6 @@
       reviewContraindications.innerHTML = `
         <div class="review-item"><span class="review-label">${t('fields.contraindications')}:</span></div>
         <div class="review-tags">${(ci.conditions || []).map(c => `<span class="review-tag">${t('fields.' + c)}</span>`).join('')}</div>
-        <div class="review-item"><span class="review-label">${t('fields.signature')}:</span><span class="review-value">${ci.signature || '-'}</span></div>
       `;
       
       const pa = AppState.formData.painAssessment || {};
