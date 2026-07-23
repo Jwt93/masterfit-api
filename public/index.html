@@ -3390,7 +3390,8 @@
       const workTypeMap = { 'sedentary': 'fields.sedentary', 'standing': 'fields.standing', 'physical': 'fields.physical', 'other': 'fields.other' };
       reviewBasicInfo.innerHTML = `
         <div class="review-item"><span class="review-label">${t('fields.workType')}:</span><span class="review-value">${bi.workType ? t(workTypeMap[bi.workType] || 'fields.' + bi.workType) : '-'}</span></div>
-        <div class="review-item"><span class="review-label">${t('fields.exerciseFreq')}:</span><span class="review-value">${bi.exerciseFreq ? t(exerciseFreqMap[bi.exerciseFreq] || 'fields.' + bi.exerciseFreq) : '-'}</span></div>
+       <div class="review-item"><span class="review-label">${t('fields.exerciseFreq')}:</span><span class="review-value">${bi.exerciseFreq ? t(exerciseFreqMap[bi.exerciseFreq] || 'fields.' + bi.exerciseFreq) : '-'}</span></div>
+      `;
       
       const ci = AppState.formData.contraindications || {};
       reviewContraindications.innerHTML = `
