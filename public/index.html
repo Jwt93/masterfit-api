@@ -4123,6 +4123,14 @@ function generateQRCode(text, container) {
         await syncToDingTalk(localClient);
         
         navigateTo('success');
+        
+        // Trigger Face ID setup prompt after successful submission
+        setTimeout(function() {
+          var phone = (AppState.formData.clientBasics || {}).phone || '';
+          if (phone && phone.length >= 7 && typeof promptFaceIdSetup === 'function') {
+            promptFaceIdSetup(phone);
+          }
+        }, 2000);
       });
       
       // View inbox
