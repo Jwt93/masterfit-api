@@ -3387,8 +3387,8 @@
       
     const bi = AppState.formData.basicInfo || {};
       reviewBasicInfo.innerHTML = `
-        <div class="review-item"><span class="review-label">${t('fields.workType')}:</span><span class="review-value">${bi.workType ? t('fields.' + bi.workType) : '-'}</span></div>
         <div class="review-item"><span class="review-label">${t('fields.exerciseFreq')}:</span><span class="review-value">${bi.exerciseFreq ? t('fields.' + bi.exerciseFreq) : '-'}</span></div>
+      `;
       
       const ci = AppState.formData.contraindications || {};
       reviewContraindications.innerHTML = `
