@@ -3371,20 +3371,18 @@
       }
     }
 
-    function updateReviewPage() {
-      const reviewClientBasics = document.getElementById('reviewClientBasics');
-      const reviewBasicInfo = document.getElementById('reviewBasicInfo');
-      const reviewContraindications = document.getElementById('reviewContraindications');
-      const reviewPainAssessment = document.getElementById('reviewPainAssessment');
-      const reviewPostural = document.getElementById('reviewPostural');
+    const cb = AppState.formData.clientBasics || {};
       
-      const cb = AppState.formData.clientBasics || {};
+      // Helper to map raw values to translation keys
+      const clientTypeMap = { 'first-time': 'fields.firstTime', 'member': 'fields.member', 'referral': 'fields.referral' };
+      const genderMap = { 'male': 'fields.male', 'female': 'fields.female' };
+      
       reviewClientBasics.innerHTML = `
         <div class="review-item"><span class="review-label">${t('fields.name')}:</span><span class="review-value">${cb.name || '-'}</span></div>
-        <div class="review-item"><span class="review-label">${t('fields.gender')}:</span><span class="review-value">${cb.gender ? t('fields.' + cb.gender) : '-'}</span></div>
+        <div class="review-item"><span class="review-label">${t('fields.gender')}:</span><span class="review-value">${cb.gender ? t(genderMap[cb.gender] || 'fields.' + cb.gender) : '-'}</span></div>
         <div class="review-item"><span class="review-label">${t('fields.age')}:</span><span class="review-value">${cb.age || '-'}</span></div>
         <div class="review-item"><span class="review-label">${t('fields.phone')}:</span><span class="review-value">${cb.phone || '-'}</span></div>
-        <div class="review-item"><span class="review-label">${t('fields.clientType')}:</span><span class="review-value">${cb.clientType ? t('fields.' + cb.clientType) : '-'}</span></div>
+        <div class="review-item"><span class="review-label">${t('fields.clientType')}:</span><span class="review-value">${cb.clientType ? t(clientTypeMap[cb.clientType] || 'fields.' + cb.clientType) : '-'}</span></div>
       `;
       
       const bi = AppState.formData.basicInfo || {};
