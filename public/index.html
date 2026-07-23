@@ -4813,7 +4813,7 @@ ${client.formData.postural?.observations?.join(', ') || 'None'}
 
       // Also intercept submit button click
       document.addEventListener('click', function(e) {
-        var btn = e.target.closest('#submitBtn');
+        var btn = e.target.closest('#submitForm');
         if (!btn) return;
 
         setTimeout(function() {
