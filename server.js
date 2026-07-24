@@ -21,6 +21,7 @@ const path = require('path');
 const crypto = require('crypto');
 const { MongoClient, ObjectId } = require('mongodb');
 const Anthropic = require('@anthropic-ai/sdk');
+const bcrypt = require('bcryptjs');
 
 const app = express();
 const PORT = process.env.PORT || 3000;
@@ -48,6 +49,8 @@ let messagesCollection;
 let appointmentsCollection;
 let dingtalkSyncsCollection;
 let notesCollection;
+let staffCollection;
+let sessionsCollection;
 
 async function connectDB() {
   if (db) return true;
@@ -64,6 +67,8 @@ async function connectDB() {
     appointmentsCollection = db.collection('appointments');
     dingtalkSyncsCollection = db.collection('dingtalk_syncs');
     notesCollection = db.collection('notes');
+    staffCollection = db.collection('staff');
+    sessionsCollection = db.collection('sessions');
 
     // Create indexes
     try {
@@ -74,11 +79,18 @@ async function connectDB() {
       await messagesCollection.createIndex({ createdAt: -1 });
       await appointmentsCollection.createIndex({ clientPhone: 1 });
       await appointmentsCollection.createIndex({ createdAt: -1 });
+      await appointmentsCollection.createIndex({ date: 1 });
+      await appointmentsCollection.createIndex({ branch: 1 });
       await notesCollection.createIndex({ clientPhone: 1 });
       await notesCollection.createIndex({ createdAt: -1 });
+      await staffCollection.createIndex({ username: 1 }, { unique: true });
+      await sessionsCollection.createIndex({ token: 1 }, { unique: true });
+      await sessionsCollection.createIndex({ expiresAt: 1 }, { expireAfterSeconds: 0 });
     } catch (e) {
       console.log('Index creation skipped (may already exist):', e.message);
     }
+
+    await ensureDefaultManager();
 
     console.log('MongoDB connected successfully');
     return true;
@@ -90,6 +102,60 @@ async function connectDB() {
 
 function generateId() {
   return Date.now().toString(36) + Math.random().toString(36).substr(2, 9);
+}
+
+// Creates a default manager account (admin / MASTERFIT) the first time the
+// server ever runs against an empty staff collection, so nothing breaks for
+// existing deployments that only knew the old shared password.
+async function ensureDefaultManager() {
+  const count = await staffCollection.countDocuments({});
+  if (count > 0) return;
+
+  const passwordHash = await bcrypt.hash('MASTERFIT', 10);
+  await staffCollection.insertOne({
+    username: 'admin',
+    passwordHash,
+    branch: null,
+    role: 'manager',
+    createdAt: new Date().toISOString()
+  });
+  console.log('No staff accounts found - created default manager account (username: admin)');
+}
+
+function generateSessionToken() {
+  return crypto.randomBytes(32).toString('hex');
+}
+
+function getBearerToken(req) {
+  const header = req.headers.authorization || '';
+  return header.startsWith('Bearer ') ? header.slice(7) : null;
+}
+
+async function getStaffFromToken(token) {
+  if (!token) return null;
+  const session = await sessionsCollection.findOne({ token, expiresAt: { $gt: new Date() } });
+  if (!session) return null;
+  return staffCollection.findOne({ _id: session.staffId });
+}
+
+// Express middleware factory - requires a valid session token, optionally
+// restricted to specific roles (e.g. requireAuth(['manager'])).
+function requireAuth(roles) {
+  return async (req, res, next) => {
+    const staff = await getStaffFromToken(getBearerToken(req));
+    if (!staff) {
+      return res.status(401).json({ error: 'Not authenticated' });
+    }
+    if (roles && !roles.includes(staff.role)) {
+      return res.status(403).json({ error: 'Insufficient permissions' });
+    }
+    req.staff = staff;
+    next();
+  };
+}
+
+function publicStaffView(staff) {
+  return { _id: staff._id, username: staff.username, branch: staff.branch, role: staff.role };
 }
 
 // Middleware
@@ -215,7 +281,16 @@ app.get('/api/clients', async (req, res) => {
     const { branch, search } = req.query;
 
     let query = {};
-    if (branch) query.branch = branch;
+    // A non-manager staff session is always scoped to their own branch,
+    // regardless of what branch was requested. Falls back to the plain
+    // query param when no session token is present (e.g. client-side code
+    // that isn't staff-authenticated yet).
+    const staff = await getStaffFromToken(getBearerToken(req));
+    if (staff && staff.role !== 'manager') {
+      query.branch = staff.branch;
+    } else if (branch) {
+      query.branch = branch;
+    }
     if (search) {
       query.$or = [
         { 'formData.clientBasics.name': { $regex: search, $options: 'i' } },
@@ -300,16 +375,18 @@ app.get('/api/messages/:phone', async (req, res) => {
   }
 });
 
-// Create appointment
+// Create (or reschedule, by replacing) an appointment
 app.post('/api/appointments', async (req, res) => {
   try {
-    const { clientPhone, date, time, branch } = req.body;
+    const { clientPhone, date, time, branch, note } = req.body;
 
     if (!clientPhone || !date) {
       return res.status(400).json({ error: 'Missing required fields' });
     }
 
-    // Replace any existing appointment for this client
+    // Replace any existing appointment for this client - this is also how
+    // "reschedule" works: scheduling a new one for the same client replaces
+    // the old one.
     await appointmentsCollection.deleteMany({ clientPhone });
 
     const appointmentData = {
@@ -317,15 +394,48 @@ app.post('/api/appointments', async (req, res) => {
       date,
       time: time || '',
       branch: branch || '',
+      note: note || '',
       reminderSent: false,
       createdAt: new Date().toISOString()
     };
 
     const result = await appointmentsCollection.insertOne(appointmentData);
     const saved = await appointmentsCollection.findOne({ _id: result.insertedId });
+
+    // Push a notification to the client's inbox
+    const notifMessage = `Your appointment has been scheduled for ${date}${time ? ' at ' + time : ''}. 您的预约已安排在${date}${time ? ' ' + time : ''}。`;
+    await messagesCollection.insertOne({
+      clientPhone,
+      from: 'Staff',
+      message: notifMessage,
+      type: 'appointment',
+      createdAt: new Date().toISOString()
+    });
+
     res.json({ data: saved });
   } catch (error) {
     console.error('Error creating appointment:', error);
+    res.status(500).json({ error: error.message });
+  }
+});
+
+// List appointments, optionally filtered by branch and/or month (YYYY-MM) -
+// backs the staff calendar view.
+app.get('/api/appointments', async (req, res) => {
+  try {
+    const { branch, month } = req.query;
+    const query = {};
+    if (branch) query.branch = branch;
+    if (month) query.date = { $regex: `^${month}` };
+
+    const appointments = await appointmentsCollection
+      .find(query)
+      .sort({ date: 1, time: 1 })
+      .toArray();
+
+    res.json({ data: appointments });
+  } catch (error) {
+    console.error('Error listing appointments:', error);
     res.status(500).json({ error: error.message });
   }
 });
@@ -342,6 +452,26 @@ app.get('/api/appointments/:phone', async (req, res) => {
     res.json({ data: appointment || null });
   } catch (error) {
     console.error('Error fetching appointment:', error);
+    res.status(500).json({ error: error.message });
+  }
+});
+
+// Delete an appointment
+app.delete('/api/appointments/:id', async (req, res) => {
+  try {
+    const { id } = req.params;
+    if (!ObjectId.isValid(id)) {
+      return res.status(400).json({ error: 'Invalid appointment ID' });
+    }
+
+    const result = await appointmentsCollection.deleteOne({ _id: new ObjectId(id) });
+    if (result.deletedCount === 0) {
+      return res.status(404).json({ error: 'Appointment not found' });
+    }
+
+    res.json({ success: true });
+  } catch (error) {
+    console.error('Error deleting appointment:', error);
     res.status(500).json({ error: error.message });
   }
 });
@@ -714,6 +844,129 @@ app.post('/api/ai/assess/:id', async (req, res) => {
       return res.status(502).json({ error: `AI assistant error: ${error.message}` });
     }
     console.error('Error generating AI assessment:', error);
+    res.status(500).json({ error: error.message });
+  }
+});
+
+// ==================== STAFF ACCOUNTS ====================
+
+// Staff login - verifies username/password and issues a session token.
+app.post('/api/staff/login', async (req, res) => {
+  try {
+    const { username, password } = req.body;
+    if (!username || !password) {
+      return res.status(400).json({ error: 'Missing username or password' });
+    }
+
+    const staff = await staffCollection.findOne({ username: username.trim() });
+    if (!staff) {
+      return res.status(401).json({ error: 'Invalid username or password' });
+    }
+
+    const valid = await bcrypt.compare(password, staff.passwordHash);
+    if (!valid) {
+      return res.status(401).json({ error: 'Invalid username or password' });
+    }
+
+    const token = generateSessionToken();
+    const expiresAt = new Date(Date.now() + 24 * 60 * 60 * 1000); // 24h
+    await sessionsCollection.insertOne({ token, staffId: staff._id, createdAt: new Date(), expiresAt });
+
+    res.json({ data: { token, staff: publicStaffView(staff) } });
+  } catch (error) {
+    console.error('Error logging in staff:', error);
+    res.status(500).json({ error: error.message });
+  }
+});
+
+// Validate the current session token and return the logged-in staff member.
+app.get('/api/staff/me', requireAuth(), async (req, res) => {
+  res.json({ data: publicStaffView(req.staff) });
+});
+
+// Staff logout - invalidates the session token.
+app.post('/api/staff/logout', async (req, res) => {
+  try {
+    const token = getBearerToken(req);
+    if (token) await sessionsCollection.deleteOne({ token });
+    res.json({ success: true });
+  } catch (error) {
+    res.status(500).json({ error: error.message });
+  }
+});
+
+// List staff accounts (managers only)
+app.get('/api/staff', requireAuth(['manager']), async (req, res) => {
+  try {
+    const staffList = await staffCollection.find({}).toArray();
+    res.json({ data: staffList.map(publicStaffView) });
+  } catch (error) {
+    console.error('Error listing staff:', error);
+    res.status(500).json({ error: error.message });
+  }
+});
+
+// Create a staff account (managers only)
+app.post('/api/staff', requireAuth(['manager']), async (req, res) => {
+  try {
+    const { username, password, branch, role } = req.body;
+
+    if (!username || !password || !role) {
+      return res.status(400).json({ error: 'Missing required fields' });
+    }
+    if (!['staff', 'manager'].includes(role)) {
+      return res.status(400).json({ error: 'Invalid role' });
+    }
+    if (role === 'staff' && !['shenzhen', 'shanghai'].includes(branch)) {
+      return res.status(400).json({ error: 'Branch is required for staff accounts' });
+    }
+
+    const existing = await staffCollection.findOne({ username: username.trim() });
+    if (existing) {
+      return res.status(409).json({ error: 'Username already exists' });
+    }
+
+    const passwordHash = await bcrypt.hash(password, 10);
+    const newStaff = {
+      username: username.trim(),
+      passwordHash,
+      branch: role === 'manager' ? null : branch,
+      role,
+      createdAt: new Date().toISOString()
+    };
+    const result = await staffCollection.insertOne(newStaff);
+    res.json({ data: publicStaffView({ ...newStaff, _id: result.insertedId }) });
+  } catch (error) {
+    console.error('Error creating staff account:', error);
+    res.status(500).json({ error: error.message });
+  }
+});
+
+// Delete a staff account (managers only)
+app.delete('/api/staff/:id', requireAuth(['manager']), async (req, res) => {
+  try {
+    const { id } = req.params;
+    if (!ObjectId.isValid(id)) {
+      return res.status(400).json({ error: 'Invalid staff ID' });
+    }
+
+    const target = await staffCollection.findOne({ _id: new ObjectId(id) });
+    if (!target) {
+      return res.status(404).json({ error: 'Staff account not found' });
+    }
+
+    if (target.role === 'manager') {
+      const managerCount = await staffCollection.countDocuments({ role: 'manager' });
+      if (managerCount <= 1) {
+        return res.status(400).json({ error: 'Cannot delete the last remaining manager account' });
+      }
+    }
+
+    await staffCollection.deleteOne({ _id: new ObjectId(id) });
+    await sessionsCollection.deleteMany({ staffId: new ObjectId(id) });
+    res.json({ success: true });
+  } catch (error) {
+    console.error('Error deleting staff account:', error);
     res.status(500).json({ error: error.message });
   }
 });

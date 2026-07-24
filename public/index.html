@@ -1931,6 +1931,106 @@
       height: 220px;
     }
 
+    /* Appointment Calendar */
+    .calendar-header {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      margin-bottom: 16px;
+    }
+    .calendar-month-label {
+      font-size: 16px;
+      font-weight: 700;
+    }
+    .calendar-grid {
+      display: grid;
+      grid-template-columns: repeat(7, 1fr);
+      gap: 4px;
+      margin-bottom: 16px;
+    }
+    .calendar-day-label {
+      text-align: center;
+      font-size: 11px;
+      font-weight: 700;
+      color: var(--text-muted);
+      padding: 4px 0;
+    }
+    .calendar-day-cell {
+      aspect-ratio: 1;
+      border-radius: var(--radius-sm);
+      background: var(--bg-light);
+      padding: 6px 4px;
+      cursor: pointer;
+      position: relative;
+      transition: var(--transition-fast);
+    }
+    body.dark-mode .calendar-day-cell {
+      background: rgba(255,255,255,0.06);
+    }
+    .calendar-day-cell.empty {
+      background: transparent;
+      cursor: default;
+    }
+    .calendar-day-cell:not(.empty):hover {
+      background: var(--primary-light);
+    }
+    .calendar-day-cell.is-today {
+      border: 2px solid var(--primary);
+    }
+    .calendar-day-cell.has-appt {
+      background: rgba(139, 0, 0, 0.12);
+    }
+    .calendar-day-number {
+      font-size: 12px;
+      font-weight: 600;
+    }
+    .calendar-day-count {
+      position: absolute;
+      bottom: 4px;
+      right: 4px;
+      background: var(--primary);
+      color: #fff;
+      font-size: 10px;
+      font-weight: 700;
+      border-radius: 999px;
+      min-width: 16px;
+      height: 16px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      padding: 0 3px;
+    }
+    .calendar-appt-item {
+      background: var(--bg-light);
+      border-radius: var(--radius-sm);
+      padding: 12px 14px;
+      margin-bottom: 10px;
+      font-size: 14px;
+    }
+    body.dark-mode .calendar-appt-item {
+      background: rgba(255,255,255,0.06);
+    }
+    .calendar-appt-actions {
+      display: flex;
+      gap: 8px;
+      margin-top: 8px;
+    }
+
+    /* Staff Accounts */
+    .staff-account-item {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      background: var(--bg-light);
+      border-radius: var(--radius-sm);
+      padding: 12px 14px;
+      margin-bottom: 8px;
+      font-size: 14px;
+    }
+    body.dark-mode .staff-account-item {
+      background: rgba(255,255,255,0.06);
+    }
+
     /* Toast */
     .toast {
       position: fixed;
@@ -2801,14 +2901,20 @@
         <h1 class="card-title" data-i18n="pages.staffLogin.title">Staff Login</h1>
         <p class="card-subtitle" data-i18n="pages.staffLogin.subtitle">Enter your password to access the staff panel</p>
 
-        <div class="login-error" id="loginError" style="display:none;" data-i18n="pages.staffLogin.error">Incorrect password. Please try again.</div>
+        <div class="login-error" id="loginError" style="display:none;">Incorrect username or password. 用户名或密码错误。</div>
 
         <div class="login-form">
           <div class="field-group">
             <label class="field-label">
+              <span>Username 用户名</span>
+            </label>
+            <input type="text" class="input" id="staffUsername" placeholder="Username 用户名" autocomplete="username">
+          </div>
+          <div class="field-group">
+            <label class="field-label">
               <span data-i18n="fields.password">Password</span>
             </label>
-            <input type="password" class="input" id="staffPassword" data-i18n-placeholder="fields.passwordPlaceholder" placeholder="Enter password">
+            <input type="password" class="input" id="staffPassword" data-i18n-placeholder="fields.passwordPlaceholder" placeholder="Enter password" autocomplete="current-password">
           </div>
           <button class="btn btn-primary" style="width: 100%;" id="staffLoginSubmit" data-i18n="buttons.login">Login</button>
           <button class="btn btn-ghost" style="width: 100%; margin-top: 12px;" id="staffLoginBack" data-i18n="buttons.cancel">Cancel</button>
@@ -2820,13 +2926,18 @@
     <div class="page" id="page-staff-panel">
       <div class="form-card">
         <div class="staff-header">
-          <h1 class="staff-title" data-i18n="pages.staffPanel.title">Staff Panel</h1>
+          <div>
+            <h1 class="staff-title" data-i18n="pages.staffPanel.title">Staff Panel</h1>
+            <p class="secondary-text" id="staffNameDisplay" style="margin-top:2px;"></p>
+          </div>
           <button class="btn btn-ghost btn-sm" id="logoutBtn" data-i18n="buttons.logout">Logout</button>
         </div>
 
-        <div class="inbox-tabs" id="staffPanelTabs" style="margin-bottom: 20px;">
+        <div class="inbox-tabs" id="staffPanelTabs" style="margin-bottom: 20px; flex-wrap: wrap;">
           <button class="inbox-tab active" data-staff-tab="dashboard">Dashboard 数据看板</button>
           <button class="inbox-tab" data-staff-tab="clients">Clients 客户列表</button>
+          <button class="inbox-tab" data-staff-tab="calendar">Calendar 预约日历</button>
+          <button class="inbox-tab" data-staff-tab="staff" id="staffAccountsTabBtn" style="display:none;">Staff Accounts 员工账户</button>
         </div>
 
         <!-- Statistics Dashboard -->
@@ -2910,6 +3021,79 @@
             <div class="ai-suggestions" id="aiSuggestions">
               <div class="ai-suggestion" data-i18n="pages.ai.ready">Select a client to see AI-powered assessment suggestions.</div>
             </div>
+          </div>
+        </div>
+
+        <!-- Appointment Calendar -->
+        <div id="staffCalendarTab" style="display: none;">
+          <div class="calendar-header">
+            <button type="button" class="btn btn-ghost btn-sm" id="calendarPrevMonth">&larr;</button>
+            <div class="calendar-month-label" id="calendarMonthLabel"></div>
+            <button type="button" class="btn btn-ghost btn-sm" id="calendarNextMonth">&rarr;</button>
+          </div>
+          <div class="calendar-grid" id="calendarGrid"></div>
+
+          <div class="assessment-section" style="margin-top: 24px;">
+            <h3 class="assessment-title">Schedule Appointment 安排预约</h3>
+            <div class="field-group">
+              <label class="field-label">Client 客户</label>
+              <select class="input" id="apptClientSelect"></select>
+            </div>
+            <div class="input-row">
+              <div class="field-group">
+                <label class="field-label">Date 日期</label>
+                <input type="date" class="input" id="apptDate">
+              </div>
+              <div class="field-group">
+                <label class="field-label">Time 时间</label>
+                <input type="time" class="input" id="apptTime">
+              </div>
+            </div>
+            <div class="field-group">
+              <label class="field-label">Note (optional) 备注(可选)</label>
+              <input type="text" class="input" id="apptNote" placeholder="e.g. Follow-up on lower back">
+            </div>
+            <button type="button" class="btn btn-primary btn-sm" id="apptScheduleBtn">Schedule 安排预约</button>
+          </div>
+
+          <div class="assessment-section" id="calendarDaySection" style="display: none;">
+            <h3 class="assessment-title" id="calendarDayTitle"></h3>
+            <div id="calendarDayList"></div>
+          </div>
+        </div>
+
+        <!-- Staff Accounts (managers only) -->
+        <div id="staffAccountsTab" style="display: none;">
+          <div class="assessment-section">
+            <h3 class="assessment-title">Add Staff Account 添加员工账户</h3>
+            <div class="field-group">
+              <label class="field-label">Username 用户名</label>
+              <input type="text" class="input" id="newStaffUsername" placeholder="Username 用户名" autocomplete="off">
+            </div>
+            <div class="field-group">
+              <label class="field-label">Password 密码</label>
+              <input type="password" class="input" id="newStaffPassword" placeholder="Password 密码" autocomplete="new-password">
+            </div>
+            <div class="field-group">
+              <label class="field-label">Role 角色</label>
+              <select class="input" id="newStaffRole">
+                <option value="staff">Staff 员工</option>
+                <option value="manager">Manager 经理</option>
+              </select>
+            </div>
+            <div class="field-group" id="newStaffBranchGroup">
+              <label class="field-label">Branch 门店</label>
+              <select class="input" id="newStaffBranch">
+                <option value="shenzhen">Shenzhen 深圳</option>
+                <option value="shanghai">Shanghai 上海</option>
+              </select>
+            </div>
+            <button type="button" class="btn btn-primary btn-sm" id="addStaffBtn">Add Account 添加账户</button>
+          </div>
+
+          <div class="assessment-section">
+            <h3 class="assessment-title">Staff Accounts 员工账户</h3>
+            <div id="staffAccountsList"></div>
           </div>
         </div>
       </div>
@@ -3618,6 +3802,10 @@
         },
       };
 
+      if (AppState.staffToken) {
+        options.headers['Authorization'] = `Bearer ${AppState.staffToken}`;
+      }
+
       if (body) {
         options.body = JSON.stringify(body);
       }
@@ -3627,7 +3815,7 @@
         const data = await response.json();
 
         if (!response.ok) {
-          throw new Error(data.message || 'API Error');
+          throw new Error(data.error || data.message || 'API Error');
         }
 
         return data;
@@ -3649,6 +3837,9 @@
       currentPage: 'branch',
       isStaffLoggedIn: false,
       staffBranch: null,
+      staffToken: null,
+      staffName: null,
+      staffRole: null,
       formData: {
         clientBasics: {},
         basicInfo: {},
@@ -3747,7 +3938,10 @@
     }
 
     async function loadStaffClients() {
-      const result = await apiCall(`/api/clients?branch=${AppState.staffBranch}`);
+      // Managers have no staffBranch (null) and see every branch's clients;
+      // the server also enforces this scoping from the auth token itself.
+      const branchQuery = AppState.staffBranch ? `?branch=${AppState.staffBranch}` : '';
+      const result = await apiCall(`/api/clients${branchQuery}`);
       if (!result.error && result.data) {
         AppState.staffClients = result.data;
       }
@@ -4505,6 +4699,209 @@
     }
 
     // ========================================
+    // Staff Panel Tabs (Dashboard / Clients / Calendar / Staff Accounts)
+    // ========================================
+    const STAFF_TAB_CONTAINERS = {
+      dashboard: 'staffDashboardTab',
+      clients: 'staffClientsTab',
+      calendar: 'staffCalendarTab',
+      staff: 'staffAccountsTab'
+    };
+
+    function switchStaffTab(tab) {
+      Object.entries(STAFF_TAB_CONTAINERS).forEach(([name, id]) => {
+        const el = document.getElementById(id);
+        if (el) el.style.display = (name === tab) ? 'block' : 'none';
+      });
+      document.querySelectorAll('#staffPanelTabs .inbox-tab').forEach(b => {
+        b.classList.toggle('active', b.getAttribute('data-staff-tab') === tab);
+      });
+      if (tab === 'dashboard') renderStatsDashboard();
+      if (tab === 'calendar') renderAppointmentCalendar();
+      if (tab === 'staff') renderStaffAccounts();
+    }
+
+    // ========================================
+    // Appointment Calendar
+    // ========================================
+    let calendarViewDate = new Date();
+    let calendarAppointmentsByDay = {};
+
+    async function renderAppointmentCalendar() {
+      const year = calendarViewDate.getFullYear();
+      const month = calendarViewDate.getMonth(); // 0-indexed
+      const monthStr = `${year}-${String(month + 1).padStart(2, '0')}`;
+
+      const monthLabelEl = document.getElementById('calendarMonthLabel');
+      if (monthLabelEl) {
+        monthLabelEl.textContent = calendarViewDate.toLocaleDateString(
+          AppState.language === 'zh' ? 'zh-CN' : 'en-US',
+          { year: 'numeric', month: 'long' }
+        );
+      }
+
+      // Managers see every branch; staff are scoped to their own.
+      const branchParam = (AppState.staffRole !== 'manager' && AppState.staffBranch) ? `&branch=${AppState.staffBranch}` : '';
+      const result = await apiCall(`/api/appointments?month=${monthStr}${branchParam}`);
+      const appointments = (!result.error && result.data) ? result.data : [];
+
+      calendarAppointmentsByDay = {};
+      appointments.forEach(a => {
+        if (!calendarAppointmentsByDay[a.date]) calendarAppointmentsByDay[a.date] = [];
+        calendarAppointmentsByDay[a.date].push(a);
+      });
+
+      renderCalendarGrid(year, month);
+      populateApptClientSelect();
+
+      const daySection = document.getElementById('calendarDaySection');
+      if (daySection) daySection.style.display = 'none';
+    }
+
+    function renderCalendarGrid(year, month) {
+      const grid = document.getElementById('calendarGrid');
+      if (!grid) return;
+
+      const firstDay = new Date(year, month, 1);
+      const startWeekday = firstDay.getDay();
+      const daysInMonth = new Date(year, month + 1, 0).getDate();
+      const todayStr = new Date().toISOString().slice(0, 10);
+      const dayLabels = ['Sun', 'Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat'];
+
+      let html = dayLabels.map(d => `<div class="calendar-day-label">${d}</div>`).join('');
+
+      for (let i = 0; i < startWeekday; i++) {
+        html += '<div class="calendar-day-cell empty"></div>';
+      }
+
+      for (let day = 1; day <= daysInMonth; day++) {
+        const dateStr = `${year}-${String(month + 1).padStart(2, '0')}-${String(day).padStart(2, '0')}`;
+        const count = (calendarAppointmentsByDay[dateStr] || []).length;
+        html += `
+          <div class="calendar-day-cell${count > 0 ? ' has-appt' : ''}${dateStr === todayStr ? ' is-today' : ''}" data-date="${dateStr}">
+            <div class="calendar-day-number">${day}</div>
+            ${count > 0 ? `<div class="calendar-day-count">${count}</div>` : ''}
+          </div>
+        `;
+      }
+
+      grid.innerHTML = html;
+
+      grid.querySelectorAll('.calendar-day-cell[data-date]').forEach(cell => {
+        cell.addEventListener('click', () => showCalendarDay(cell.getAttribute('data-date')));
+      });
+    }
+
+    function showCalendarDay(dateStr) {
+      const section = document.getElementById('calendarDaySection');
+      const title = document.getElementById('calendarDayTitle');
+      const list = document.getElementById('calendarDayList');
+      if (!section || !title || !list) return;
+
+      const appts = calendarAppointmentsByDay[dateStr] || [];
+      title.textContent = `Appointments for ${dateStr} ${dateStr}的预约`;
+
+      const dateInput = document.getElementById('apptDate');
+      if (dateInput) dateInput.value = dateStr;
+
+      if (appts.length === 0) {
+        list.innerHTML = '<p class="secondary-text">No appointments on this day. 当天无预约。</p>';
+      } else {
+        list.innerHTML = appts.map(a => {
+          const client = AppState.staffClients.find(c => c.formData?.clientBasics?.phone === a.clientPhone);
+          const name = client?.formData?.clientBasics?.name || a.clientPhone;
+          return `
+            <div class="calendar-appt-item">
+              <div><strong>${escapeHtmlForAi(name)}</strong>${a.time ? ' · ' + escapeHtmlForAi(a.time) : ''}</div>
+              <div class="secondary-text">${escapeHtmlForAi(a.clientPhone)}</div>
+              ${a.note ? `<div class="secondary-text">${escapeHtmlForAi(a.note)}</div>` : ''}
+              <div class="calendar-appt-actions">
+                <button type="button" class="btn btn-ghost btn-sm" data-appt-id="${a._id}" data-action="reschedule">Reschedule 改期</button>
+                <button type="button" class="btn btn-ghost btn-sm" data-appt-id="${a._id}" data-action="delete">Delete 删除</button>
+              </div>
+            </div>
+          `;
+        }).join('');
+
+        list.querySelectorAll('[data-action="delete"]').forEach(btn => {
+          btn.addEventListener('click', async () => {
+            if (!confirm('Delete this appointment? 删除此预约?')) return;
+            await apiCall(`/api/appointments/${btn.getAttribute('data-appt-id')}`, 'DELETE');
+            showToast('Appointment deleted 预约已删除', 'success');
+            renderAppointmentCalendar();
+          });
+        });
+
+        list.querySelectorAll('[data-action="reschedule"]').forEach(btn => {
+          btn.addEventListener('click', () => {
+            const appt = appts.find(a => a._id === btn.getAttribute('data-appt-id'));
+            if (!appt) return;
+            const clientSelect = document.getElementById('apptClientSelect');
+            const timeInput = document.getElementById('apptTime');
+            const noteInput = document.getElementById('apptNote');
+            if (clientSelect) clientSelect.value = appt.clientPhone;
+            if (dateInput) dateInput.value = appt.date;
+            if (timeInput) timeInput.value = appt.time || '';
+            if (noteInput) noteInput.value = appt.note || '';
+            showToast('Edit below and click Schedule to reschedule 请在下方修改后点击"安排预约"以改期', 'info');
+          });
+        });
+      }
+
+      section.style.display = 'block';
+    }
+
+    function populateApptClientSelect() {
+      const select = document.getElementById('apptClientSelect');
+      if (!select) return;
+      select.innerHTML = AppState.staffClients.map(c => {
+        const cb = c.formData?.clientBasics || {};
+        return `<option value="${cb.phone || ''}">${escapeHtmlForAi(cb.name || 'Unknown')} (${escapeHtmlForAi(cb.phone || '')})</option>`;
+      }).join('');
+    }
+
+    // ========================================
+    // Staff Accounts (managers only)
+    // ========================================
+    async function renderStaffAccounts() {
+      const list = document.getElementById('staffAccountsList');
+      if (!list) return;
+
+      const result = await apiCall('/api/staff');
+      if (result.error || !result.data) {
+        list.innerHTML = `<p class="secondary-text">${result.error || 'Unable to load staff accounts. 无法加载员工账户。'}</p>`;
+        return;
+      }
+
+      list.innerHTML = result.data.map(s => {
+        const roleLabel = s.role === 'manager' ? 'Manager 经理' : 'Staff 员工';
+        const branchLabel = s.branch === 'shenzhen' ? 'Shenzhen 深圳' : (s.branch === 'shanghai' ? 'Shanghai 上海' : '');
+        return `
+          <div class="staff-account-item">
+            <div>
+              <strong>${escapeHtmlForAi(s.username)}</strong>
+              <span class="secondary-text"> · ${roleLabel}${branchLabel ? ' · ' + branchLabel : ''}</span>
+            </div>
+            <button type="button" class="btn btn-ghost btn-sm" data-staff-id="${s._id}">Remove 移除</button>
+          </div>
+        `;
+      }).join('');
+
+      list.querySelectorAll('[data-staff-id]').forEach(btn => {
+        btn.addEventListener('click', async () => {
+          if (!confirm('Remove this staff account? 移除此员工账户?')) return;
+          const result2 = await apiCall(`/api/staff/${btn.getAttribute('data-staff-id')}`, 'DELETE');
+          if (!result2.error) {
+            showToast('Account removed 账户已移除', 'success');
+            renderStaffAccounts();
+          } else {
+            showToast(result2.error || 'Failed to remove account 移除失败', 'error');
+          }
+        });
+      });
+    }
+
+    // ========================================
     // Staff Panel Functions
     // ========================================
     async function renderStaffClientList() {
@@ -5041,36 +5438,50 @@
 
       // Staff login submit
       document.getElementById('staffLoginSubmit')?.addEventListener('click', async () => {
+        const username = document.getElementById('staffUsername').value.trim();
         const password = document.getElementById('staffPassword').value;
-        if (password.toLowerCase() === 'masterfit') {
-          AppState.isStaffLoggedIn = true;
-          AppState.staffBranch = AppState.branch;
-          document.getElementById('loginError').classList.remove('show');
-          showToast(t('messages.loginSuccess'), 'success');
+        const loginErrorEl = document.getElementById('loginError');
 
-          // Load clients from API
-          await renderStaffClientList();
-          renderStatsDashboard();
-
-          const qrUrl = `https://smallapps.ai4money.work/webs/masterfit.html#branch=${AppState.branch}`;
-          generateQRCode(qrUrl, document.getElementById('qrCode'));
-
-          // Dashboard is shown first, before the client list
-          document.querySelectorAll('#staffPanelTabs .inbox-tab').forEach(btn => {
-            btn.classList.toggle('active', btn.getAttribute('data-staff-tab') === 'dashboard');
-          });
-          document.getElementById('staffDashboardTab').style.display = 'block';
-          document.getElementById('staffClientsTab').style.display = 'none';
-
-          navigateTo('staff-panel');
-        } else {
-          document.getElementById('loginError').classList.add('show');
+        if (!username || !password) {
+          loginErrorEl.textContent = 'Please enter a username and password. 请输入用户名和密码。';
+          loginErrorEl.style.display = 'block';
+          return;
         }
+
+        const result = await apiCall('/api/staff/login', 'POST', { username, password });
+        if (result.error || !result.data) {
+          loginErrorEl.textContent = result.error || 'Incorrect username or password. 用户名或密码错误。';
+          loginErrorEl.style.display = 'block';
+          return;
+        }
+
+        AppState.isStaffLoggedIn = true;
+        AppState.staffToken = result.data.token;
+        AppState.staffName = result.data.staff.username;
+        AppState.staffRole = result.data.staff.role;
+        AppState.staffBranch = result.data.staff.role === 'manager' ? null : result.data.staff.branch;
+        loginErrorEl.style.display = 'none';
+        showToast(t('messages.loginSuccess'), 'success');
+
+        const roleLabel = AppState.staffRole === 'manager' ? 'Manager 经理' : 'Staff 员工';
+        document.getElementById('staffNameDisplay').textContent = `${AppState.staffName} · ${roleLabel}`;
+        document.getElementById('staffAccountsTabBtn').style.display = AppState.staffRole === 'manager' ? 'inline-block' : 'none';
+
+        // Load clients from API
+        await renderStaffClientList();
+
+        const qrBranch = AppState.staffBranch || AppState.branch;
+        const qrUrl = `https://smallapps.ai4money.work/webs/masterfit.html#branch=${qrBranch}`;
+        generateQRCode(qrUrl, document.getElementById('qrCode'));
+
+        // Dashboard is shown first, before the client list
+        switchStaffTab('dashboard');
+        navigateTo('staff-panel');
       });
 
       // Staff login back - always closes login panel and returns to previous page
       document.getElementById('staffLoginBack')?.addEventListener('click', () => {
-        document.getElementById('loginError')?.classList.remove('show');
+        document.getElementById('loginError').style.display = 'none';
         if (AppState.currentPage && AppState.currentPage !== 'staff-login') {
           navigateTo(AppState.currentPage);
         } else {
@@ -5079,8 +5490,12 @@
       });
 
       // Logout
-      document.getElementById('logoutBtn')?.addEventListener('click', () => {
+      document.getElementById('logoutBtn')?.addEventListener('click', async () => {
+        await apiCall('/api/staff/logout', 'POST');
         AppState.isStaffLoggedIn = false;
+        AppState.staffToken = null;
+        AppState.staffName = null;
+        AppState.staffRole = null;
         AppState.staffBranch = null;
         AppState.selectedClientId = null;
         document.getElementById('clientDetail').style.display = 'none';
@@ -5089,15 +5504,74 @@
         navigateTo('client-basics');
       });
 
-      // Staff Panel tabs (Dashboard / Clients)
+      // Staff Panel tabs (Dashboard / Clients / Calendar / Staff Accounts)
       document.querySelectorAll('#staffPanelTabs .inbox-tab').forEach(tabBtn => {
         tabBtn.addEventListener('click', () => {
-          const tab = tabBtn.getAttribute('data-staff-tab');
-          document.querySelectorAll('#staffPanelTabs .inbox-tab').forEach(b => b.classList.toggle('active', b === tabBtn));
-          document.getElementById('staffDashboardTab').style.display = tab === 'dashboard' ? 'block' : 'none';
-          document.getElementById('staffClientsTab').style.display = tab === 'clients' ? 'block' : 'none';
-          if (tab === 'dashboard') renderStatsDashboard();
+          switchStaffTab(tabBtn.getAttribute('data-staff-tab'));
         });
+      });
+
+      // Calendar month navigation
+      document.getElementById('calendarPrevMonth')?.addEventListener('click', () => {
+        calendarViewDate = new Date(calendarViewDate.getFullYear(), calendarViewDate.getMonth() - 1, 1);
+        renderAppointmentCalendar();
+      });
+      document.getElementById('calendarNextMonth')?.addEventListener('click', () => {
+        calendarViewDate = new Date(calendarViewDate.getFullYear(), calendarViewDate.getMonth() + 1, 1);
+        renderAppointmentCalendar();
+      });
+
+      // Schedule appointment
+      document.getElementById('apptScheduleBtn')?.addEventListener('click', async () => {
+        const clientPhone = document.getElementById('apptClientSelect')?.value;
+        const date = document.getElementById('apptDate')?.value;
+        const time = document.getElementById('apptTime')?.value;
+        const noteInput = document.getElementById('apptNote');
+        const note = noteInput?.value.trim();
+
+        if (!clientPhone || !date) {
+          showToast('Please select a client and date 请选择客户和日期', 'error');
+          return;
+        }
+
+        const selectedClient = AppState.staffClients.find(c => c.formData?.clientBasics?.phone === clientPhone);
+        const branch = selectedClient?.branch || AppState.staffBranch || AppState.branch;
+
+        const result = await apiCall('/api/appointments', 'POST', { clientPhone, date, time, branch, note });
+        if (!result.error) {
+          showToast('Appointment scheduled 预约已安排', 'success');
+          if (noteInput) noteInput.value = '';
+          renderAppointmentCalendar();
+        } else {
+          showToast(result.error || 'Failed to schedule appointment 安排失败', 'error');
+        }
+      });
+
+      // Staff accounts (managers only)
+      document.getElementById('newStaffRole')?.addEventListener('change', (e) => {
+        document.getElementById('newStaffBranchGroup').style.display = e.target.value === 'manager' ? 'none' : 'block';
+      });
+
+      document.getElementById('addStaffBtn')?.addEventListener('click', async () => {
+        const username = document.getElementById('newStaffUsername')?.value.trim();
+        const password = document.getElementById('newStaffPassword')?.value;
+        const role = document.getElementById('newStaffRole')?.value;
+        const branch = document.getElementById('newStaffBranch')?.value;
+
+        if (!username || !password) {
+          showToast('Please fill in username and password 请填写用户名和密码', 'error');
+          return;
+        }
+
+        const result = await apiCall('/api/staff', 'POST', { username, password, role, branch });
+        if (!result.error) {
+          document.getElementById('newStaffUsername').value = '';
+          document.getElementById('newStaffPassword').value = '';
+          showToast('Account created 账户已创建', 'success');
+          renderStaffAccounts();
+        } else {
+          showToast(result.error || 'Failed to create account 创建失败', 'error');
+        }
       });
 
       // Reset form button - show confirmation modal
