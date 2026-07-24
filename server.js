@@ -158,6 +158,13 @@ function publicStaffView(staff) {
   return { _id: staff._id, username: staff.username, branch: staff.branch, role: staff.role };
 }
 
+// Picks a random staff member (not manager) from the given branch to own a client.
+async function assignRandomStaff(branch) {
+  const eligible = await staffCollection.find({ role: 'staff', branch }).toArray();
+  if (eligible.length === 0) return null;
+  return eligible[Math.floor(Math.random() * eligible.length)].username;
+}
+
 // Middleware
 app.use(cors());
 app.use(express.json({ limit: '10mb' }));
@@ -234,16 +241,21 @@ app.post('/api/clients', async (req, res) => {
       if (existing) {
         const updateOps = { $set: { ...clientData, updatedAt: new Date().toISOString() } };
         if (isSubmission) updateOps.$inc = { visitCount: 1 };
+        if (!existing.assignedStaff) {
+          const assignedStaff = await assignRandomStaff(branch);
+          if (assignedStaff) updateOps.$set.assignedStaff = assignedStaff;
+        }
         await clientsCollection.updateOne({ _id: existing._id }, updateOps);
         const updated = await clientsCollection.findOne({ _id: existing._id });
         return res.json({ data: updated });
       }
     }
 
-    // Insert new client
+    // Insert new client - randomly assign to a staff member in the same branch
     const newClient = {
       ...clientData,
       visitCount: isSubmission ? 1 : 0,
+      assignedStaff: await assignRandomStaff(branch),
       createdAt: new Date().toISOString()
     };
     const result = await clientsCollection.insertOne(newClient);
@@ -281,13 +293,13 @@ app.get('/api/clients', async (req, res) => {
     const { branch, search } = req.query;
 
     let query = {};
-    // A non-manager staff session is always scoped to their own branch,
-    // regardless of what branch was requested. Falls back to the plain
-    // query param when no session token is present (e.g. client-side code
-    // that isn't staff-authenticated yet).
+    // A non-manager staff session only ever sees clients assigned to them,
+    // regardless of what branch was requested. Managers see everything
+    // (optionally scoped by the branch query param). Falls back to the
+    // plain query param when no session token is present.
     const staff = await getStaffFromToken(getBearerToken(req));
     if (staff && staff.role !== 'manager') {
-      query.branch = staff.branch;
+      query.assignedStaff = staff.username;
     } else if (branch) {
       query.branch = branch;
     }
@@ -329,6 +341,36 @@ app.get('/api/clients/:id', async (req, res) => {
     res.json({ data: client });
   } catch (error) {
     console.error('Error fetching client:', error);
+    res.status(500).json({ error: error.message });
+  }
+});
+
+// Reassign a client to a different staff member (managers only)
+app.post('/api/clients/:id/assign', requireAuth(['manager']), async (req, res) => {
+  try {
+    const { id } = req.params;
+    const { assignedStaff } = req.body;
+
+    if (!ObjectId.isValid(id)) {
+      return res.status(400).json({ error: 'Invalid client ID' });
+    }
+    if (!assignedStaff) {
+      return res.status(400).json({ error: 'Missing assignedStaff' });
+    }
+
+    const result = await clientsCollection.findOneAndUpdate(
+      { _id: new ObjectId(id) },
+      { $set: { assignedStaff, updatedAt: new Date().toISOString() } },
+      { returnDocument: 'after' }
+    );
+
+    if (!result) {
+      return res.status(404).json({ error: 'Client not found' });
+    }
+
+    res.json({ data: result });
+  } catch (error) {
+    console.error('Error reassigning client:', error);
     res.status(500).json({ error: error.message });
   }
 });

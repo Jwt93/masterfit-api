@@ -451,6 +451,15 @@
       height: 32px;
     }
 
+    .nav-logo-img {
+      max-height: 40px;
+      width: auto;
+      display: block;
+      background: #fff;
+      border-radius: 6px;
+      padding: 2px 8px;
+    }
+
     .nav-links {
       display: flex;
       align-items: center;
@@ -2254,12 +2263,7 @@
   <nav class="top-nav" id="topNav" style="display: none;">
     <div class="nav-inner">
       <div class="nav-logo">
-        <svg viewBox="0 0 32 32" fill="none" xmlns="http://www.w3.org/2000/svg">
-          <circle cx="16" cy="16" r="14" stroke="currentColor" stroke-width="2"/>
-          <path d="M10 16C10 12.686 12.686 10 16 10V22C12.686 22 10 19.314 10 16Z" fill="currentColor"/>
-          <circle cx="16" cy="16" r="3" fill="currentColor"/>
-        </svg>
-        <span>Master Fit</span>
+        <img src="logo.png" alt="Master Fit" class="nav-logo-img">
       </div>
 
       <div class="nav-links" id="navLinks"></div>
@@ -2344,6 +2348,7 @@
       <div class="form-card">
         <h1 class="card-title" data-i18n="pages.clientBasics.title">Client Basics</h1>
         <p class="card-subtitle" data-i18n="pages.clientBasics.subtitle">Please provide your basic information</p>
+        <a href="#" id="changeLocationLink" style="display:inline-block;font-size:13px;color:var(--text-secondary);text-decoration:underline;margin-bottom:16px;">Change Location / 更换门店</a>
 
         <div id="returningClientCard" style="display:none;"></div>
 
@@ -3977,16 +3982,7 @@
 
       // Update all elements with data-i18n attribute
       document.querySelectorAll('[data-i18n]').forEach(el => {
-        const key = el.getAttribute('data-i18n');
-        // Special handling for Treatment Preferences zone tags (bilingual)
-        if (key && key.startsWith('zones.')) {
-          const zoneName = key.substring(6); // e.g., 'leftShoulder'
-          const enLabel = i18n.en.zones[zoneName] || zoneName;
-          const zhLabel = i18n.zh.zones[zoneName] || zoneName;
-          el.textContent = AppState.language === 'zh' ? `${zhLabel} ${enLabel}` : `${enLabel} ${zhLabel}`;
-        } else {
-          el.textContent = t(key);
-        }
+        el.textContent = t(el.getAttribute('data-i18n'));
       });
 
       // Update all elements with data-i18n-placeholder attribute
@@ -4260,17 +4256,27 @@
     // ========================================
     // WebAuthn / Passkey Support
     // ========================================
-    function isWebAuthnSupported() {
-      return !!(navigator.credentials && navigator.credentials.create && navigator.credentials.get);
+    // Checking that navigator.credentials exists isn't enough - Safari (especially
+    // iOS) defines the API even when no platform authenticator (Face ID/Touch ID) is
+    // actually usable (e.g. Private Browsing, no biometrics enrolled), which caused
+    // registration/login to silently fail instead of falling back. Ask the platform
+    // directly so unsupported devices never see the button at all.
+    async function isWebAuthnSupported() {
+      if (!window.PublicKeyCredential || !navigator.credentials?.create) return false;
+      try {
+        return await PublicKeyCredential.isUserVerifyingPlatformAuthenticatorAvailable();
+      } catch (e) {
+        return false;
+      }
     }
 
     async function registerPasskey(phone) {
-      if (!isWebAuthnSupported()) return { error: 'WebAuthn not supported' };
+      if (!(await isWebAuthnSupported())) return { error: 'WebAuthn not supported' };
       try {
         const credential = await navigator.credentials.create({
           publicKey: {
             challenge: new Uint8Array(32),
-            rp: { name: 'Master Fit' },
+            rp: { id: window.location.hostname, name: 'Master Fit' },
             user: {
               id: new TextEncoder().encode(phone),
               name: phone,
@@ -4293,7 +4299,7 @@
     }
 
     async function authenticateWithPasskey() {
-      if (!isWebAuthnSupported()) return { error: 'WebAuthn not supported' };
+      if (!(await isWebAuthnSupported())) return { error: 'WebAuthn not supported' };
       try {
         const stored = JSON.parse(localStorage.getItem('mf_passkeys') || '{}');
         const credIds = Object.values(stored);
@@ -4303,6 +4309,7 @@
         const credential = await navigator.credentials.get({
           publicKey: {
             challenge: new Uint8Array(32),
+            rpId: window.location.hostname,
             allowCredentials: credIdBuffers.map(id => ({ type: 'public-key', id: id }))
           }
         });
@@ -4349,8 +4356,8 @@
     }
 
     // Show Face ID setup prompt after first form submission
-    function showFaceIDEnablePrompt(phone) {
-      if (!isWebAuthnSupported()) return;
+    async function showFaceIDEnablePrompt(phone) {
+      if (!(await isWebAuthnSupported())) return;
       const stored = JSON.parse(localStorage.getItem('mf_passkeys') || '{}');
       if (stored[phone]) return; // Already registered
 
@@ -4911,6 +4918,18 @@
       // Try to fetch from API first
       await loadStaffClients();
 
+      // Managers can reassign clients - fetch branch-scoped staff usernames for the dropdown.
+      const isManager = AppState.staffRole === 'manager';
+      const staffByBranch = {};
+      if (isManager) {
+        const staffResult = await apiCall('/api/staff');
+        if (!staffResult.error && staffResult.data) {
+          staffResult.data.filter(s => s.role === 'staff').forEach(s => {
+            (staffByBranch[s.branch] = staffByBranch[s.branch] || []).push(s.username);
+          });
+        }
+      }
+
       const filtered = AppState.staffClients.filter(c => {
         if (AppState.staffBranch && c.branch !== AppState.staffBranch) return false;
         if (search) {
@@ -4931,15 +4950,24 @@
         const date = new Date(client.createdAt || client.updatedAt).toLocaleDateString(AppState.language === 'zh' ? 'zh-CN' : 'en-US');
         const isNew = client.formData?.clientBasics?.clientType === 'first-time';
         const clientId = client._id || client.id;
+        const branchStaff = staffByBranch[client.branch] || [];
+        const reassignHtml = isManager ? `
+          <select class="input reassign-select" data-client-id="${clientId}" style="margin-top:8px;font-size:12px;padding:4px 8px;width:auto;">
+            <option value="">Reassign 重新分配</option>
+            ${branchStaff.map(u => `<option value="${u}" ${u === client.assignedStaff ? 'selected' : ''}>${u}</option>`).join('')}
+          </select>
+        ` : '';
         return `
           <div class="client-item" data-client-id="${clientId}">
             <div class="client-info">
               <h4>${cb.name || 'Unknown'}</h4>
               <p>${cb.phone || '-'}</p>
+              ${isManager ? `<p class="secondary-text" style="font-size:11px;">Assigned to 分配给: ${client.assignedStaff || '-'}</p>` : ''}
             </div>
             <div class="client-meta">
               <div class="client-date">${date}</div>
               <span class="client-status ${isNew ? 'new' : 'returning'}">${isNew ? t('fields.firstTime') : t('fields.member')}</span>
+              ${reassignHtml}
             </div>
           </div>
         `;
@@ -4951,9 +4979,26 @@
 
       // Add click handlers
       list.querySelectorAll('.client-item').forEach(item => {
-        item.addEventListener('click', () => {
+        item.addEventListener('click', (e) => {
+          if (e.target.closest('.reassign-select')) return;
           const clientId = item.getAttribute('data-client-id');
           showClientDetail(clientId);
+        });
+      });
+
+      list.querySelectorAll('.reassign-select').forEach(sel => {
+        sel.addEventListener('click', (e) => e.stopPropagation());
+        sel.addEventListener('change', async (e) => {
+          e.stopPropagation();
+          const assignedStaff = sel.value;
+          if (!assignedStaff) return;
+          const result = await apiCall(`/api/clients/${sel.getAttribute('data-client-id')}/assign`, 'POST', { assignedStaff });
+          if (!result.error) {
+            showToast('Client reassigned 已重新分配', 'success');
+            renderStaffClientList();
+          } else {
+            showToast(result.error || 'Failed to reassign 分配失败', 'error');
+          }
         });
       });
     }
@@ -5159,6 +5204,18 @@
           `).join('') || '<p>No pain points recorded</p>'}
         </div>
 
+        ${(client.checkins && client.checkins.length > 0) ? `
+        <div class="assessment-section">
+          <h3 class="assessment-title">Improvement Feedback 改善反馈</h3>
+          ${client.checkins.slice().reverse().map(c => {
+            const label = c.response === 'yes' ? 'Yes 是' : (c.response === 'somewhat' ? 'Somewhat 有一些' : 'No 没有');
+            const zoneLabel = c.priorZone ? t('zones.' + c.priorZone) : '';
+            const date = new Date(c.respondedAt).toLocaleString(AppState.language === 'zh' ? 'zh-CN' : 'en-US');
+            return `<div class="review-item"><span class="review-label">${date}:</span><span class="review-value">${label}${zoneLabel ? ` (${zoneLabel}${c.priorSeverity != null ? ' ' + c.priorSeverity + '/10' : ''})` : ''}</span></div>`;
+          }).join('')}
+        </div>
+        ` : ''}
+
         <div class="assessment-section">
           <h3 class="assessment-title">${t('fields.painTrend')}</h3>
           <div class="pain-chart" id="staffPainChart"></div>
@@ -5348,6 +5405,7 @@
             });
           }
           showToast('Thanks for letting us know! 感谢您的反馈!', 'success');
+          hideReturningClientCard();
         });
       });
     }
@@ -5715,7 +5773,12 @@
       if (faceIdQuickGroup && faceIdQuickBtn) {
         const quickStoredPasskeys = JSON.parse(localStorage.getItem('mf_passkeys') || '{}');
         const quickHasPasskeys = Object.keys(quickStoredPasskeys).length > 0;
-        faceIdQuickGroup.style.display = isWebAuthnSupported() && quickHasPasskeys ? 'block' : 'none';
+        faceIdQuickGroup.style.display = 'none';
+        if (quickHasPasskeys) {
+          isWebAuthnSupported().then(supported => {
+            faceIdQuickGroup.style.display = supported ? 'block' : 'none';
+          });
+        }
 
         faceIdQuickBtn.addEventListener('click', async () => {
           const doQuickAuth = async () => {
@@ -5778,6 +5841,12 @@
       // Navigation buttons
       document.getElementById('nextClientBasics')?.addEventListener('click', () => {
         navigateTo('basic-info');
+      });
+
+      // Branch selection is always reachable, not just on first visit.
+      document.getElementById('changeLocationLink')?.addEventListener('click', (e) => {
+        e.preventDefault();
+        navigateTo('branch');
       });
 
       document.getElementById('backBasicInfo')?.addEventListener('click', () => {
@@ -6088,7 +6157,12 @@
       if (faceIdSection && faceIdBtn) {
         const storedPasskeys = JSON.parse(localStorage.getItem('mf_passkeys') || '{}');
         const hasPasskeys = Object.keys(storedPasskeys).length > 0;
-        faceIdSection.style.display = isWebAuthnSupported() && hasPasskeys ? 'block' : 'none';
+        faceIdSection.style.display = 'none';
+        if (hasPasskeys) {
+          isWebAuthnSupported().then(supported => {
+            faceIdSection.style.display = supported ? 'block' : 'none';
+          });
+        }
 
         faceIdBtn.addEventListener('click', async () => {
           const doAuth = async () => {
@@ -6377,8 +6451,10 @@ ${client.formData.postural?.observations?.join(', ') || 'None'}
       // Initialize event handlers FIRST, before any DOM updates
       initEventHandlers();
 
-      // Now apply translations (this also calls updateNavItems)
-      // updateLanguage called by initEventHandlers
+      // Apply translations for the current language - without this, data-i18n
+      // elements keep whatever bilingual placeholder text is in the static HTML
+      // until the user manually toggles the language once.
+      updateLanguage();
 
       // Handle hash routing
       const hash = window.location.hash.replace('#', '');
