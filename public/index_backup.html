@@ -765,23 +765,6 @@
       color: var(--text-secondary);
     }
 
-    .branch-logo-anim {
-      display: block;
-      margin: 0 auto 20px;
-      max-height: 72px;
-      width: auto;
-      opacity: 0;
-      animation: logoFadeIn 0.8s ease-out forwards, logoPulseGlow 2.6s ease-in-out 0.8s infinite;
-    }
-    @keyframes logoFadeIn {
-      from { opacity: 0; transform: translateY(-10px) scale(0.94); }
-      to { opacity: 1; transform: translateY(0) scale(1); }
-    }
-    @keyframes logoPulseGlow {
-      0%, 100% { filter: drop-shadow(0 0 0 rgba(139, 0, 0, 0)); }
-      50% { filter: drop-shadow(0 0 14px rgba(139, 0, 0, 0.55)); }
-    }
-
     /* Form Elements */
     .field-group {
       margin-bottom: 24px;
@@ -1957,19 +1940,6 @@
       height: 220px;
     }
 
-    .heatmap-row {
-      display: flex;
-      align-items: center;
-      gap: 10px;
-      padding: 8px 0;
-      border-bottom: 1px solid var(--border);
-      font-size: 13px;
-    }
-    .heatmap-row:last-child { border-bottom: none; }
-    .heatmap-rank { font-weight: 700; color: var(--primary); width: 28px; flex-shrink: 0; }
-    .heatmap-zone { flex: 1; color: var(--text-primary); }
-    .heatmap-count { font-weight: 600; color: var(--text-secondary); white-space: nowrap; }
-
     /* Appointment Calendar */
     .calendar-header {
       display: flex;
@@ -2344,7 +2314,6 @@
     <!-- Branch Selection -->
     <div class="page active" id="page-branch">
       <div class="form-card">
-        <img src="logo.png" alt="Master Fit" class="branch-logo-anim">
         <h1 class="card-title" data-i18n="pages.branch.title">Select Your Location</h1>
         <p class="card-subtitle" data-i18n="pages.branch.subtitle">Please choose the Master Fit branch you are visiting</p>
 
@@ -2370,67 +2339,6 @@
             <h2 class="branch-card-title">Shanghai</h2>
             <p class="branch-card-subtitle">上海</p>
           </div>
-        </div>
-      </div>
-    </div>
-
-    <!-- New vs Returning entry choice -->
-    <div class="page" id="page-entry-type">
-      <div class="form-card">
-        <h1 class="card-title">Welcome / 欢迎</h1>
-        <p class="card-subtitle">Are you a new or returning client? / 您是新客户还是老会员?</p>
-
-        <div class="branch-grid">
-          <div class="branch-card" id="newClientCard">
-            <div class="branch-card-icon">
-              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5">
-                <path d="M12 5v14M5 12h14"/>
-              </svg>
-            </div>
-            <h2 class="branch-card-title">New Client</h2>
-            <p class="branch-card-subtitle">新客户</p>
-          </div>
-
-          <div class="branch-card" id="returningMemberCard">
-            <div class="branch-card-icon">
-              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5">
-                <path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/>
-                <circle cx="12" cy="7" r="4"/>
-              </svg>
-            </div>
-            <h2 class="branch-card-title">Returning Member</h2>
-            <p class="branch-card-subtitle">老会员</p>
-          </div>
-        </div>
-
-        <div class="page-nav">
-          <button class="btn btn-ghost" id="backEntryType">Back / 返回</button>
-        </div>
-      </div>
-    </div>
-
-    <!-- Returning member phone + PIN login -->
-    <div class="page" id="page-returning-login">
-      <div class="form-card login-card">
-        <h1 class="card-title">Returning Member / 老会员</h1>
-        <p class="card-subtitle">Enter your phone number and PIN / 请输入手机号和PIN码</p>
-
-        <div class="login-error" id="returningLoginError" style="display:none;"></div>
-
-        <div class="login-form">
-          <div class="field-group">
-            <label class="field-label"><span>Phone Number 手机号</span></label>
-            <input type="tel" class="input" id="returningPhone" placeholder="Phone number 手机号" autocomplete="tel">
-          </div>
-          <div class="field-group">
-            <label class="field-label"><span>4-Digit PIN 4位PIN码</span></label>
-            <input type="password" inputmode="numeric" pattern="[0-9]*" maxlength="4" class="input" id="returningPin" placeholder="••••" style="letter-spacing:8px;text-align:center;font-size:20px;">
-          </div>
-        </div>
-
-        <div class="page-nav">
-          <button class="btn btn-ghost" id="backReturningLogin">Back / 返回</button>
-          <button class="btn btn-primary" id="returningLoginSubmit">Login 登录</button>
         </div>
       </div>
     </div>
@@ -3034,7 +2942,6 @@
           <button class="inbox-tab active" data-staff-tab="dashboard">Dashboard 数据看板</button>
           <button class="inbox-tab" data-staff-tab="clients">Clients 客户列表</button>
           <button class="inbox-tab" data-staff-tab="calendar">Calendar 预约日历</button>
-          <button class="inbox-tab" data-staff-tab="heatmap">Pain Heatmap 疼痛热力图</button>
           <button class="inbox-tab" data-staff-tab="staff" id="staffAccountsTabBtn" style="display:none;">Staff Accounts 员工账户</button>
         </div>
 
@@ -3157,23 +3064,6 @@
           <div class="assessment-section" id="calendarDaySection" style="display: none;">
             <h3 class="assessment-title" id="calendarDayTitle"></h3>
             <div id="calendarDayList"></div>
-          </div>
-        </div>
-
-        <!-- Pain Heatmap -->
-        <div id="staffHeatmapTab" style="display: none;">
-          <div class="stats-chart-card">
-            <h4 class="stats-chart-title">Pain Heatmap - Top 10 疼痛热力图(前10)</h4>
-            <div class="field-group" style="max-width: 220px;">
-              <label class="field-label">Branch 门店</label>
-              <select class="input" id="heatmapBranchFilter">
-                <option value="">All 全部</option>
-                <option value="shenzhen">Shenzhen 深圳</option>
-                <option value="shanghai">Shanghai 上海</option>
-              </select>
-            </div>
-            <div id="heatmapRankedList" style="margin: 12px 0;"></div>
-            <div class="stats-chart-container" id="chartPainHeatmap" style="height: 340px;"></div>
           </div>
         </div>
 
@@ -3332,25 +3222,6 @@
       </div>
     </div>
   </div>
-
-  <!-- PIN Setup Modal -->
-  <div class="modal-overlay" id="pinSetupModal" style="display:none;z-index:2000;">
-    <div class="modal" style="max-width: 400px; text-align: center;">
-      <div style="padding: 8px 0 0;">
-        <h3 class="modal-title" style="color:var(--primary);margin-bottom:8px;">Create a PIN 设置PIN码</h3>
-        <p style="color:var(--text-secondary);font-size:14px;line-height:1.6;margin-bottom:16px;">Create a PIN for faster access next time / 设置4位PIN码方便下次登录</p>
-        <input type="password" inputmode="numeric" pattern="[0-9]*" maxlength="4" class="input" id="pinSetupInput" placeholder="••••" style="letter-spacing:8px;text-align:center;font-size:24px;margin-bottom:8px;">
-        <p id="pinSetupError" style="display:none;color:var(--primary);font-size:13px;margin-bottom:8px;"></p>
-        <div style="display:flex;gap:12px;margin-top:12px;">
-          <button class="btn btn-primary" id="pinSetupSave" style="flex:1;">Save 保存</button>
-          <button class="btn btn-ghost" id="pinSetupSkip" style="flex:1;">Skip 跳过</button>
-        </div>
-      </div>
-    </div>
-  </div>
-
-  <!-- Confetti canvas for success screen -->
-  <canvas id="confettiCanvas" style="position:fixed;inset:0;width:100%;height:100%;pointer-events:none;z-index:9999;display:none;"></canvas>
 
     <script>
   // ===== STANDALONE MOBILE MENU =====
@@ -3990,9 +3861,7 @@
       isClientLoggedIn: false,
       clientPhone: null,
       currentClientId: null, // Server-side client ID for updates
-      welcomeShownForPhone: null,
-      entryMode: null, // 'new' | 'returning'
-      pinAttempts: {} // phone -> { count, lockUntil }
+      welcomeShownForPhone: null
     };
 
     // Contraindications that require staff to confirm with the client in person
@@ -4320,64 +4189,6 @@
       }
     }
 
-    // ========================================
-    // Confetti (vanilla JS + Canvas, brand colors)
-    // ========================================
-    function fireConfetti() {
-      const canvas = document.getElementById('confettiCanvas');
-      if (!canvas) return;
-      const ctx = canvas.getContext('2d');
-      canvas.width = window.innerWidth;
-      canvas.height = window.innerHeight;
-      canvas.style.display = 'block';
-
-      const colors = ['#8B0000', '#ffffff', '#F2C6C6'];
-      const pieces = Array.from({ length: 80 }, () => ({
-        x: Math.random() * canvas.width,
-        y: -20 - Math.random() * canvas.height * 0.3,
-        size: 5 + Math.random() * 5,
-        color: colors[Math.floor(Math.random() * colors.length)],
-        speedY: 1.5 + Math.random() * 2,
-        speedX: (Math.random() - 0.5) * 1.6,
-        rotation: Math.random() * Math.PI * 2,
-        rotationSpeed: (Math.random() - 0.5) * 0.15,
-        shape: Math.random() > 0.5 ? 'circle' : 'rect'
-      }));
-
-      const duration = 3000;
-      const start = performance.now();
-
-      function frame(now) {
-        const elapsed = now - start;
-        ctx.clearRect(0, 0, canvas.width, canvas.height);
-        pieces.forEach(p => {
-          p.x += p.speedX;
-          p.y += p.speedY;
-          p.rotation += p.rotationSpeed;
-          ctx.save();
-          ctx.translate(p.x, p.y);
-          ctx.rotate(p.rotation);
-          ctx.fillStyle = p.color;
-          ctx.globalAlpha = Math.max(0, 1 - elapsed / duration);
-          if (p.shape === 'circle') {
-            ctx.beginPath();
-            ctx.arc(0, 0, p.size / 2, 0, Math.PI * 2);
-            ctx.fill();
-          } else {
-            ctx.fillRect(-p.size / 2, -p.size / 4, p.size, p.size / 2);
-          }
-          ctx.restore();
-        });
-        if (elapsed < duration) {
-          requestAnimationFrame(frame);
-        } else {
-          ctx.clearRect(0, 0, canvas.width, canvas.height);
-          canvas.style.display = 'none';
-        }
-      }
-      requestAnimationFrame(frame);
-    }
-
     function updateReviewPage() {
       const reviewClientBasics = document.getElementById('reviewClientBasics');
       const reviewBasicInfo = document.getElementById('reviewBasicInfo');
@@ -4531,31 +4342,17 @@
         b.style.flex = '1';
         b.textContent = btn.text;
         b.addEventListener('click', () => {
-          modal.classList.remove('active');
+          modal.style.display = 'none';
           if (btn.onClick) btn.onClick();
         });
         actionsEl.appendChild(b);
       });
       modal.style.display = 'flex';
-      modal.classList.add('active');
     }
 
     function hideFaceIdModal() {
       const modal = document.getElementById('faceIdModal');
-      if (modal) modal.classList.remove('active');
-    }
-
-    // Show the "create a PIN" prompt after a new client's first submission
-    function showPinSetupModal() {
-      const modal = document.getElementById('pinSetupModal');
-      const input = document.getElementById('pinSetupInput');
-      const errorEl = document.getElementById('pinSetupError');
-      if (!modal) return;
-      input.value = '';
-      errorEl.style.display = 'none';
-      modal.style.display = 'flex';
-      modal.classList.add('active');
-      input.focus();
+      if (modal) modal.style.display = 'none';
     }
 
     // Show Face ID setup prompt after first form submission
@@ -4915,7 +4712,6 @@
       dashboard: 'staffDashboardTab',
       clients: 'staffClientsTab',
       calendar: 'staffCalendarTab',
-      heatmap: 'staffHeatmapTab',
       staff: 'staffAccountsTab'
     };
 
@@ -4929,47 +4725,7 @@
       });
       if (tab === 'dashboard') renderStatsDashboard();
       if (tab === 'calendar') renderAppointmentCalendar();
-      if (tab === 'heatmap') renderPainHeatmap();
       if (tab === 'staff') renderStaffAccounts();
-    }
-
-    // ========================================
-    // Pain Heatmap
-    // ========================================
-    async function renderPainHeatmap() {
-      const branch = document.getElementById('heatmapBranchFilter')?.value || '';
-      const result = await apiCall('/api/clients' + (branch ? `?branch=${branch}` : ''));
-      const clients = result.data || [];
-
-      const zoneCounts = {};
-      clients.forEach(c => {
-        const zones = new Set((c.formData?.painAssessment?.points || []).map(p => p.zone));
-        zones.forEach(z => { zoneCounts[z] = (zoneCounts[z] || 0) + 1; });
-      });
-
-      const total = clients.length || 1;
-      const ranked = Object.entries(zoneCounts)
-        .map(([zone, count]) => ({ zone, count, pct: Math.round((count / total) * 100) }))
-        .sort((a, b) => b.count - a.count)
-        .slice(0, 10);
-
-      const listEl = document.getElementById('heatmapRankedList');
-      if (listEl) {
-        listEl.innerHTML = ranked.length ? ranked.map((r, i) => `
-          <div class="heatmap-row">
-            <span class="heatmap-rank">#${i + 1}</span>
-            <span class="heatmap-zone">${zoneOrFieldLabel(r.zone)}</span>
-            <span class="heatmap-count">${r.count} (${r.pct}%)</span>
-          </div>
-        `).join('') : '<p style="text-align:center;color:var(--text-muted);">No data yet 暂无数据</p>';
-      }
-
-      renderStatsChart(
-        'chartPainHeatmap',
-        'bar',
-        ranked.map(r => zoneOrFieldLabel(r.zone)),
-        ranked.map(r => r.count)
-      );
     }
 
     // ========================================
@@ -5671,116 +5427,8 @@
           const _rfBtn = document.getElementById('resetFormBtn');
           if (_rfBtn) _rfBtn.style.display = 'flex';
           updateNavItems();
-          navigateTo('entry-type');
+          navigateTo('client-basics');
         });
-      });
-
-      // Entry type: new client vs returning member
-      document.getElementById('newClientCard')?.addEventListener('click', () => {
-        AppState.entryMode = 'new';
-        AppState.currentClientId = null;
-        AppState.formData = {
-          clientBasics: {},
-          basicInfo: {},
-          contraindications: {},
-          painAssessment: { points: [] },
-          treatmentPreferences: {},
-          postural: {}
-        };
-        navigateTo('client-basics');
-      });
-
-      document.getElementById('returningMemberCard')?.addEventListener('click', () => {
-        AppState.entryMode = 'returning';
-        navigateTo('returning-login');
-        document.getElementById('returningPhone')?.focus();
-      });
-
-      document.getElementById('backEntryType')?.addEventListener('click', () => {
-        navigateTo('branch');
-      });
-
-      document.getElementById('backReturningLogin')?.addEventListener('click', () => {
-        navigateTo('entry-type');
-      });
-
-      document.getElementById('returningLoginSubmit')?.addEventListener('click', async () => {
-        const phone = document.getElementById('returningPhone').value.trim();
-        const pin = document.getElementById('returningPin').value.trim();
-        const errorEl = document.getElementById('returningLoginError');
-        const showError = (msg) => {
-          errorEl.textContent = msg;
-          errorEl.style.display = 'block';
-        };
-        errorEl.style.display = 'none';
-
-        if (!phone || !/^\d{4}$/.test(pin)) {
-          showError('Please enter your phone number and 4-digit PIN. / 请输入手机号和4位PIN码。');
-          return;
-        }
-
-        const rec = AppState.pinAttempts[phone];
-        if (rec && rec.lockUntil > Date.now()) {
-          const secs = Math.ceil((rec.lockUntil - Date.now()) / 1000);
-          showError(`Too many attempts. Try again in ${secs}s. / 尝试次数过多,请${secs}秒后重试。`);
-          return;
-        }
-
-        const result = await apiCall('/api/clients/verify-pin', 'POST', { phone, pin });
-        if (result.error || !result.data) {
-          const next = rec || { count: 0, lockUntil: 0 };
-          next.count++;
-          if (next.count >= 3) {
-            next.lockUntil = Date.now() + 60000;
-            next.count = 0;
-            showError('Too many attempts. Locked for 60 seconds. / 尝试次数过多,已锁定60秒。');
-          } else {
-            showError(`Incorrect phone or PIN. ${3 - next.count} attempt(s) left. / 手机号或PIN码错误,还剩${3 - next.count}次尝试。`);
-          }
-          AppState.pinAttempts[phone] = next;
-          return;
-        }
-
-        delete AppState.pinAttempts[phone];
-        const client = result.data;
-        AppState.entryMode = 'returning';
-        AppState.currentClientId = client._id;
-        AppState.branch = client.branch || AppState.branch;
-        AppState.formData = {
-          clientBasics: {},
-          basicInfo: {},
-          contraindications: {},
-          painAssessment: { points: [] },
-          treatmentPreferences: {},
-          postural: {},
-          ...client.formData
-        };
-        navigateTo('review');
-      });
-
-      // PIN setup modal (shown after a new client's first submission)
-      document.getElementById('pinSetupSave')?.addEventListener('click', async () => {
-        const pin = document.getElementById('pinSetupInput').value.trim();
-        const errorEl = document.getElementById('pinSetupError');
-        if (!/^\d{4}$/.test(pin)) {
-          errorEl.textContent = 'PIN must be exactly 4 digits. / PIN码必须是4位数字。';
-          errorEl.style.display = 'block';
-          return;
-        }
-        const phone = AppState.formData.clientBasics?.phone;
-        const result = await apiCall('/api/clients/pin', 'POST', { id: AppState.currentClientId, phone, pin });
-        document.getElementById('pinSetupModal').classList.remove('active');
-        if (!result.error) {
-          showToast('PIN saved / PIN已保存', 'success');
-        }
-      });
-
-      document.getElementById('pinSetupSkip')?.addEventListener('click', () => {
-        document.getElementById('pinSetupModal').classList.remove('active');
-      });
-
-      document.getElementById('heatmapBranchFilter')?.addEventListener('change', () => {
-        renderPainHeatmap();
       });
 
       // Language toggle - re-read state from localStorage to ensure first click always works
@@ -6475,20 +6123,14 @@
         }
 
         navigateTo('success');
-        fireConfetti();
-
-        // Prompt new clients to set a PIN for faster access next time
-        if (AppState.entryMode === 'new' && AppState.currentClientId) {
-          setTimeout(() => showPinSetupModal(), 400);
-        }
-
+        
         // Prompt to enable Face ID / passkey login
         if (phoneForStorage) {
-          setTimeout(() => showFaceIDEnablePrompt(phoneForStorage), 900);
+          setTimeout(() => showFaceIDEnablePrompt(phoneForStorage), 500);
         }
-
+        
         // Show Face ID setup button on home screen for returning clients
-        setTimeout(() => showHomeScreenFaceIDButton(), 1400);
+        setTimeout(() => showHomeScreenFaceIDButton(), 1000);
       });
 
       // View inbox

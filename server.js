@@ -287,6 +287,55 @@ app.get('/api/clients/phone/:phone', async (req, res) => {
   }
 });
 
+// Set/update a client's 4-digit PIN for returning-member login
+app.post('/api/clients/pin', async (req, res) => {
+  try {
+    const { id, phone, pin } = req.body;
+    if (!/^\d{4}$/.test(pin || '')) {
+      return res.status(400).json({ error: 'PIN must be 4 digits' });
+    }
+    const query = id && ObjectId.isValid(id) ? { _id: new ObjectId(id) } : { 'formData.clientBasics.phone': phone };
+    const pinHash = await bcrypt.hash(pin, 10);
+    const result = await clientsCollection.findOneAndUpdate(
+      query,
+      { $set: { pinHash } },
+      { returnDocument: 'after' }
+    );
+    if (!result) {
+      return res.status(404).json({ error: 'Client not found' });
+    }
+    res.json({ data: { success: true } });
+  } catch (error) {
+    console.error('Error setting PIN:', error);
+    res.status(500).json({ error: error.message });
+  }
+});
+
+// Verify phone + PIN for returning-member login; returns full client record on success
+app.post('/api/clients/verify-pin', async (req, res) => {
+  try {
+    const { phone, pin } = req.body;
+    if (!phone || !pin) {
+      return res.status(400).json({ error: 'Phone and PIN required' });
+    }
+    const client = await clientsCollection.findOne(
+      { 'formData.clientBasics.phone': phone },
+      { sort: { createdAt: -1 } }
+    );
+    if (!client || !client.pinHash) {
+      return res.status(401).json({ error: 'Invalid phone or PIN' });
+    }
+    const valid = await bcrypt.compare(pin, client.pinHash);
+    if (!valid) {
+      return res.status(401).json({ error: 'Invalid phone or PIN' });
+    }
+    res.json({ data: client });
+  } catch (error) {
+    console.error('Error verifying PIN:', error);
+    res.status(500).json({ error: error.message });
+  }
+});
+
 // Get all clients
 app.get('/api/clients', async (req, res) => {
   try {
