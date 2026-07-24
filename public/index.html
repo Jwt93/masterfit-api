@@ -1793,6 +1793,144 @@
       margin: 8px 0;
     }
 
+    .ai-section-title {
+      font-weight: 700;
+      color: var(--primary);
+      margin: 10px 0 4px;
+    }
+    .ai-section-title:first-child {
+      margin-top: 0;
+    }
+
+    .ai-suggestion p {
+      margin: 0 0 8px;
+    }
+    .ai-suggestion ul {
+      margin: 0 0 8px 18px;
+    }
+
+    .ai-loading {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      padding: 16px;
+      color: var(--text-secondary);
+      font-size: 14px;
+    }
+    .ai-spinner {
+      width: 18px;
+      height: 18px;
+      border: 2px solid var(--primary-light);
+      border-top-color: var(--primary);
+      border-radius: 50%;
+      animation: ai-spin 0.8s linear infinite;
+      flex-shrink: 0;
+    }
+    @keyframes ai-spin {
+      to { transform: rotate(360deg); }
+    }
+
+    .ai-error {
+      padding: 16px;
+      border-radius: var(--radius-md);
+      background: rgba(239, 68, 68, 0.1);
+      color: var(--error);
+      font-size: 14px;
+    }
+
+    .ai-meta-row {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 12px;
+      margin-top: 4px;
+    }
+    .ai-cached-badge {
+      font-size: 12px;
+      color: var(--text-muted);
+    }
+
+    .session-notes-list {
+      display: flex;
+      flex-direction: column;
+      gap: 10px;
+      margin-bottom: 16px;
+    }
+    .session-note-item {
+      background: var(--bg-light);
+      border-radius: var(--radius-sm);
+      padding: 10px 14px;
+    }
+    body.dark-mode .session-note-item {
+      background: rgba(255,255,255,0.06);
+    }
+    .session-note-meta {
+      font-size: 12px;
+      color: var(--text-secondary);
+      margin-bottom: 4px;
+    }
+    .session-note-text {
+      font-size: 14px;
+      white-space: pre-wrap;
+      line-height: 1.5;
+    }
+    .session-note-composer .input {
+      width: 100%;
+    }
+
+    /* Statistics Dashboard */
+    .stats-cards-row {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(120px, 1fr));
+      gap: 12px;
+      margin-bottom: 24px;
+    }
+    .stat-card {
+      background: var(--bg-light);
+      border-radius: var(--radius-md);
+      padding: 16px;
+      text-align: center;
+    }
+    body.dark-mode .stat-card {
+      background: rgba(255,255,255,0.06);
+    }
+    .stat-card-value {
+      font-size: 28px;
+      font-weight: 800;
+      color: var(--primary);
+      line-height: 1.2;
+    }
+    .stat-card-label {
+      font-size: 12px;
+      color: var(--text-secondary);
+      margin-top: 4px;
+    }
+
+    .stats-charts-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+      gap: 16px;
+      margin-bottom: 8px;
+    }
+    .stats-chart-card {
+      background: var(--bg-light);
+      border-radius: var(--radius-md);
+      padding: 16px;
+    }
+    body.dark-mode .stats-chart-card {
+      background: rgba(255,255,255,0.06);
+    }
+    .stats-chart-title {
+      font-size: 13px;
+      font-weight: 700;
+      margin-bottom: 12px;
+      color: var(--text-primary);
+    }
+    .stats-chart-container {
+      position: relative;
+      height: 220px;
+    }
+
     /* Toast */
     .toast {
       position: fixed;
@@ -2686,43 +2824,92 @@
           <button class="btn btn-ghost btn-sm" id="logoutBtn" data-i18n="buttons.logout">Logout</button>
         </div>
 
-        <div class="staff-search">
-          <input type="text" class="input" id="clientSearch" data-i18n-placeholder="fields.searchPlaceholder" placeholder="Search by name or phone...">
-          <button class="btn btn-primary btn-sm" id="searchBtn" data-i18n="buttons.search">Search</button>
+        <div class="inbox-tabs" id="staffPanelTabs" style="margin-bottom: 20px;">
+          <button class="inbox-tab active" data-staff-tab="dashboard">Dashboard 数据看板</button>
+          <button class="inbox-tab" data-staff-tab="clients">Clients 客户列表</button>
         </div>
 
-        <div class="client-list" id="staffClientList"></div>
-
-        <div id="clientDetail" style="display: none;"></div>
-
-        <div class="export-buttons" id="exportButtons" style="display: none;">
-          <button class="btn btn-secondary btn-sm" id="exportPdf" data-i18n="buttons.exportPdf">Export PDF</button>
-          <button class="btn btn-secondary btn-sm" id="exportExcel" data-i18n="buttons.exportExcel">Export Excel</button>
-        </div>
-
-        <div class="qr-section" id="qrSection">
-          <h3 class="pain-chart-title" data-i18n="fields.checkinQR">Front Desk Check-in QR Code</h3>
-          <p class="secondary-text" data-i18n="fields.qrHint">Print this QR code and place it at the front desk for clients to scan</p>
-          <div class="qr-code" id="qrCode"></div>
-          <button class="btn btn-secondary btn-sm" id="printQR" data-i18n="buttons.printQR">Print QR Code</button>
-        </div>
-
-        <!-- AI Assistant -->
-        <div class="ai-panel" id="aiPanel" style="display: none;">
-          <div class="ai-header">
-            <div class="ai-icon">
-              <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-                <path d="M12 2a10 10 0 0 1 10 10c0 5.52-4.48 10-10 10S2 17.52 2 12 6.48 2 12 2z"/>
-                <path d="M12 8v4M12 16h.01"/>
-              </svg>
+        <!-- Statistics Dashboard -->
+        <div id="staffDashboardTab">
+          <div class="stats-cards-row">
+            <div class="stat-card">
+              <div class="stat-card-value" id="statTotalMonth">-</div>
+              <div class="stat-card-label">This Month 本月新增</div>
             </div>
-            <div>
-              <div class="ai-title" data-i18n="pages.ai.title">AI Treatment Assistant</div>
-              <div class="ai-subtitle" data-i18n="pages.ai.subtitle">Staff only - Helps draft assessments and suggestions</div>
+            <div class="stat-card">
+              <div class="stat-card-value" id="statTotalAllTime">-</div>
+              <div class="stat-card-label">All Time 累计总数</div>
+            </div>
+            <div class="stat-card">
+              <div class="stat-card-value" id="statShenzhen">-</div>
+              <div class="stat-card-label">Shenzhen 深圳</div>
+            </div>
+            <div class="stat-card">
+              <div class="stat-card-value" id="statShanghai">-</div>
+              <div class="stat-card-label">Shanghai 上海</div>
             </div>
           </div>
-          <div class="ai-suggestions" id="aiSuggestions">
-            <div class="ai-suggestion" data-i18n="pages.ai.ready">Select a client to see AI-powered assessment suggestions.</div>
+
+          <div class="stats-charts-grid">
+            <div class="stats-chart-card">
+              <h4 class="stats-chart-title">Top Pain Areas 常见疼痛部位</h4>
+              <div class="stats-chart-container" id="chartTopPain"></div>
+            </div>
+            <div class="stats-chart-card">
+              <h4 class="stats-chart-title">Top Injury History 常见受伤史</h4>
+              <div class="stats-chart-container" id="chartTopInjury"></div>
+            </div>
+            <div class="stats-chart-card">
+              <h4 class="stats-chart-title">New vs Returning 新客户 vs 回头客</h4>
+              <div class="stats-chart-container" id="chartNewReturning"></div>
+            </div>
+            <div class="stats-chart-card">
+              <h4 class="stats-chart-title">Busiest Days 最繁忙日期</h4>
+              <div class="stats-chart-container" id="chartBusiestDays"></div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Client List / Detail -->
+        <div id="staffClientsTab" style="display: none;">
+          <div class="staff-search">
+            <input type="text" class="input" id="clientSearch" data-i18n-placeholder="fields.searchPlaceholder" placeholder="Search by name or phone...">
+            <button class="btn btn-primary btn-sm" id="searchBtn" data-i18n="buttons.search">Search</button>
+          </div>
+
+          <div class="client-list" id="staffClientList"></div>
+
+          <div id="clientDetail" style="display: none;"></div>
+
+          <div class="export-buttons" id="exportButtons" style="display: none;">
+            <button class="btn btn-secondary btn-sm" id="exportPdf" data-i18n="buttons.exportPdf">Export PDF</button>
+            <button class="btn btn-secondary btn-sm" id="exportExcel" data-i18n="buttons.exportExcel">Export Excel</button>
+          </div>
+
+          <div class="qr-section" id="qrSection">
+            <h3 class="pain-chart-title" data-i18n="fields.checkinQR">Front Desk Check-in QR Code</h3>
+            <p class="secondary-text" data-i18n="fields.qrHint">Print this QR code and place it at the front desk for clients to scan</p>
+            <div class="qr-code" id="qrCode"></div>
+            <button class="btn btn-secondary btn-sm" id="printQR" data-i18n="buttons.printQR">Print QR Code</button>
+          </div>
+
+          <!-- AI Assistant -->
+          <div class="ai-panel" id="aiPanel" style="display: none;">
+            <div class="ai-header">
+              <div class="ai-icon">
+                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                  <path d="M12 2a10 10 0 0 1 10 10c0 5.52-4.48 10-10 10S2 17.52 2 12 6.48 2 12 2z"/>
+                  <path d="M12 8v4M12 16h.01"/>
+                </svg>
+              </div>
+              <div>
+                <div class="ai-title" data-i18n="pages.ai.title">AI Treatment Assistant</div>
+                <div class="ai-subtitle" data-i18n="pages.ai.subtitle">Staff only - Helps draft assessments and suggestions</div>
+              </div>
+            </div>
+            <div class="ai-suggestions" id="aiSuggestions">
+              <div class="ai-suggestion" data-i18n="pages.ai.ready">Select a client to see AI-powered assessment suggestions.</div>
+            </div>
           </div>
         </div>
       </div>
@@ -4213,6 +4400,111 @@
     }
 
     // ========================================
+    // Statistics Dashboard
+    // ========================================
+    const statsChartInstances = {};
+
+    function renderStatsChart(containerId, type, labels, data, colors) {
+      const container = document.getElementById(containerId);
+      if (!container) return;
+
+      if (typeof Chart === 'undefined') {
+        container.innerHTML = '<p style="text-align:center;color:var(--text-muted);">Chart library loading...</p>';
+        return;
+      }
+
+      if (statsChartInstances[containerId]) {
+        statsChartInstances[containerId].destroy();
+      }
+
+      if (!labels.length) {
+        container.innerHTML = '<p style="text-align:center;color:var(--text-muted);">No data yet 暂无数据</p>';
+        return;
+      }
+
+      const canvas = document.createElement('canvas');
+      container.innerHTML = '';
+      container.appendChild(canvas);
+
+      const palette = colors || ['#8B0000', '#A52A2A', '#C25050', '#D98080', '#EFC0C0', '#F2A65A'];
+
+      statsChartInstances[containerId] = new Chart(canvas, {
+        type,
+        data: {
+          labels,
+          datasets: [{
+            data,
+            backgroundColor: type === 'bar' ? '#8B0000' : palette,
+            borderColor: type === 'bar' ? '#8B0000' : '#fff',
+            borderWidth: type === 'pie' ? 2 : 0
+          }]
+        },
+        options: {
+          responsive: true,
+          maintainAspectRatio: false,
+          indexAxis: type === 'bar' ? 'y' : undefined,
+          plugins: {
+            legend: { display: type === 'pie', position: 'bottom', labels: { boxWidth: 12, font: { size: 11 } } }
+          },
+          scales: type === 'bar' ? {
+            x: { beginAtZero: true, ticks: { precision: 0 } }
+          } : undefined
+        }
+      });
+    }
+
+    function zoneOrFieldLabel(key) {
+      const zoneLabel = t('zones.' + key);
+      if (zoneLabel !== 'zones.' + key) return zoneLabel;
+      const fieldLabel = t('fields.' + key);
+      if (fieldLabel !== 'fields.' + key) return fieldLabel;
+      return key;
+    }
+
+    async function renderStatsDashboard() {
+      const result = await apiCall('/api/stats');
+      if (result.error || !result.data) return;
+      const s = result.data;
+
+      const totalMonthEl = document.getElementById('statTotalMonth');
+      const totalAllTimeEl = document.getElementById('statTotalAllTime');
+      const shenzhenEl = document.getElementById('statShenzhen');
+      const shanghaiEl = document.getElementById('statShanghai');
+      if (totalMonthEl) totalMonthEl.textContent = s.totalClientsThisMonth;
+      if (totalAllTimeEl) totalAllTimeEl.textContent = s.totalClientsAllTime;
+      if (shenzhenEl) shenzhenEl.textContent = s.branchSplit.shenzhen;
+      if (shanghaiEl) shanghaiEl.textContent = s.branchSplit.shanghai;
+
+      renderStatsChart(
+        'chartTopPain',
+        'bar',
+        s.topPainAreas.map(p => zoneOrFieldLabel(p.key)),
+        s.topPainAreas.map(p => p.count)
+      );
+
+      renderStatsChart(
+        'chartTopInjury',
+        'bar',
+        s.topInjuryHistory.map(i => zoneOrFieldLabel(i.key)),
+        s.topInjuryHistory.map(i => i.count)
+      );
+
+      renderStatsChart(
+        'chartNewReturning',
+        'pie',
+        ['New 新客户', 'Returning 回头客'],
+        [s.newVsReturning.new, s.newVsReturning.returning]
+      );
+
+      renderStatsChart(
+        'chartBusiestDays',
+        'bar',
+        s.busiestDays.map(d => d.day),
+        s.busiestDays.map(d => d.count)
+      );
+    }
+
+    // ========================================
     // Staff Panel Functions
     // ========================================
     async function renderStaffClientList() {
@@ -4267,6 +4559,139 @@
           showClientDetail(clientId);
         });
       });
+    }
+
+    // ========================================
+    // AI Treatment Assistant (server-backed)
+    // ========================================
+    function escapeHtmlForAi(str) {
+      return String(str)
+        .replace(/&/g, '&amp;')
+        .replace(/</g, '&lt;')
+        .replace(/>/g, '&gt;');
+    }
+
+    function inlineFormatAi(str) {
+      return escapeHtmlForAi(str).replace(/\*\*(.+?)\*\*/g, '<strong>$1</strong>');
+    }
+
+    // Very small markdown-lite renderer for the AI response: "## " headers,
+    // "- " bullets, "**bold**", plain paragraphs.
+    function renderAiMarkdown(text) {
+      if (!text) return '';
+      const lines = text.split('\n');
+      let html = '';
+      let inList = false;
+      lines.forEach(rawLine => {
+        const line = rawLine.trim();
+        if (!line) {
+          if (inList) { html += '</ul>'; inList = false; }
+          return;
+        }
+        if (line.startsWith('## ')) {
+          if (inList) { html += '</ul>'; inList = false; }
+          html += `<div class="ai-section-title">${escapeHtmlForAi(line.slice(3))}</div>`;
+        } else if (line.startsWith('- ') || line.startsWith('* ')) {
+          if (!inList) { html += '<ul>'; inList = true; }
+          html += `<li>${inlineFormatAi(line.slice(2))}</li>`;
+        } else {
+          if (inList) { html += '</ul>'; inList = false; }
+          html += `<p>${inlineFormatAi(line)}</p>`;
+        }
+      });
+      if (inList) html += '</ul>';
+      return html;
+    }
+
+    function splitBilingualAiText(text) {
+      const marker = '## 中文';
+      const idx = text.indexOf(marker);
+      if (idx === -1) return { en: text.trim(), zh: '' };
+      return { en: text.slice(0, idx).trim(), zh: text.slice(idx + marker.length).trim() };
+    }
+
+    function renderAiAssessment(assessment, cached, clientId) {
+      const aiSuggestions = document.getElementById('aiSuggestions');
+      if (!aiSuggestions) return;
+      const { en, zh } = splitBilingualAiText(assessment.text || '');
+      const generatedLabel = assessment.generatedAt
+        ? new Date(assessment.generatedAt).toLocaleString(AppState.language === 'zh' ? 'zh-CN' : 'en-US')
+        : '';
+
+      aiSuggestions.innerHTML = `
+        <div class="ai-lang-section">
+          <div class="ai-lang-label">English:</div>
+          <div class="ai-suggestion">${renderAiMarkdown(en)}</div>
+        </div>
+        <div class="ai-lang-divider"></div>
+        <div class="ai-lang-section">
+          <div class="ai-lang-label">中文:</div>
+          <div class="ai-suggestion">${renderAiMarkdown(zh)}</div>
+        </div>
+        <div class="ai-meta-row">
+          <span class="ai-cached-badge">${cached ? 'Cached' : 'Generated'} ${generatedLabel} · 缓存/生成时间 ${generatedLabel}</span>
+          <button type="button" class="btn btn-ghost btn-sm" id="aiRegenerateBtn">Regenerate 重新生成</button>
+        </div>
+      `;
+
+      document.getElementById('aiRegenerateBtn')?.addEventListener('click', () => {
+        loadAiAssessment(clientId, true);
+      });
+    }
+
+    async function loadAiAssessment(clientId, force) {
+      const aiSuggestions = document.getElementById('aiSuggestions');
+      if (!aiSuggestions) return;
+
+      aiSuggestions.innerHTML = `
+        <div class="ai-loading">
+          <span class="ai-spinner"></span>
+          <span>Generating AI treatment assessment... 正在生成AI治疗建议...</span>
+        </div>
+      `;
+
+      const result = await apiCall(`/api/ai/assess/${clientId}`, 'POST', force ? { force: true } : {});
+
+      if (result.error || !result.data) {
+        aiSuggestions.innerHTML = `
+          <div class="ai-error">
+            AI assistant is unavailable right now (${result.error || 'unknown error'}). AI助手当前不可用。
+          </div>
+        `;
+        return;
+      }
+
+      renderAiAssessment(result.data, result.cached, clientId);
+    }
+
+    // ========================================
+    // Session Notes (private, staff-only)
+    // ========================================
+    function renderSessionNotesList(notes) {
+      const list = document.getElementById('sessionNotesList');
+      if (!list) return;
+      if (!notes || notes.length === 0) {
+        list.innerHTML = '<p class="secondary-text">No notes yet. 暂无记录。</p>';
+        return;
+      }
+      list.innerHTML = notes.map(n => `
+        <div class="session-note-item">
+          <div class="session-note-meta"><strong>${escapeHtmlForAi(n.staffName || 'Staff')}</strong> · ${new Date(n.createdAt).toLocaleString(AppState.language === 'zh' ? 'zh-CN' : 'en-US')}</div>
+          <div class="session-note-text">${escapeHtmlForAi(n.text)}</div>
+        </div>
+      `).join('');
+    }
+
+    async function loadSessionNotes(clientPhone) {
+      const list = document.getElementById('sessionNotesList');
+      if (!list || !clientPhone) return;
+      list.innerHTML = '<p class="secondary-text">Loading... 加载中...</p>';
+      const result = await apiCall(`/api/notes/${clientPhone}`);
+      if (result.error || !result.data) {
+        list.innerHTML = '<p class="secondary-text">No notes yet. 暂无记录。</p>';
+        return;
+      }
+      renderSessionNotesList(result.data);
     }
 
     async function showClientDetail(clientId) {
@@ -4343,13 +4768,22 @@
         </div>
 
         <div class="assessment-section">
+          <h3 class="assessment-title">Session Notes 训练记录 <span class="secondary-text" style="font-weight:400;">(Private - Staff Only 仅员工可见)</span></h3>
+          <div class="session-notes-list" id="sessionNotesList"></div>
+          <div class="session-note-composer">
+            <input type="text" class="input" id="noteStaffName" placeholder="Your name 您的姓名" style="margin-bottom:8px;">
+            <textarea class="input" id="noteText" rows="3" placeholder="Add a private note for this visit... 添加本次访问的私人记录..." style="margin-bottom:8px;resize:vertical;"></textarea>
+            <button class="btn btn-primary btn-sm" id="saveNoteBtn">Save Note 保存记录</button>
+          </div>
+        </div>
+
+        <div class="assessment-section">
           <h3 class="assessment-title">${t('pages.staffPanel.title')}</h3>
           <button class="btn btn-primary btn-sm" id="sendMsgBtn">${t('buttons.sendMessage')}</button>
           <button class="btn btn-secondary btn-sm" id="scheduleBtn">${t('buttons.scheduleAppointment')}</button>
         </div>
       `;
 
-      // Update AI suggestions (bilingual EN + ZH)
       // Render pain trend chart for staff panel
       const clientPhone = cb.phone;
       if (clientPhone) {
@@ -4363,57 +4797,32 @@
         renderPainChart(staffPainHistory.filter(p => p.severity > 0), 'staffPainChart', 'staffPainChartInstance');
       }
 
-      const aiSuggestions = document.getElementById('aiSuggestions');
-      const painPoints = pa.points || [];
-      const injuryHistory = bi.injuryHistory || [];
+      loadAiAssessment(clientId, false);
 
-      // Build English content
-      let aiEn = '<div class="ai-suggestion">';
-      let aiZh = '<div class="ai-suggestion">';
-
-      if (painPoints.length > 0) {
-        const highPain = painPoints.filter(p => p.severity >= 7);
-        const mediumPain = painPoints.filter(p => p.severity >= 4 && p.severity < 7);
-
-        if (highPain.length > 0) {
-          aiEn += `<strong>High Priority:</strong> ${highPain.map(p => t('zones.' + p.zone)).join(', ')} areas show severe pain (${highPain[0].severity}/10). Recommend immediate attention and gentle treatment approach.<br><br>`;
-          aiZh += `<strong>高优先级:</strong>${highPain.map(p => t('zones.' + p.zone)).join('、')}区域存在严重疼痛(${highPain[0].severity}/10)。建议立即关注,采用温和的治疗方法。<br><br>`;
-        }
-
-        if (mediumPain.length > 0) {
-          aiEn += `<strong>Moderate Priority:</strong> ${mediumPain.map(p => t('zones.' + p.zone)).join(', ')} areas show moderate discomfort.<br><br>`;
-          aiZh += `<strong>中优先级:</strong>${mediumPain.map(p => t('zones.' + p.zone)).join('、')}区域存在中度不适。<br><br>`;
-        }
-
-        const suggestedPlan = painPoints.length >= 3 ? 'Comprehensive Improvement' : 'Pain Resolution';
-        aiEn += `<strong>Suggested Program:</strong> ${suggestedPlan} phase recommended. Focus on ${painPoints[0].zone ? t('zones.' + painPoints[0].zone) : 'affected areas'} as primary treatment area.<br><br>`;
-        aiZh += `<strong>建议方案:</strong>建议进入${painPoints.length >= 3 ? '综合改善' : '疼痛缓解'}阶段。重点关注${painPoints[0].zone ? t('zones.' + painPoints[0].zone) : '受影响区域'}作为主要治疗区域。<br><br>`;
-      } else {
-        aiEn += `<strong>Note:</strong> No acute pain points detected. Consider maintenance and prevention-focused program.<br><br>`;
-        aiZh += `<strong>备注:</strong>未检测到急性疼痛点。建议以维护和预防为主的方案。<br><br>`;
+      // Session notes (private, staff-only)
+      const noteStaffNameInput = document.getElementById('noteStaffName');
+      if (noteStaffNameInput) {
+        noteStaffNameInput.value = localStorage.getItem('mf_staff_name') || '';
       }
-
-      if (injuryHistory.includes('disc') || injuryHistory.includes('meniscus')) {
-        const inj = injuryHistory.find(i => i === 'disc' || i === 'meniscus');
-        const injLabel = t('fields.' + inj);
-        aiEn += `<strong>⚠️ Caution:</strong> History of ${injLabel} detected. Ensure proper assessment before intensive treatment.<br>`;
-        aiZh += `<strong>⚠️ 注意:</strong>检测到${injLabel}病史。进行强化治疗前请确保评估充分。<br>`;
+      if (clientPhone) {
+        loadSessionNotes(clientPhone);
       }
+      document.getElementById('saveNoteBtn')?.addEventListener('click', async () => {
+        const staffName = document.getElementById('noteStaffName')?.value.trim() || 'Staff';
+        const noteTextInput = document.getElementById('noteText');
+        const text = noteTextInput?.value.trim();
+        if (!text || !clientPhone) return;
 
-      aiEn += '</div>';
-      aiZh += '</div>';
-
-      aiSuggestions.innerHTML = `
-        <div class="ai-lang-section">
-          <div class="ai-lang-label">English:</div>
-          ${aiEn}
-        </div>
-        <div class="ai-lang-divider"></div>
-        <div class="ai-lang-section">
-          <div class="ai-lang-label">中文:</div>
-          ${aiZh}
-        </div>
-      `;
+        localStorage.setItem('mf_staff_name', staffName);
+        const result = await apiCall('/api/notes', 'POST', { clientPhone, staffName, text });
+        if (!result.error) {
+          noteTextInput.value = '';
+          loadSessionNotes(clientPhone);
+          showToast('Note saved 记录已保存', 'success');
+        } else {
+          showToast('Failed to save note 保存失败', 'error');
+        }
+      });
 
       // Add event listeners
       document.getElementById('sendMsgBtn')?.addEventListener('click', async () => {
@@ -4641,9 +5050,18 @@
 
           // Load clients from API
           await renderStaffClientList();
+          renderStatsDashboard();
 
           const qrUrl = `https://smallapps.ai4money.work/webs/masterfit.html#branch=${AppState.branch}`;
           generateQRCode(qrUrl, document.getElementById('qrCode'));
+
+          // Dashboard is shown first, before the client list
+          document.querySelectorAll('#staffPanelTabs .inbox-tab').forEach(btn => {
+            btn.classList.toggle('active', btn.getAttribute('data-staff-tab') === 'dashboard');
+          });
+          document.getElementById('staffDashboardTab').style.display = 'block';
+          document.getElementById('staffClientsTab').style.display = 'none';
+
           navigateTo('staff-panel');
         } else {
           document.getElementById('loginError').classList.add('show');
@@ -4669,6 +5087,17 @@
         document.getElementById('exportButtons').style.display = 'none';
         document.getElementById('aiPanel').style.display = 'none';
         navigateTo('client-basics');
+      });
+
+      // Staff Panel tabs (Dashboard / Clients)
+      document.querySelectorAll('#staffPanelTabs .inbox-tab').forEach(tabBtn => {
+        tabBtn.addEventListener('click', () => {
+          const tab = tabBtn.getAttribute('data-staff-tab');
+          document.querySelectorAll('#staffPanelTabs .inbox-tab').forEach(b => b.classList.toggle('active', b === tabBtn));
+          document.getElementById('staffDashboardTab').style.display = tab === 'dashboard' ? 'block' : 'none';
+          document.getElementById('staffClientsTab').style.display = tab === 'clients' ? 'block' : 'none';
+          if (tab === 'dashboard') renderStatsDashboard();
+        });
       });
 
       // Reset form button - show confirmation modal

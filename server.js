@@ -18,7 +18,9 @@ const express = require('express');
 const cors = require('cors');
 const fs = require('fs');
 const path = require('path');
+const crypto = require('crypto');
 const { MongoClient, ObjectId } = require('mongodb');
+const Anthropic = require('@anthropic-ai/sdk');
 
 const app = express();
 const PORT = process.env.PORT || 3000;
@@ -32,6 +34,12 @@ if (!MONGODB_URI) {
   process.exit(1);
 }
 
+// AI treatment assistant is optional - only enabled when a key is configured.
+const anthropic = process.env.ANTHROPIC_API_KEY ? new Anthropic() : null;
+if (!anthropic) {
+  console.log('ANTHROPIC_API_KEY not set - AI Treatment Assistant endpoint will return 503');
+}
+
 // MongoDB client and db references
 let client;
 let db;
@@ -39,6 +47,7 @@ let clientsCollection;
 let messagesCollection;
 let appointmentsCollection;
 let dingtalkSyncsCollection;
+let notesCollection;
 
 async function connectDB() {
   if (db) return true;
@@ -54,6 +63,7 @@ async function connectDB() {
     messagesCollection = db.collection('messages');
     appointmentsCollection = db.collection('appointments');
     dingtalkSyncsCollection = db.collection('dingtalk_syncs');
+    notesCollection = db.collection('notes');
 
     // Create indexes
     try {
@@ -64,6 +74,8 @@ async function connectDB() {
       await messagesCollection.createIndex({ createdAt: -1 });
       await appointmentsCollection.createIndex({ clientPhone: 1 });
       await appointmentsCollection.createIndex({ createdAt: -1 });
+      await notesCollection.createIndex({ clientPhone: 1 });
+      await notesCollection.createIndex({ createdAt: -1 });
     } catch (e) {
       console.log('Index creation skipped (may already exist):', e.message);
     }
@@ -453,6 +465,255 @@ app.post('/api/clients/:id/checkin', async (req, res) => {
     res.json({ data: result });
   } catch (error) {
     console.error('Error saving check-in:', error);
+    res.status(500).json({ error: error.message });
+  }
+});
+
+// ==================== STATISTICS DASHBOARD ====================
+
+// Aggregate stats across all clients for the staff dashboard.
+app.get('/api/stats', async (req, res) => {
+  try {
+    const allClients = await clientsCollection.find({}).toArray();
+
+    const now = new Date();
+    const monthStart = new Date(now.getFullYear(), now.getMonth(), 1);
+
+    let totalClientsThisMonth = 0;
+    const painCounts = {};
+    const injuryCounts = {};
+    let newCount = 0;
+    let returningCount = 0;
+    const dayCounts = [0, 0, 0, 0, 0, 0, 0]; // Sun-Sat, from createdAt (first visit)
+    const branchCounts = { shenzhen: 0, shanghai: 0 };
+
+    allClients.forEach((c) => {
+      const createdAt = c.createdAt ? new Date(c.createdAt) : null;
+      if (createdAt && !isNaN(createdAt.getTime())) {
+        if (createdAt >= monthStart) totalClientsThisMonth++;
+        dayCounts[createdAt.getDay()]++;
+      }
+
+      const points = c.formData?.painAssessment?.points || [];
+      points.forEach((p) => {
+        if (p.zone) painCounts[p.zone] = (painCounts[p.zone] || 0) + 1;
+      });
+
+      const injuries = c.formData?.basicInfo?.injuryHistory || [];
+      injuries.forEach((inj) => {
+        if (inj) injuryCounts[inj] = (injuryCounts[inj] || 0) + 1;
+      });
+
+      if (c.formData?.clientBasics?.clientType === 'first-time') {
+        newCount++;
+      } else {
+        returningCount++;
+      }
+
+      if (c.branch === 'shenzhen') branchCounts.shenzhen++;
+      else if (c.branch === 'shanghai') branchCounts.shanghai++;
+    });
+
+    const topN = (counts, n) =>
+      Object.entries(counts)
+        .sort((a, b) => b[1] - a[1])
+        .slice(0, n)
+        .map(([key, count]) => ({ key, count }));
+
+    res.json({
+      data: {
+        totalClientsThisMonth,
+        totalClientsAllTime: allClients.length,
+        topPainAreas: topN(painCounts, 5),
+        topInjuryHistory: topN(injuryCounts, 5),
+        newVsReturning: { new: newCount, returning: returningCount },
+        busiestDays: ['Sun', 'Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat'].map((day, i) => ({
+          day,
+          count: dayCounts[i]
+        })),
+        branchSplit: branchCounts
+      }
+    });
+  } catch (error) {
+    console.error('Error computing stats:', error);
+    res.status(500).json({ error: error.message });
+  }
+});
+
+// ==================== SESSION NOTES ====================
+// Private staff notes per client visit - never exposed to client-facing routes.
+
+// Add a session note
+app.post('/api/notes', async (req, res) => {
+  try {
+    const { clientPhone, staffName, text } = req.body;
+
+    if (!clientPhone || !text) {
+      return res.status(400).json({ error: 'Missing required fields' });
+    }
+
+    const noteData = {
+      clientPhone,
+      staffName: staffName || 'Staff',
+      text,
+      createdAt: new Date().toISOString()
+    };
+
+    const result = await notesCollection.insertOne(noteData);
+    const saved = await notesCollection.findOne({ _id: result.insertedId });
+    res.json({ data: saved });
+  } catch (error) {
+    console.error('Error saving note:', error);
+    res.status(500).json({ error: error.message });
+  }
+});
+
+// Get session notes for a client, most recent first
+app.get('/api/notes/:phone', async (req, res) => {
+  try {
+    const { phone } = req.params;
+    const notes = await notesCollection
+      .find({ clientPhone: phone })
+      .sort({ createdAt: -1 })
+      .toArray();
+
+    res.json({ data: notes });
+  } catch (error) {
+    console.error('Error fetching notes:', error);
+    res.status(500).json({ error: error.message });
+  }
+});
+
+// ==================== AI TREATMENT ASSISTANT ====================
+
+// Builds a deterministic snapshot of the fields the AI assessment depends on,
+// used both in the prompt and as a cache key (hash) so we can skip re-calling
+// the API when nothing relevant about the client has changed.
+function buildAssessmentInput(client) {
+  const cb = client.formData?.clientBasics || {};
+  const bi = client.formData?.basicInfo || {};
+  const pa = client.formData?.painAssessment || {};
+  const tp = client.formData?.treatmentPreferences || {};
+  const ci = client.formData?.contraindications || {};
+  const po = client.formData?.postural || {};
+
+  return {
+    age: cb.age || null,
+    gender: cb.gender || null,
+    painPoints: (pa.points || []).map((p) => ({
+      zone: p.zone || null,
+      severity: p.severity ?? null,
+      type: p.type || null,
+      duration: p.duration || null
+    })),
+    injuryHistory: bi.injuryHistory || [],
+    posturalObservations: po.observations || [],
+    treatmentPreferences: tp.zones || [],
+    priorSurgery: bi.priorSurgery || null,
+    surgeryDetails: bi.surgeryDetails || null,
+    contraindications: ci.conditions || []
+  };
+}
+
+function hashAssessmentInput(input) {
+  return crypto.createHash('sha256').update(JSON.stringify(input)).digest('hex');
+}
+
+function buildAssessmentPrompt(input) {
+  const painLines =
+    input.painPoints
+      .map(
+        (p) =>
+          `- Zone: ${p.zone || 'unspecified'}; Severity: ${p.severity ?? 'unspecified'}/10; Type: ${p.type || 'unspecified'}; Duration: ${p.duration || 'unspecified'}`
+      )
+      .join('\n') || 'None reported';
+
+  return `Client profile:
+- Age: ${input.age || 'unknown'}, Gender: ${input.gender || 'unknown'}
+- Prior surgery: ${input.priorSurgery || 'none reported'}${input.surgeryDetails ? ` (details: ${input.surgeryDetails})` : ''}
+- Injury history: ${input.injuryHistory.join(', ') || 'none reported'}
+- Postural observations: ${input.posturalObservations.join(', ') || 'none reported'}
+- Treatment preferences (zones client wants focused on): ${input.treatmentPreferences.join(', ') || 'none specified'}
+- Contraindications: ${input.contraindications.join(', ') || 'none reported'}
+
+Pain points:
+${painLines}
+
+Based on this intake information, provide:
+1. Specific treatment recommendations for each pain area listed
+2. Suggested session frequency
+3. Contraindication warnings the therapist must consider before treatment (if any)
+4. Recommended program phase (e.g. Pain Resolution, Comprehensive Improvement, Maintenance)
+
+Format your response in clear sections using "## " headers exactly as follows, in this order:
+## Treatment Recommendations
+## Suggested Session Frequency
+## Contraindication Warnings
+## Recommended Program Phase
+
+Use "**text**" for emphasis where helpful. After the English sections, repeat the exact same four sections translated into Simplified Chinese under a header "## 中文". Do not add any other top-level headers or preamble.`;
+}
+
+// Generate (or return cached) AI treatment assessment for a client.
+app.post('/api/ai/assess/:id', async (req, res) => {
+  try {
+    if (!anthropic) {
+      return res.status(503).json({ error: 'AI Treatment Assistant is not configured on this server' });
+    }
+
+    const { id } = req.params;
+    const { force } = req.body || {};
+
+    if (!ObjectId.isValid(id)) {
+      return res.status(400).json({ error: 'Invalid client ID' });
+    }
+
+    const clientDoc = await clientsCollection.findOne({ _id: new ObjectId(id) });
+    if (!clientDoc) {
+      return res.status(404).json({ error: 'Client not found' });
+    }
+
+    const input = buildAssessmentInput(clientDoc);
+    const inputHash = hashAssessmentInput(input);
+
+    if (!force && clientDoc.aiAssessment && clientDoc.aiAssessment.inputHash === inputHash) {
+      return res.json({ data: clientDoc.aiAssessment, cached: true });
+    }
+
+    const message = await anthropic.messages.create({
+      model: 'claude-opus-4-8',
+      max_tokens: 2048,
+      thinking: { type: 'adaptive' },
+      output_config: { effort: 'medium' },
+      system:
+        'You are an expert physical therapist reviewing a new client intake for a massage and stretch therapy studio. Give specific, actionable clinical guidance grounded only in the information provided - do not invent details not present in the intake.',
+      messages: [{ role: 'user', content: buildAssessmentPrompt(input) }]
+    });
+
+    if (message.stop_reason === 'refusal') {
+      return res.status(502).json({ error: 'AI assistant declined to respond to this request' });
+    }
+
+    const text = message.content
+      .filter((block) => block.type === 'text')
+      .map((block) => block.text)
+      .join('\n');
+
+    const aiAssessment = {
+      text,
+      inputHash,
+      generatedAt: new Date().toISOString()
+    };
+
+    await clientsCollection.updateOne({ _id: clientDoc._id }, { $set: { aiAssessment } });
+
+    res.json({ data: aiAssessment, cached: false });
+  } catch (error) {
+    if (error instanceof Anthropic.APIError) {
+      console.error('Anthropic API error:', error.status, error.message);
+      return res.status(502).json({ error: `AI assistant error: ${error.message}` });
+    }
+    console.error('Error generating AI assessment:', error);
     res.status(500).json({ error: error.message });
   }
 });
