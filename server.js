@@ -101,7 +101,7 @@ app.get('/api/health', async (req, res) => {
 // Create or update client
 app.post('/api/clients', async (req, res) => {
   try {
-    const { id, branch, formData } = req.body;
+    const { id, branch, formData, isSubmission } = req.body;
 
     if (!branch || !formData) {
       return res.status(400).json({ error: 'Missing required fields' });
@@ -115,9 +115,12 @@ app.post('/api/clients', async (req, res) => {
 
     // If a real MongoDB id was already given, always update that exact record.
     if (id && ObjectId.isValid(id)) {
+      const updateOps = { $set: { ...clientData, updatedAt: new Date().toISOString() } };
+      // Only a genuine form submission (not an autosave-on-keystroke) counts as a visit.
+      if (isSubmission) updateOps.$inc = { visitCount: 1 };
       const result = await clientsCollection.findOneAndUpdate(
         { _id: new ObjectId(id) },
-        { $set: { ...clientData, updatedAt: new Date().toISOString() } },
+        updateOps,
         { returnDocument: 'after' }
       );
       return res.json({ data: result });
@@ -151,10 +154,9 @@ app.post('/api/clients', async (req, res) => {
         'formData.clientBasics.phone': phone
       });
       if (existing) {
-        await clientsCollection.updateOne(
-          { _id: existing._id },
-          { $set: { ...clientData, updatedAt: new Date().toISOString() } }
-        );
+        const updateOps = { $set: { ...clientData, updatedAt: new Date().toISOString() } };
+        if (isSubmission) updateOps.$inc = { visitCount: 1 };
+        await clientsCollection.updateOne({ _id: existing._id }, updateOps);
         const updated = await clientsCollection.findOne({ _id: existing._id });
         return res.json({ data: updated });
       }
@@ -163,6 +165,7 @@ app.post('/api/clients', async (req, res) => {
     // Insert new client
     const newClient = {
       ...clientData,
+      visitCount: isSubmission ? 1 : 0,
       createdAt: new Date().toISOString()
     };
     const result = await clientsCollection.insertOne(newClient);
@@ -411,6 +414,45 @@ app.get('/api/clients/:id/pain', async (req, res) => {
     res.json({ data: client.painHistory || [] });
   } catch (error) {
     console.error('Error fetching pain history:', error);
+    res.status(500).json({ error: error.message });
+  }
+});
+
+// Add a returning-client "has this improved?" check-in response
+app.post('/api/clients/:id/checkin', async (req, res) => {
+  try {
+    const { id } = req.params;
+    const { response, priorZone, priorSeverity } = req.body;
+
+    if (!ObjectId.isValid(id)) {
+      return res.status(400).json({ error: 'Invalid client ID' });
+    }
+    if (!['yes', 'somewhat', 'no'].includes(response)) {
+      return res.status(400).json({ error: 'Invalid response value' });
+    }
+
+    const result = await clientsCollection.findOneAndUpdate(
+      { _id: new ObjectId(id) },
+      {
+        $push: {
+          checkins: {
+            response,
+            priorZone: priorZone || null,
+            priorSeverity: priorSeverity ?? null,
+            respondedAt: new Date().toISOString()
+          }
+        }
+      },
+      { returnDocument: 'after' }
+    );
+
+    if (!result) {
+      return res.status(404).json({ error: 'Client not found' });
+    }
+
+    res.json({ data: result });
+  } catch (error) {
+    console.error('Error saving check-in:', error);
     res.status(500).json({ error: error.message });
   }
 });

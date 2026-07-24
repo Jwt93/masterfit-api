@@ -1903,6 +1903,112 @@
         }
       }
       /* END MOBILE NAV FIX */
+
+      /* Contraindication Alert Banner (Staff Panel) */
+      .contraindication-banner {
+        background: linear-gradient(135deg, #DC2626, #B91C1C);
+        color: #FFFFFF;
+        border-radius: var(--radius-md);
+        padding: 20px 24px;
+        margin-bottom: 24px;
+        box-shadow: 0 4px 20px rgba(220, 38, 38, 0.45);
+        border: 2px solid #7F1D1D;
+      }
+      .contraindication-banner .cb-title {
+        font-size: 20px;
+        font-weight: 800;
+        display: flex;
+        align-items: center;
+        gap: 8px;
+        margin-bottom: 12px;
+        letter-spacing: 0.2px;
+      }
+      .contraindication-banner .cb-list {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 8px;
+        margin-bottom: 12px;
+      }
+      .contraindication-banner .cb-item {
+        background: rgba(255,255,255,0.18);
+        border: 1px solid rgba(255,255,255,0.4);
+        border-radius: 999px;
+        padding: 6px 14px;
+        font-size: 14px;
+        font-weight: 600;
+      }
+      .contraindication-banner .cb-item.serious {
+        background: #FFFFFF;
+        color: #B91C1C;
+        font-weight: 800;
+      }
+      .contraindication-banner .cb-warning {
+        background: rgba(0,0,0,0.22);
+        border-radius: var(--radius-sm);
+        padding: 12px 16px;
+        font-size: 15px;
+        font-weight: 800;
+        line-height: 1.5;
+      }
+
+      /* Returning Client Welcome Card */
+      .returning-client-card {
+        background: linear-gradient(135deg, rgba(34,197,94,0.14), rgba(34,197,94,0.04));
+        border: 1px solid rgba(34,197,94,0.35);
+        border-radius: var(--radius-md);
+        padding: 18px 20px;
+        margin-bottom: 20px;
+      }
+      body.dark-mode .returning-client-card {
+        background: linear-gradient(135deg, rgba(34,197,94,0.2), rgba(34,197,94,0.07));
+        border-color: rgba(34,197,94,0.4);
+      }
+      .returning-client-card .rc-header {
+        font-size: 16px;
+        font-weight: 700;
+        margin-bottom: 8px;
+        color: var(--success);
+      }
+      .returning-client-card .rc-row {
+        font-size: 14px;
+        color: var(--text-secondary);
+        margin-bottom: 4px;
+      }
+      .returning-client-card .rc-prompt {
+        font-size: 14px;
+        font-weight: 600;
+        margin-top: 12px;
+        margin-bottom: 8px;
+        color: var(--text-primary);
+      }
+      .returning-client-card .rc-actions {
+        display: flex;
+        gap: 8px;
+        flex-wrap: wrap;
+      }
+      .improvement-btn {
+        padding: 8px 16px;
+        border-radius: 999px;
+        border: 1px solid var(--border);
+        background: var(--bg-white);
+        color: var(--text-primary);
+        font-size: 13px;
+        font-weight: 600;
+        cursor: pointer;
+        transition: var(--transition-fast);
+      }
+      .improvement-btn:hover {
+        border-color: var(--success);
+      }
+      .improvement-btn.selected {
+        background: var(--success);
+        border-color: var(--success);
+        color: #fff;
+      }
+      body.dark-mode .improvement-btn {
+        background: var(--bg-card-dark);
+        color: var(--text-inverse);
+      }
 </style>
 </head>
 <body>
@@ -2001,6 +2107,8 @@
         <h1 class="card-title" data-i18n="pages.clientBasics.title">Client Basics</h1>
         <p class="card-subtitle" data-i18n="pages.clientBasics.subtitle">Please provide your basic information</p>
 
+        <div id="returningClientCard" style="display:none;"></div>
+
         <div class="field-group">
           <label class="field-label">
             <span data-i18n="fields.name">Name</span>
@@ -2044,6 +2152,16 @@
             </label>
             <input type="tel" class="input" id="clientPhone" data-field="clientBasics.phone" data-i18n-placeholder="fields.phonePlaceholder" placeholder="Phone number">
           </div>
+        </div>
+
+        <div class="field-group" id="faceIdQuickLoginGroup" style="display:none;">
+          <button type="button" class="btn btn-secondary" id="faceIdQuickLoginBtn" style="width:100%;">
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" style="vertical-align:middle;margin-right:6px;">
+              <path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/>
+              <circle cx="12" cy="7" r="4"/>
+            </svg>
+            <span data-i18n="fields.useFaceId">Use Face ID / 使用面容ID</span>
+          </button>
         </div>
 
         <div class="field-group">
@@ -3359,8 +3477,14 @@
       editingPainIndex: -1,
       isClientLoggedIn: false,
       clientPhone: null,
-      currentClientId: null // Server-side client ID for updates
+      currentClientId: null, // Server-side client ID for updates
+      welcomeShownForPhone: null
     };
+
+    // Contraindications that require staff to confirm with the client in person
+    // before treatment (pregnancy, thrombosis, tumor, heart disease, acute injury,
+    // open wound, metal implant).
+    const SERIOUS_CONTRAINDICATIONS = ['pregnancy', 'thrombosis', 'tumor', 'heart', 'acuteInjury', 'wound', 'implant'];
 
     // ========================================
     // Utility Functions
@@ -4170,8 +4294,29 @@
       const cb = client.formData?.clientBasics || {};
       const bi = client.formData?.basicInfo || {};
       const pa = client.formData?.painAssessment || {};
+      const ci = client.formData?.contraindications || {};
+
+      // Contraindication alert banner - large, red, at the very top, impossible to miss.
+      let contraindicationBannerHtml = '';
+      const flaggedConditions = ci.conditions || [];
+      if (flaggedConditions.length > 0) {
+        const hasSerious = flaggedConditions.some(v => SERIOUS_CONTRAINDICATIONS.includes(v));
+        const itemsHtml = flaggedConditions.map(v => {
+          const label = `${i18n.en.fields[v] || v} ${i18n.zh.fields[v] || ''}`.trim();
+          const serious = SERIOUS_CONTRAINDICATIONS.includes(v);
+          return `<span class="cb-item${serious ? ' serious' : ''}">${serious ? '⚠️ ' : ''}${label}</span>`;
+        }).join('');
+        contraindicationBannerHtml = `
+          <div class="contraindication-banner">
+            <div class="cb-title">🚨 CONTRAINDICATIONS FLAGGED 已标记禁忌症</div>
+            <div class="cb-list">${itemsHtml}</div>
+            ${hasSerious ? `<div class="cb-warning">⚠️ CONSULT WITH CLIENT BEFORE TREATMENT — 治疗前请务必与客户当面确认</div>` : ''}
+          </div>
+        `;
+      }
 
       detail.innerHTML = `
+        ${contraindicationBannerHtml}
         <div class="assessment-section">
           <h3 class="assessment-title">${t('pages.clientBasics.title')}</h3>
           <div class="review-item"><span class="review-label">${t('fields.name')}:</span><span class="review-value">${cb.name || '-'}</span></div>
@@ -4312,6 +4457,92 @@
           localStorage.setItem('mf_clients', JSON.stringify(AppState.staffClients));
           showToast(t('messages.appointmentScheduled'), 'success');
         }
+      });
+    }
+
+    // ========================================
+    // Returning Client Greeting
+    // ========================================
+    // Looks up a phone number against the API and, if it belongs to a client
+    // who has completed at least one prior visit, shows the welcome-back card.
+    // Silently does nothing for first-time clients or unknown numbers.
+    async function checkReturningClient(phone, prefetchedClient) {
+      if (!phone) return;
+      const digits = phone.replace(/\D/g, '');
+      // Too short to be a real phone number yet - leave any existing card alone
+      // (the user is still mid-edit of the number they already matched on).
+      if (digits.length < 7) return;
+      if (AppState.welcomeShownForPhone === phone) return;
+
+      let clientRecord = prefetchedClient;
+      if (!clientRecord) {
+        const result = await apiCall(`/api/clients/phone/${phone}`);
+        if (result.error || !result.data) {
+          hideReturningClientCard();
+          return;
+        }
+        clientRecord = result.data;
+      }
+
+      // Never show for first-timers - only clients with at least one completed visit.
+      if (!clientRecord.visitCount || clientRecord.visitCount < 1) {
+        hideReturningClientCard();
+        return;
+      }
+
+      AppState.welcomeShownForPhone = phone;
+      renderReturningClientCard(clientRecord);
+    }
+
+    function hideReturningClientCard() {
+      AppState.welcomeShownForPhone = null;
+      const card = document.getElementById('returningClientCard');
+      if (card) {
+        card.style.display = 'none';
+        card.innerHTML = '';
+      }
+    }
+
+    function renderReturningClientCard(clientRecord) {
+      const card = document.getElementById('returningClientCard');
+      if (!card) return;
+
+      const cb = clientRecord.formData?.clientBasics || {};
+      const points = clientRecord.formData?.painAssessment?.points || [];
+      const topPain = points.slice().sort((a, b) => (b.severity || 0) - (a.severity || 0))[0];
+      const visitNumber = (clientRecord.visitCount || 0) + 1;
+      const name = cb.name || 'Guest / 客户';
+
+      card.innerHTML = `
+        <div class="returning-client-card">
+          <div class="rc-header">👋 Welcome back, ${name}! 欢迎回来,${name}!</div>
+          <div class="rc-row">Visit #${visitNumber} · 第${visitNumber}次到访</div>
+          ${topPain ? `<div class="rc-row">Last visit pain area 上次疼痛部位: <strong>${t('zones.' + topPain.zone)}</strong> — Severity 严重度 ${topPain.severity}/10</div>` : ''}
+          <div class="rc-prompt">Has this improved? 这次有改善吗?</div>
+          <div class="rc-actions">
+            <button type="button" class="improvement-btn" data-response="yes">Yes 是</button>
+            <button type="button" class="improvement-btn" data-response="somewhat">Somewhat 有一些</button>
+            <button type="button" class="improvement-btn" data-response="no">No 没有</button>
+          </div>
+        </div>
+      `;
+      card.style.display = 'block';
+
+      card.querySelectorAll('.improvement-btn').forEach(btn => {
+        btn.addEventListener('click', async () => {
+          card.querySelectorAll('.improvement-btn').forEach(b => b.classList.remove('selected'));
+          btn.classList.add('selected');
+
+          const response = btn.getAttribute('data-response');
+          if (clientRecord._id) {
+            await apiCall(`/api/clients/${clientRecord._id}/checkin`, 'POST', {
+              response,
+              priorZone: topPain?.zone || null,
+              priorSeverity: topPain?.severity ?? null
+            });
+          }
+          showToast('Thanks for letting us know! 感谢您的反馈!', 'success');
+        });
       });
     }
 
@@ -4568,6 +4799,63 @@
         }
       });
 
+      // Returning-client lookup: once the client finishes typing their phone
+      // number, check if it belongs to a returning client and greet them.
+      document.getElementById('clientPhone')?.addEventListener('blur', (e) => {
+        checkReturningClient(e.target.value);
+      });
+
+      // Face ID quick login (Client Basics page) - lets a returning client
+      // auto-fill their phone number and pre-load their previous form data.
+      const faceIdQuickGroup = document.getElementById('faceIdQuickLoginGroup');
+      const faceIdQuickBtn = document.getElementById('faceIdQuickLoginBtn');
+      if (faceIdQuickGroup && faceIdQuickBtn) {
+        const quickStoredPasskeys = JSON.parse(localStorage.getItem('mf_passkeys') || '{}');
+        const quickHasPasskeys = Object.keys(quickStoredPasskeys).length > 0;
+        faceIdQuickGroup.style.display = isWebAuthnSupported() && quickHasPasskeys ? 'block' : 'none';
+
+        faceIdQuickBtn.addEventListener('click', async () => {
+          const doQuickAuth = async () => {
+            const result = await authenticateWithPasskey();
+            if (result.phone) {
+              const phoneInput = document.getElementById('clientPhone');
+              if (phoneInput) phoneInput.value = result.phone;
+              if (!AppState.formData.clientBasics) AppState.formData.clientBasics = {};
+              AppState.formData.clientBasics.phone = result.phone;
+
+              const apiResult = await apiCall(`/api/clients/phone/${result.phone}`);
+              if (!apiResult.error && apiResult.data) {
+                AppState.formData = apiResult.data.formData || AppState.formData;
+                AppState.formData.clientBasics.phone = result.phone;
+                AppState.currentClientId = apiResult.data._id;
+                restoreFormValues();
+                checkReturningClient(result.phone, apiResult.data);
+                showToast('Welcome back! 欢迎回来!', 'success');
+              }
+              validateForm();
+            } else if (result.error) {
+              showFaceIdModal(
+                'Face ID Failed / 面容ID识别失败',
+                'Face ID authentication failed. Would you like to try again? / 面容ID识别失败,是否重试?',
+                [
+                  {
+                    text: 'Try Again 重试',
+                    class: 'btn btn-primary',
+                    onClick: () => doQuickAuth()
+                  },
+                  {
+                    text: 'Enter Manually 手动输入',
+                    class: 'btn btn-ghost',
+                    onClick: () => {}
+                  }
+                ]
+              );
+            }
+          };
+          doQuickAuth();
+        });
+      }
+
       // Prior Surgery detail toggle
       document.querySelectorAll('input[name="priorSurgery"]').forEach(input => {
         input.addEventListener('change', () => {
@@ -4819,7 +5107,8 @@
       document.getElementById('submitForm')?.addEventListener('click', async () => {
         const clientData = {
           branch: AppState.branch,
-          formData: JSON.parse(JSON.stringify(AppState.formData))
+          formData: JSON.parse(JSON.stringify(AppState.formData)),
+          isSubmission: true
         };
 
         if (AppState.currentClientId) {
@@ -5205,6 +5494,12 @@ ${client.formData.postural?.observations?.join(', ') || 'None'}
 
       // Restore form field values
       restoreFormValues();
+
+      // Same-device returning client: phone was already restored from
+      // localStorage/API, so greet them without waiting for a blur event.
+      if (AppState.formData.clientBasics?.phone) {
+        checkReturningClient(AppState.formData.clientBasics.phone);
+      }
 
       // Initial validation
       validateForm();
