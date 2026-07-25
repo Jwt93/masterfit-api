@@ -1011,23 +1011,61 @@
       margin: 32px 0;
     }
 
+    .body-diagram-card {
+      background: var(--bg-light);
+      border-radius: var(--radius-lg);
+      padding: 16px 20px 20px;
+      box-shadow: 0 1px 3px rgba(0,0,0,0.06);
+    }
+
+    body.dark-mode .body-diagram-card {
+      background: rgba(255,255,255,0.06);
+    }
+
+    .body-diagram-view-label {
+      text-align: center;
+      font-size: 13px;
+      font-weight: 700;
+      letter-spacing: 0.02em;
+      color: var(--text-secondary);
+      margin-bottom: 8px;
+      text-transform: uppercase;
+    }
+
     .body-diagram {
       position: relative;
       width: 200px;
-      height: 450px;
+      height: 460px;
     }
 
     .body-diagram svg {
       width: 100%;
       height: 100%;
+      overflow: visible;
+    }
+
+    .body-silhouette {
+      fill: var(--bg-card);
+      stroke: none;
+      pointer-events: none;
+      opacity: 0.5;
+    }
+
+    body.dark-mode .body-silhouette {
+      fill: rgba(255,255,255,0.04);
     }
 
     .body-zone {
-      fill: #e0e0e0;
-      stroke: #999;
+      fill: url(#bodyZoneGradient);
+      stroke: #b7a99a;
       stroke-width: 1;
       cursor: pointer;
-      transition: all var(--transition-fast);
+      transition: fill var(--transition-fast), stroke var(--transition-fast);
+    }
+
+    body.dark-mode .body-zone {
+      fill: rgba(255,255,255,0.14);
+      stroke: rgba(255,255,255,0.28);
     }
 
     .body-zone:hover {
@@ -1035,7 +1073,8 @@
       stroke: var(--primary);
     }
 
-    .body-zone.active {
+    .body-zone.active,
+    body.dark-mode .body-zone.active {
       fill: var(--primary);
       stroke: var(--primary);
     }
@@ -2754,69 +2793,157 @@
 
         <div class="body-diagram-container">
           <!-- Front View -->
-          <div class="body-diagram">
-            <svg viewBox="0 0 200 450" id="bodyFront">
-              <!-- Head -->
-              <ellipse class="body-zone" data-zone="head" cx="100" cy="30" rx="25" ry="28"/>
-              <!-- Neck -->
-              <rect class="body-zone" data-zone="neck" x="88" y="55" width="24" height="20" rx="4"/>
-              <!-- Left Shoulder -->
-              <ellipse class="body-zone" data-zone="leftShoulder" cx="60" cy="90" rx="18" ry="12"/>
-              <!-- Right Shoulder -->
-              <ellipse class="body-zone" data-zone="rightShoulder" cx="140" cy="90" rx="18" ry="12"/>
-              <!-- Chest -->
-              <path class="body-zone" data-zone="chest" d="M70 75 L130 75 L135 130 L65 130 Z"/>
-              <!-- Left Upper Arm -->
-              <rect class="body-zone" data-zone="leftUpperArm" x="35" y="95" width="20" height="50" rx="8"/>
-              <!-- Right Upper Arm -->
-              <rect class="body-zone" data-zone="rightUpperArm" x="145" y="95" width="20" height="50" rx="8"/>
-              <!-- Left Elbow -->
-              <ellipse class="body-zone" data-zone="leftElbow" cx="45" cy="150" rx="10" ry="10"/>
-              <!-- Right Elbow -->
-              <ellipse class="body-zone" data-zone="rightElbow" cx="155" cy="150" rx="10" ry="10"/>
-              <!-- Left Forearm -->
-              <rect class="body-zone" data-zone="leftForearm" x="32" y="158" width="18" height="50" rx="7"/>
-              <!-- Right Forearm -->
-              <rect class="body-zone" data-zone="rightForearm" x="150" y="158" width="18" height="50" rx="7"/>
-              <!-- Left Wrist -->
-              <ellipse class="body-zone" data-zone="leftWrist" cx="41" cy="215" rx="8" ry="8"/>
-              <!-- Right Wrist -->
-              <ellipse class="body-zone" data-zone="rightWrist" cx="159" cy="215" rx="8" ry="8"/>
-              <!-- Left Hand -->
-              <ellipse class="body-zone" data-zone="leftHand" cx="41" cy="235" rx="12" ry="15"/>
-              <!-- Right Hand -->
-              <ellipse class="body-zone" data-zone="rightHand" cx="159" cy="235" rx="12" ry="15"/>
-              <!-- Abdomen/Upper Back -->
-              <path class="body-zone" data-zone="upperBack" d="M68 130 L132 130 L130 180 L70 180 Z"/>
-              <!-- Lower Back -->
-              <path class="body-zone" data-zone="lowerBack" d="M72 180 L128 180 L125 220 L75 220 Z"/>
-              <!-- Left Hip -->
-              <ellipse class="body-zone" data-zone="leftHip" cx="80" cy="240" rx="20" ry="15"/>
-              <!-- Right Hip -->
-              <ellipse class="body-zone" data-zone="rightHip" cx="120" cy="240" rx="20" ry="15"/>
-              <!-- Glutes -->
-              <ellipse class="body-zone" data-zone="glutes" cx="100" cy="260" rx="35" ry="15"/>
-              <!-- Left Thigh -->
-              <rect class="body-zone" data-zone="leftThigh" x="65" y="275" width="25" height="70" rx="10"/>
-              <!-- Right Thigh -->
-              <rect class="body-zone" data-zone="rightThigh" x="110" y="275" width="25" height="70" rx="10"/>
-              <!-- Left Knee -->
-              <ellipse class="body-zone" data-zone="leftKnee" cx="77" cy="350" rx="14" ry="14"/>
-              <!-- Right Knee -->
-              <ellipse class="body-zone" data-zone="rightKnee" cx="123" cy="350" rx="14" ry="14"/>
-              <!-- Left Calf -->
-              <rect class="body-zone" data-zone="leftCalf" x="63" y="362" width="22" height="55" rx="9"/>
-              <!-- Right Calf -->
-              <rect class="body-zone" data-zone="rightCalf" x="115" y="362" width="22" height="55" rx="9"/>
-              <!-- Left Ankle -->
-              <ellipse class="body-zone" data-zone="leftAnkle" cx="74" cy="420" rx="10" ry="10"/>
-              <!-- Right Ankle -->
-              <ellipse class="body-zone" data-zone="rightAnkle" cx="126" cy="420" rx="10" ry="10"/>
-              <!-- Left Foot -->
-              <ellipse class="body-zone" data-zone="leftFoot" cx="70" cy="440" rx="15" ry="10"/>
-              <!-- Right Foot -->
-              <ellipse class="body-zone" data-zone="rightFoot" cx="130" cy="440" rx="15" ry="10"/>
-            </svg>
+          <div class="body-diagram-card">
+            <div class="body-diagram-view-label">Front 正面</div>
+            <div class="body-diagram">
+              <svg viewBox="0 0 200 460" id="bodyFront">
+                <defs>
+                  <linearGradient id="bodyZoneGradient" x1="0%" y1="0%" x2="100%" y2="100%">
+                    <stop offset="0%" stop-color="#f2ece3"/>
+                    <stop offset="100%" stop-color="#ddd0bf"/>
+                  </linearGradient>
+                </defs>
+                <!-- Soft anatomical backdrop, purely decorative -->
+                <g class="body-silhouette">
+                  <ellipse cx="100" cy="30" rx="22" ry="27"/>
+                  <path d="M56,66 C52,84 50,104 54,124 C58,152 64,178 70,192 L130,192 C136,178 142,152 146,124 C150,104 148,84 144,66 C134,58 66,58 56,66 Z"/>
+                  <path d="M40,88 C24,98 18,120 20,155 L48,155 C50,128 48,105 40,88 Z"/>
+                  <path d="M160,88 C176,98 182,120 180,155 L152,155 C150,128 152,105 160,88 Z"/>
+                  <path d="M60,196 C52,225 50,260 55,296 L92,296 C94,258 92,224 86,196 Z"/>
+                  <path d="M140,196 C148,225 150,260 145,296 L108,296 C106,258 108,224 114,196 Z"/>
+                </g>
+                <!-- Head -->
+                <ellipse class="body-zone" data-zone="head" cx="100" cy="30" rx="20" ry="25"/>
+                <!-- Neck -->
+                <path class="body-zone" data-zone="neck" d="M90,53 C90,58 91,62 92,66 L108,66 C109,62 110,58 110,53 Z"/>
+                <!-- Left Shoulder -->
+                <ellipse class="body-zone" data-zone="leftShoulder" cx="52" cy="82" rx="19" ry="15"/>
+                <!-- Right Shoulder -->
+                <ellipse class="body-zone" data-zone="rightShoulder" cx="148" cy="82" rx="19" ry="15"/>
+                <!-- Chest -->
+                <path class="body-zone" data-zone="chest" d="M70,66 C70,66 60,70 56,84 C54,92 54,100 56,112 C58,128 62,145 66,160 C68,168 70,174 74,178 L126,178 C130,174 132,168 134,160 C138,145 142,128 144,112 C146,100 146,92 144,84 C140,70 130,66 130,66 Z"/>
+                <!-- Left Upper Arm -->
+                <path class="body-zone" data-zone="leftUpperArm" d="M40,90 C34,95 30,105 28,118 C26,130 26,142 28,152 L46,152 C48,140 49,128 48,116 C47,105 45,96 42,90 Z"/>
+                <!-- Right Upper Arm -->
+                <path class="body-zone" data-zone="rightUpperArm" d="M160,90 C166,95 170,105 172,118 C174,130 174,142 172,152 L154,152 C152,140 151,128 152,116 C153,105 155,96 158,90 Z"/>
+                <!-- Left Elbow -->
+                <ellipse class="body-zone" data-zone="leftElbow" cx="37" cy="155" rx="11" ry="11"/>
+                <!-- Right Elbow -->
+                <ellipse class="body-zone" data-zone="rightElbow" cx="163" cy="155" rx="11" ry="11"/>
+                <!-- Left Forearm -->
+                <path class="body-zone" data-zone="leftForearm" d="M28,160 C26,172 25,185 26,198 C27,208 29,216 32,222 L48,222 C50,214 50,205 49,196 C48,184 47,172 46,160 Z"/>
+                <!-- Right Forearm -->
+                <path class="body-zone" data-zone="rightForearm" d="M172,160 C174,172 175,185 174,198 C173,208 171,216 168,222 L152,222 C150,214 150,205 151,196 C152,184 153,172 154,160 Z"/>
+                <!-- Left Wrist -->
+                <ellipse class="body-zone" data-zone="leftWrist" cx="37" cy="227" rx="8" ry="8"/>
+                <!-- Right Wrist -->
+                <ellipse class="body-zone" data-zone="rightWrist" cx="163" cy="227" rx="8" ry="8"/>
+                <!-- Left Hand -->
+                <ellipse class="body-zone" data-zone="leftHand" cx="36" cy="248" rx="13" ry="17"/>
+                <!-- Right Hand -->
+                <ellipse class="body-zone" data-zone="rightHand" cx="164" cy="248" rx="13" ry="17"/>
+                <!-- Left Hip -->
+                <ellipse class="body-zone" data-zone="leftHip" cx="78" cy="192" rx="20" ry="16"/>
+                <!-- Right Hip -->
+                <ellipse class="body-zone" data-zone="rightHip" cx="122" cy="192" rx="20" ry="16"/>
+                <!-- Left Thigh -->
+                <path class="body-zone" data-zone="leftThigh" d="M62,200 C58,215 56,235 57,255 C58,270 60,282 63,292 L88,292 C90,278 91,262 90,245 C89,228 87,213 84,200 Z"/>
+                <!-- Right Thigh -->
+                <path class="body-zone" data-zone="rightThigh" d="M138,200 C142,215 144,235 143,255 C142,270 140,282 137,292 L112,292 C110,278 109,262 110,245 C111,228 113,213 116,200 Z"/>
+                <!-- Left Knee -->
+                <ellipse class="body-zone" data-zone="leftKnee" cx="73" cy="297" rx="13" ry="13"/>
+                <!-- Right Knee -->
+                <ellipse class="body-zone" data-zone="rightKnee" cx="127" cy="297" rx="13" ry="13"/>
+                <!-- Left Calf -->
+                <path class="body-zone" data-zone="leftCalf" d="M62,305 C59,320 57,338 58,355 C59,368 61,378 64,386 L82,386 C84,376 85,364 84,350 C83,335 81,320 78,305 Z"/>
+                <!-- Right Calf -->
+                <path class="body-zone" data-zone="rightCalf" d="M138,305 C141,320 143,338 142,355 C141,368 139,378 136,386 L118,386 C116,376 115,364 116,350 C117,335 119,320 122,305 Z"/>
+                <!-- Left Ankle -->
+                <ellipse class="body-zone" data-zone="leftAnkle" cx="71" cy="392" rx="9" ry="9"/>
+                <!-- Right Ankle -->
+                <ellipse class="body-zone" data-zone="rightAnkle" cx="129" cy="392" rx="9" ry="9"/>
+                <!-- Left Foot -->
+                <ellipse class="body-zone" data-zone="leftFoot" cx="68" cy="415" rx="15" ry="11"/>
+                <!-- Right Foot -->
+                <ellipse class="body-zone" data-zone="rightFoot" cx="132" cy="415" rx="15" ry="11"/>
+              </svg>
+            </div>
+          </div>
+
+          <!-- Back View -->
+          <div class="body-diagram-card">
+            <div class="body-diagram-view-label">Back 背面</div>
+            <div class="body-diagram">
+              <svg viewBox="0 0 200 460" id="bodyBack">
+                <!-- Soft anatomical backdrop, purely decorative -->
+                <g class="body-silhouette">
+                  <ellipse cx="100" cy="30" rx="22" ry="27"/>
+                  <path d="M56,66 C52,84 50,104 54,124 C58,152 64,178 70,192 L130,192 C136,178 142,152 146,124 C150,104 148,84 144,66 C134,58 66,58 56,66 Z"/>
+                  <path d="M40,88 C24,98 18,120 20,155 L48,155 C50,128 48,105 40,88 Z"/>
+                  <path d="M160,88 C176,98 182,120 180,155 L152,155 C150,128 152,105 160,88 Z"/>
+                  <path d="M60,196 C52,225 50,260 55,296 L92,296 C94,258 92,224 86,196 Z"/>
+                  <path d="M140,196 C148,225 150,260 145,296 L108,296 C106,258 108,224 114,196 Z"/>
+                </g>
+                <!-- Head -->
+                <ellipse class="body-zone" data-zone="head" cx="100" cy="30" rx="20" ry="25"/>
+                <!-- Neck -->
+                <path class="body-zone" data-zone="neck" d="M90,53 C90,58 91,62 92,66 L108,66 C109,62 110,58 110,53 Z"/>
+                <!-- Left Shoulder -->
+                <ellipse class="body-zone" data-zone="leftShoulder" cx="52" cy="82" rx="19" ry="15"/>
+                <!-- Right Shoulder -->
+                <ellipse class="body-zone" data-zone="rightShoulder" cx="148" cy="82" rx="19" ry="15"/>
+                <!-- Upper Back -->
+                <path class="body-zone" data-zone="upperBack" d="M70,66 C70,66 60,70 56,84 C54,92 54,100 56,112 L144,112 C146,100 146,92 144,84 C140,70 130,66 130,66 Z"/>
+                <!-- Lower Back -->
+                <path class="body-zone" data-zone="lowerBack" d="M56,112 L144,112 C142,128 138,145 134,160 L66,160 C62,145 58,128 56,112 Z"/>
+                <!-- Left Upper Arm -->
+                <path class="body-zone" data-zone="leftUpperArm" d="M40,90 C34,95 30,105 28,118 C26,130 26,142 28,152 L46,152 C48,140 49,128 48,116 C47,105 45,96 42,90 Z"/>
+                <!-- Right Upper Arm -->
+                <path class="body-zone" data-zone="rightUpperArm" d="M160,90 C166,95 170,105 172,118 C174,130 174,142 172,152 L154,152 C152,140 151,128 152,116 C153,105 155,96 158,90 Z"/>
+                <!-- Left Elbow -->
+                <ellipse class="body-zone" data-zone="leftElbow" cx="37" cy="155" rx="11" ry="11"/>
+                <!-- Right Elbow -->
+                <ellipse class="body-zone" data-zone="rightElbow" cx="163" cy="155" rx="11" ry="11"/>
+                <!-- Left Forearm -->
+                <path class="body-zone" data-zone="leftForearm" d="M28,160 C26,172 25,185 26,198 C27,208 29,216 32,222 L48,222 C50,214 50,205 49,196 C48,184 47,172 46,160 Z"/>
+                <!-- Right Forearm -->
+                <path class="body-zone" data-zone="rightForearm" d="M172,160 C174,172 175,185 174,198 C173,208 171,216 168,222 L152,222 C150,214 150,205 151,196 C152,184 153,172 154,160 Z"/>
+                <!-- Left Wrist -->
+                <ellipse class="body-zone" data-zone="leftWrist" cx="37" cy="227" rx="8" ry="8"/>
+                <!-- Right Wrist -->
+                <ellipse class="body-zone" data-zone="rightWrist" cx="163" cy="227" rx="8" ry="8"/>
+                <!-- Left Hand -->
+                <ellipse class="body-zone" data-zone="leftHand" cx="36" cy="248" rx="13" ry="17"/>
+                <!-- Right Hand -->
+                <ellipse class="body-zone" data-zone="rightHand" cx="164" cy="248" rx="13" ry="17"/>
+                <!-- Left Hip -->
+                <ellipse class="body-zone" data-zone="leftHip" cx="78" cy="192" rx="20" ry="16"/>
+                <!-- Right Hip -->
+                <ellipse class="body-zone" data-zone="rightHip" cx="122" cy="192" rx="20" ry="16"/>
+                <!-- Glutes -->
+                <ellipse class="body-zone" data-zone="glutes" cx="100" cy="188" rx="34" ry="17"/>
+                <!-- Left Thigh -->
+                <path class="body-zone" data-zone="leftThigh" d="M62,204 C58,218 56,236 57,255 C58,270 60,282 63,292 L88,292 C90,278 91,262 90,245 C89,230 87,216 84,204 Z"/>
+                <!-- Right Thigh -->
+                <path class="body-zone" data-zone="rightThigh" d="M138,204 C142,218 144,236 143,255 C142,270 140,282 137,292 L112,292 C110,278 109,262 110,245 C111,230 113,216 116,204 Z"/>
+                <!-- Left Knee -->
+                <ellipse class="body-zone" data-zone="leftKnee" cx="73" cy="297" rx="13" ry="13"/>
+                <!-- Right Knee -->
+                <ellipse class="body-zone" data-zone="rightKnee" cx="127" cy="297" rx="13" ry="13"/>
+                <!-- Left Calf -->
+                <path class="body-zone" data-zone="leftCalf" d="M62,305 C59,320 57,338 58,355 C59,368 61,378 64,386 L82,386 C84,376 85,364 84,350 C83,335 81,320 78,305 Z"/>
+                <!-- Right Calf -->
+                <path class="body-zone" data-zone="rightCalf" d="M138,305 C141,320 143,338 142,355 C141,368 139,378 136,386 L118,386 C116,376 115,364 116,350 C117,335 119,320 122,305 Z"/>
+                <!-- Left Ankle -->
+                <ellipse class="body-zone" data-zone="leftAnkle" cx="71" cy="392" rx="9" ry="9"/>
+                <!-- Right Ankle -->
+                <ellipse class="body-zone" data-zone="rightAnkle" cx="129" cy="392" rx="9" ry="9"/>
+                <!-- Left Foot -->
+                <ellipse class="body-zone" data-zone="leftFoot" cx="68" cy="415" rx="15" ry="11"/>
+                <!-- Right Foot -->
+                <ellipse class="body-zone" data-zone="rightFoot" cx="132" cy="415" rx="15" ry="11"/>
+              </svg>
+            </div>
           </div>
         </div>
 
@@ -4349,6 +4476,9 @@
 
         if (pageId === 'review') {
           updateReviewPage();
+        }
+        if (pageId === 'pain-assessment') {
+          updatePainPointsList();
         }
       }
     }
@@ -6702,9 +6832,18 @@ ${client.formData.postural?.observations?.join(', ') || 'None'}
       } catch(e) { console.error('initEventHandlers error:', e); }
     }
 
+    function updateBodyZoneHighlights() {
+      const points = AppState.formData.painAssessment?.points || [];
+      const markedZones = new Set(points.map(p => p.zone));
+      document.querySelectorAll('.body-zone').forEach(zone => {
+        zone.classList.toggle('active', markedZones.has(zone.getAttribute('data-zone')));
+      });
+    }
+
     function updatePainPointsList() {
       const list = document.getElementById('painPointsList');
       const points = AppState.formData.painAssessment?.points || [];
+      updateBodyZoneHighlights();
 
       list.innerHTML = points.map((p, i) => {
         const typesStr = p.types?.map(tp => t('fields.' + tp)).join(', ') || '';
