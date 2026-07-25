@@ -460,6 +460,11 @@
       padding: 2px 8px;
     }
 
+    .nav-logo-fallback {
+      align-items: center;
+      gap: 8px;
+    }
+
     .nav-links {
       display: flex;
       align-items: center;
@@ -766,12 +771,24 @@
     }
 
     .branch-logo-anim {
-      display: block;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
       margin: 0 auto 20px;
-      max-height: 72px;
-      width: auto;
       opacity: 0;
       animation: logoFadeIn 0.8s ease-out forwards, logoPulseGlow 2.6s ease-in-out 0.8s infinite;
+    }
+    .branch-logo-img {
+      max-height: 72px;
+      width: auto;
+      display: block;
+    }
+    .branch-logo-fallback {
+      align-items: center;
+      gap: 8px;
+      color: var(--primary);
+      font-size: 22px;
+      font-weight: 800;
     }
     @keyframes logoFadeIn {
       from { opacity: 0; transform: translateY(-10px) scale(0.94); }
@@ -2293,7 +2310,14 @@
   <nav class="top-nav" id="topNav" style="display: none;">
     <div class="nav-inner">
       <div class="nav-logo">
-        <img src="logo.png" alt="Master Fit" class="nav-logo-img">
+        <img src="logo.png" alt="Master Fit" class="nav-logo-img" id="navLogoImg" onerror="this.style.display='none';document.getElementById('navLogoFallback').style.display='flex';">
+        <div class="nav-logo-fallback" id="navLogoFallback" style="display:none;">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" width="28" height="28">
+            <path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"/>
+            <circle cx="12" cy="10" r="3"/>
+          </svg>
+          <span>Master Fit 拉伸大师</span>
+        </div>
       </div>
 
       <div class="nav-links" id="navLinks"></div>
@@ -2344,7 +2368,16 @@
     <!-- Branch Selection -->
     <div class="page active" id="page-branch">
       <div class="form-card">
-        <img src="logo.png" alt="Master Fit" class="branch-logo-anim">
+        <div class="branch-logo-anim">
+          <img src="logo.png" alt="Master Fit" class="branch-logo-img" id="branchLogoImg" onerror="this.style.display='none';document.getElementById('branchLogoFallback').style.display='flex';">
+          <div class="branch-logo-fallback" id="branchLogoFallback" style="display:none;">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" width="48" height="48">
+              <path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"/>
+              <circle cx="12" cy="10" r="3"/>
+            </svg>
+            <span>Master Fit 拉伸大师</span>
+          </div>
+        </div>
         <h1 class="card-title" data-i18n="pages.branch.title">Select Your Location</h1>
         <p class="card-subtitle" data-i18n="pages.branch.subtitle">Please choose the Master Fit branch you are visiting</p>
 
@@ -6364,13 +6397,13 @@
 
       function getIncompletePages() {
         const sections = [
-          { id: 'client-basics', fields: ['name', 'gender', 'age', 'phone', 'clientType'] },
-          { id: 'basic-info', fields: ['workType', 'exerciseFreq', 'exerciseTypes', 'injuryHistory', 'priorSurgery'] },
-          { id: 'contraindications', fields: ['signature'] }
+          { id: 'client-basics', dataKey: 'clientBasics', fields: ['name', 'gender', 'age', 'phone', 'clientType'] },
+          { id: 'basic-info', dataKey: 'basicInfo', fields: ['workType', 'exerciseFreq', 'exerciseTypes', 'injuryHistory', 'priorSurgery'] },
+          { id: 'contraindications', dataKey: 'contraindications', fields: ['signature'] }
         ];
         return sections.filter(section => {
           return section.fields.some(field => {
-            const data = AppState.formData[section.id.replace('-', '')];
+            const data = AppState.formData[section.dataKey];
             if (!data) return true;
             const val = data[field];
             if (Array.isArray(val)) return !val || val.length === 0;
