@@ -2557,46 +2557,31 @@
               <span data-i18n="fields.phone">Phone Number</span>
               <span class="required">*</span>
             </label>
-            <input type="tel" class="input" id="clientPhone" data-field="clientBasics.phone" data-i18n-placeholder="fields.phonePlaceholder" placeholder="Phone number">
-          </div>
-        </div>
-
-        <div class="field-group" id="faceIdQuickLoginGroup" style="display:none;">
-          <button type="button" class="btn btn-secondary" id="faceIdQuickLoginBtn" style="width:100%;">
-            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" style="vertical-align:middle;margin-right:6px;">
-              <path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/>
-              <circle cx="12" cy="7" r="4"/>
-            </svg>
-            <span data-i18n="fields.useFaceId">Use Face ID / 使用面容ID</span>
-          </button>
-        </div>
-
-        <div class="field-group">
-          <label class="field-label">
-            <span data-i18n="fields.clientType">Client Type</span>
-            <span class="required">*</span>
-          </label>
-          <div class="radio-group" data-field="clientBasics.clientType">
-            <label class="radio-item">
-              <input type="radio" class="radio-input" name="clientType" value="first-time">
-              <span class="radio-custom"></span>
-              <span class="radio-label" data-i18n="fields.firstTime">First-time</span>
-            </label>
-            <label class="radio-item">
-              <input type="radio" class="radio-input" name="clientType" value="member">
-              <span class="radio-custom"></span>
-              <span class="radio-label" data-i18n="fields.member">Member</span>
-            </label>
-            <label class="radio-item">
-              <input type="radio" class="radio-input" name="clientType" value="referral">
-              <span class="radio-custom"></span>
-              <span class="radio-label" data-i18n="fields.referral">Referral</span>
-            </label>
+            <div style="display:flex;gap:8px;">
+              <select class="input" id="clientCountryCode" data-field="clientBasics.countryCode" style="flex:0 0 118px;">
+                <option value="+86" selected>China +86</option>
+                <option value="+1">USA/Canada +1</option>
+                <option value="+44">UK +44</option>
+                <option value="+852">Hong Kong +852</option>
+                <option value="+853">Macau +853</option>
+                <option value="+886">Taiwan +886</option>
+                <option value="+65">Singapore +65</option>
+                <option value="+81">Japan +81</option>
+                <option value="+82">South Korea +82</option>
+                <option value="+61">Australia +61</option>
+                <option value="+49">Germany +49</option>
+                <option value="+33">France +33</option>
+                <option value="+7">Russia +7</option>
+                <option value="+91">India +91</option>
+                <option value="+other">Other 其他</option>
+              </select>
+              <input type="tel" class="input" id="clientPhone" data-field="clientBasics.phone" data-i18n-placeholder="fields.phonePlaceholder" placeholder="Phone number" style="flex:1;">
+            </div>
           </div>
         </div>
 
         <div class="page-nav">
-          <div></div>
+          <button class="btn btn-ghost" id="backClientBasics">Back / 返回</button>
           <button class="btn btn-primary" id="nextClientBasics" data-i18n="buttons.next">Next</button>
         </div>
       </div>
@@ -3129,16 +3114,6 @@
           <div class="appointment-datetime" id="appointmentDateTime"></div>
         </div>
 
-        <div id="faceIdLoginSection" style="display:none;text-align:center;margin-bottom:16px;">
-          <button class="btn btn-secondary" id="faceIdLoginBtn">
-            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" style="vertical-align:middle;margin-right:6px;">
-              <path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/>
-              <circle cx="12" cy="7" r="4"/>
-            </svg>
-            <span data-i18n="fields.useFaceId">Use Face ID / 使用面容ID</span>
-          </button>
-        </div>
-
         <div class="pain-chart-container">
           <h3 class="pain-chart-title" data-i18n="fields.painTrend">Pain Progress</h3>
           <div class="pain-chart" id="painChart"></div>
@@ -3476,23 +3451,6 @@
   <!-- Toast -->
   <div class="toast" id="toast"></div>
 
-  <!-- Face ID Modal -->
-  <div class="modal-overlay" id="faceIdModal" style="display:none;z-index:2000;">
-    <div class="modal" style="max-width: 400px; text-align: center;">
-      <div class="modal-header" style="justify-content:center;border:none;padding-bottom:0;">
-        <svg width="48" height="48" viewBox="0 0 24 24" fill="none" stroke="var(--primary)" stroke-width="1.5" style="margin-bottom:12px;">
-          <path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/>
-          <circle cx="12" cy="7" r="4"/>
-        </svg>
-      </div>
-      <div style="padding: 0 0 24px;">
-        <h3 class="modal-title" id="faceIdModalTitle" style="color:var(--primary);margin-bottom:12px;">Face ID / 面容ID</h3>
-        <p id="faceIdModalMessage" style="color:var(--text-secondary);font-size:14px;line-height:1.6;margin-bottom:20px;"></p>
-        <div id="faceIdModalActions" style="display:flex;gap:12px;"></div>
-      </div>
-    </div>
-  </div>
-
   <!-- PIN Setup Modal -->
   <div class="modal-overlay" id="pinSetupModal" style="display:none;z-index:2000;">
     <div class="modal" style="max-width: 400px; text-align: center;">
@@ -3765,8 +3723,7 @@
           added: 'Added',
           treatmentPrefs: 'Treatment Preferences',
           treatmentPrefsHint: 'Select areas to focus on',
-          otherSpecify: 'Other (please specify)',
-          useFaceId: 'Use Face ID / 使用面容ID'
+          otherSpecify: 'Other (please specify)'
         },
         buttons: {
           next: 'Next',
@@ -4011,8 +3968,7 @@
           added: '添加时间',
           treatmentPrefs: '治疗偏好',
           treatmentPrefsHint: '选择重点治疗部位',
-          otherSpecify: '其他(请说明)',
-          useFaceId: '使用面容ID'
+          otherSpecify: '其他(请说明)'
         },
         buttons: {
           next: '下一步',
@@ -4335,14 +4291,14 @@
     function validateForm() {
       let isValid = true;
       const required = {
-        clientBasics: ['name', 'gender', 'age', 'phone', 'clientType'],
+        clientBasics: ['name', 'gender', 'age', 'phone'],
         basicInfo: ['workType', 'exerciseFreq', 'exerciseTypes', 'injuryHistory', 'priorSurgery'],
         contraindications: ['signature']
       };
 
       // Check client basics
       for (const field of required.clientBasics) {
-        if (field === 'gender' || field === 'clientType') {
+        if (field === 'gender') {
           const val = AppState.formData.clientBasics?.[field];
           if (!val) isValid = false;
         } else {
@@ -4401,7 +4357,7 @@
         const hasError = page.required.some(req => {
           const data = AppState.formData[req] || {};
           if (req === 'clientBasics') {
-            return !data.name || !data.gender || !data.age || !data.phone || !data.clientType;
+            return !data.name || !data.gender || !data.age || !data.phone;
           }
           if (req === 'basicInfo') {
             return !data.workType || !data.exerciseFreq || !data.exerciseTypes?.length || !data.injuryHistory?.length || !data.priorSurgery;
@@ -4554,7 +4510,7 @@
         <div class="review-item"><span class="review-label">${t('fields.name')}:</span><span class="review-value">${cb.name || '-'}</span></div>
         <div class="review-item"><span class="review-label">${t('fields.gender')}:</span><span class="review-value">${cb.gender ? t('fields.' + cb.gender) : '-'}</span></div>
         <div class="review-item"><span class="review-label">${t('fields.age')}:</span><span class="review-value">${cb.age || '-'}</span></div>
-        <div class="review-item"><span class="review-label">${t('fields.phone')}:</span><span class="review-value">${cb.phone || '-'}</span></div>
+        <div class="review-item"><span class="review-label">${t('fields.phone')}:</span><span class="review-value">${cb.phone ? `${cb.countryCode || '+86'} ${cb.phone}` : '-'}</span></div>
         <div class="review-item"><span class="review-label">${t('fields.clientType')}:</span><span class="review-value">${cb.clientType ? t('fields.' + cb.clientType) : '-'}</span></div>
       `;
 
@@ -4605,109 +4561,6 @@
       reviewPostural.innerHTML = poOther ? `${poDisplay}<div class="review-item"><span class="review-label">${t('fields.otherSpecify')}:</span><span class="review-value">${poOther}</span></div>` : (poDisplay || '<span class="review-value">-</span>');
     }
 
-    // ========================================
-    // WebAuthn / Passkey Support
-    // ========================================
-    // Checking that navigator.credentials exists isn't enough - Safari (especially
-    // iOS) defines the API even when no platform authenticator (Face ID/Touch ID) is
-    // actually usable (e.g. Private Browsing, no biometrics enrolled), which caused
-    // registration/login to silently fail instead of falling back. Ask the platform
-    // directly so unsupported devices never see the button at all.
-    async function isWebAuthnSupported() {
-      if (!window.PublicKeyCredential || !navigator.credentials?.create) return false;
-      try {
-        return await PublicKeyCredential.isUserVerifyingPlatformAuthenticatorAvailable();
-      } catch (e) {
-        return false;
-      }
-    }
-
-    async function registerPasskey(phone) {
-      if (!(await isWebAuthnSupported())) return { error: 'WebAuthn not supported' };
-      try {
-        const credential = await navigator.credentials.create({
-          publicKey: {
-            challenge: new Uint8Array(32),
-            rp: { id: window.location.hostname, name: 'Master Fit' },
-            user: {
-              id: new TextEncoder().encode(phone),
-              name: phone,
-              displayName: phone
-            },
-            pubKeyCredParams: [{ alg: -7, type: 'public-key' }],
-            authenticatorSelection: { authenticatorAttachment: 'platform' }
-          }
-        });
-        if (credential) {
-          const credId = btoa(String.fromCharCode(...new Uint8Array(credential.rawId)));
-          const stored = JSON.parse(localStorage.getItem('mf_passkeys') || '{}');
-          stored[phone] = credId;
-          localStorage.setItem('mf_passkeys', JSON.stringify(stored));
-          return { success: true };
-        }
-      } catch (e) {
-        return { error: e.message };
-      }
-    }
-
-    async function authenticateWithPasskey() {
-      if (!(await isWebAuthnSupported())) return { error: 'WebAuthn not supported' };
-      try {
-        const stored = JSON.parse(localStorage.getItem('mf_passkeys') || '{}');
-        const credIds = Object.values(stored);
-        if (credIds.length === 0) return { error: 'No passkeys registered' };
-
-        const credIdBuffers = credIds.map(id => Uint8Array.from(atob(id), c => c.charCodeAt(0)));
-        const credential = await navigator.credentials.get({
-          publicKey: {
-            challenge: new Uint8Array(32),
-            rpId: window.location.hostname,
-            allowCredentials: credIdBuffers.map(id => ({ type: 'public-key', id: id }))
-          }
-        });
-
-        if (credential) {
-          const credId = btoa(String.fromCharCode(...new Uint8Array(credential.rawId)));
-          const stored2 = JSON.parse(localStorage.getItem('mf_passkeys') || '{}');
-          for (const [phone, cid] of Object.entries(stored2)) {
-            if (cid === credId) return { phone };
-          }
-        }
-      } catch (e) {
-        return { error: e.message };
-      }
-    }
-
-    // Face ID Modal helpers
-    function showFaceIdModal(title, message, buttons) {
-      const modal = document.getElementById('faceIdModal');
-      const titleEl = document.getElementById('faceIdModalTitle');
-      const messageEl = document.getElementById('faceIdModalMessage');
-      const actionsEl = document.getElementById('faceIdModalActions');
-      if (!modal) return;
-      titleEl.textContent = title;
-      messageEl.textContent = message;
-      actionsEl.innerHTML = '';
-      buttons.forEach(btn => {
-        const b = document.createElement('button');
-        b.className = btn.class || 'btn btn-primary';
-        b.style.flex = '1';
-        b.textContent = btn.text;
-        b.addEventListener('click', () => {
-          modal.classList.remove('active');
-          if (btn.onClick) btn.onClick();
-        });
-        actionsEl.appendChild(b);
-      });
-      modal.style.display = 'flex';
-      modal.classList.add('active');
-    }
-
-    function hideFaceIdModal() {
-      const modal = document.getElementById('faceIdModal');
-      if (modal) modal.classList.remove('active');
-    }
-
     // Show the "create a PIN" prompt after a new client's first submission
     function showPinSetupModal() {
       const modal = document.getElementById('pinSetupModal');
@@ -4719,143 +4572,6 @@
       modal.style.display = 'flex';
       modal.classList.add('active');
       input.focus();
-    }
-
-    // Show Face ID setup prompt after first form submission
-    async function showFaceIDEnablePrompt(phone) {
-      if (!(await isWebAuthnSupported())) return;
-      const stored = JSON.parse(localStorage.getItem('mf_passkeys') || '{}');
-      if (stored[phone]) return; // Already registered
-
-      const doRegister = async (retryCount = 0) => {
-        const result = await registerPasskey(phone);
-        if (result.success) {
-          // Success - no need to show anything
-          return;
-        }
-        // Registration failed
-        if (retryCount >= 2) {
-          // After 3 attempts, show unavailable
-          showFaceIdModal(
-            AppState.language === 'zh' ? '面容ID设置' : 'Face ID Setup',
-            AppState.language === 'zh'
-              ? '此设备暂不支持面容ID设置。您可以稍后在主页设置。'
-              : 'Face ID setup is unavailable on this device. You can set it up later from the home screen.',
-            [{ text: 'OK', class: 'btn btn-ghost', onClick: () => {} }]
-          );
-          return;
-        }
-        // Show retry/skip dialog
-        showFaceIdModal(
-          AppState.language === 'zh' ? '面容ID设置失败' : 'Face ID Setup Failed',
-          (AppState.language === 'zh'
-            ? '面容ID设置失败,请重试。'
-            : 'Face ID setup failed. Please try again.') + ` (${retryCount + 1}/3)`,
-          [
-            {
-              text: AppState.language === 'zh' ? '重试' : 'Try Again',
-              class: 'btn btn-primary',
-              onClick: () => doRegister(retryCount + 1)
-            },
-            {
-              text: AppState.language === 'zh' ? '跳过' : 'Skip',
-              class: 'btn btn-ghost',
-              onClick: () => {}
-            }
-          ]
-        );
-      };
-
-      // Initial confirm
-      showFaceIdModal(
-        AppState.language === 'zh' ? '开启面容ID快速登录' : 'Enable Face ID',
-        AppState.language === 'zh'
-          ? '是否开启面容ID/指纹快速登录?下次访问时无需输入手机号即可登录。'
-          : 'Would you like to enable Face ID / fingerprint login for faster access next time?',
-        [
-          {
-            text: AppState.language === 'zh' ? '开启' : 'Enable',
-            class: 'btn btn-primary',
-            onClick: () => doRegister(0)
-          },
-          {
-            text: AppState.language === 'zh' ? '跳过' : 'Skip',
-            class: 'btn btn-ghost',
-            onClick: () => {}
-          }
-        ]
-      );
-    }
-
-    // Show Face ID setup button on home screen for returning clients
-    function showHomeScreenFaceIDButton() {
-      // Add to the branch card area or main nav - find the nav
-      const nav = document.getElementById('navLinks');
-      if (!nav) return;
-      // Check if already has setup Face ID button
-      if (document.getElementById('setupFaceIdNavBtn')) return;
-      // Only show for clients who have submitted before (have a phone in localStorage)
-      const allPasskeys = JSON.parse(localStorage.getItem('mf_passkeys') || '{}');
-      if (Object.keys(allPasskeys).length === 0) return;
-
-      const btn = document.createElement('div');
-      btn.id = 'setupFaceIdNavBtn';
-      btn.className = 'nav-item';
-      btn.style.cssText = 'cursor:pointer;color:var(--text-secondary);font-size:13px;padding:8px 16px;';
-      btn.textContent = AppState.language === 'zh' ? '设置面容ID' : 'Set up Face ID';
-      btn.addEventListener('click', () => {
-        // Find the first phone in passkeys that is not yet registered
-        // For simplicity, show a dialog to enter phone number
-        const phone = prompt(AppState.language === 'zh' ? '请输入您的手机号:' : 'Please enter your phone number:');
-        if (phone && phone.trim()) {
-          const stored = JSON.parse(localStorage.getItem('mf_passkeys') || '{}');
-          if (stored[phone.trim()]) {
-            alert(AppState.language === 'zh' ? '此手机号已设置面容ID' : 'Face ID is already set up for this phone number.');
-            return;
-          }
-          // Register the passkey
-          const doSetup = async (retryCount = 0) => {
-            const result = await registerPasskey(phone.trim());
-            if (result.success) {
-              showFaceIdModal(
-                AppState.language === 'zh' ? '设置成功' : 'Setup Complete',
-                AppState.language === 'zh' ? '面容ID已成功设置!' : 'Face ID has been set up successfully!',
-                [{ text: 'OK', class: 'btn btn-primary', onClick: () => {} }]
-              );
-              btn.style.display = 'none';
-              return;
-            }
-            if (retryCount >= 2) {
-              showFaceIdModal(
-                AppState.language === 'zh' ? '面容ID设置' : 'Face ID Setup',
-                AppState.language === 'zh'
-                  ? '此设备暂不支持面容ID设置。'
-                  : 'Face ID setup is unavailable on this device.',
-                [{ text: 'OK', class: 'btn btn-ghost', onClick: () => {} }]
-              );
-              return;
-            }
-            showFaceIdModal(
-              AppState.language === 'zh' ? '面容ID设置失败' : 'Face ID Setup Failed',
-              (AppState.language === 'zh' ? '面容ID设置失败,请重试。' : 'Face ID setup failed. Please try again.') + ` (${retryCount + 1}/3)`,
-              [
-                {
-                  text: AppState.language === 'zh' ? '重试' : 'Try Again',
-                  class: 'btn btn-primary',
-                  onClick: () => doSetup(retryCount + 1)
-                },
-                {
-                  text: AppState.language === 'zh' ? '取消' : 'Cancel',
-                  class: 'btn btn-ghost',
-                  onClick: () => {}
-                }
-              ]
-            );
-          };
-          doSetup(0);
-        }
-      });
-      nav.appendChild(btn);
     }
 
     // ========================================
@@ -5355,7 +5071,7 @@
       list.innerHTML = filtered.map(client => {
         const cb = client.formData?.clientBasics || {};
         const date = new Date(client.createdAt || client.updatedAt).toLocaleDateString(AppState.language === 'zh' ? 'zh-CN' : 'en-US');
-        const isNew = client.formData?.clientBasics?.clientType === 'first-time';
+        const isNew = ['firstTime', 'first-time'].includes(client.formData?.clientBasics?.clientType);
         const clientId = client._id || client.id;
         const branchStaff = staffByBranch[client.branch] || [];
         const reassignHtml = isManager ? `
@@ -5594,7 +5310,7 @@
         <div class="assessment-section">
           <h3 class="assessment-title">${t('pages.clientBasics.title')}</h3>
           <div class="review-item"><span class="review-label">${t('fields.name')}:</span><span class="review-value">${cb.name || '-'}</span></div>
-          <div class="review-item"><span class="review-label">${t('fields.phone')}:</span><span class="review-value">${cb.phone || '-'}</span></div>
+          <div class="review-item"><span class="review-label">${t('fields.phone')}:</span><span class="review-value">${cb.phone ? `${cb.countryCode || '+86'} ${cb.phone}` : '-'}</span></div>
           <div class="review-item"><span class="review-label">${t('fields.clientType')}:</span><span class="review-value">${cb.clientType ? t('fields.' + cb.clientType) : '-'}</span></div>
         </div>
 
@@ -5843,7 +5559,7 @@
         AppState.entryMode = 'new';
         AppState.currentClientId = null;
         AppState.formData = {
-          clientBasics: {},
+          clientBasics: { clientType: 'firstTime', countryCode: '+86' },
           basicInfo: {},
           contraindications: {},
           painAssessment: { points: [] },
@@ -5861,6 +5577,10 @@
 
       document.getElementById('backEntryType')?.addEventListener('click', () => {
         navigateTo('branch');
+      });
+
+      document.getElementById('backClientBasics')?.addEventListener('click', () => {
+        navigateTo('entry-type');
       });
 
       document.getElementById('backReturningLogin')?.addEventListener('click', () => {
@@ -6281,62 +6001,6 @@
         checkReturningClient(e.target.value);
       });
 
-      // Face ID quick login (Client Basics page) - lets a returning client
-      // auto-fill their phone number and pre-load their previous form data.
-      const faceIdQuickGroup = document.getElementById('faceIdQuickLoginGroup');
-      const faceIdQuickBtn = document.getElementById('faceIdQuickLoginBtn');
-      if (faceIdQuickGroup && faceIdQuickBtn) {
-        const quickStoredPasskeys = JSON.parse(localStorage.getItem('mf_passkeys') || '{}');
-        const quickHasPasskeys = Object.keys(quickStoredPasskeys).length > 0;
-        faceIdQuickGroup.style.display = 'none';
-        if (quickHasPasskeys) {
-          isWebAuthnSupported().then(supported => {
-            faceIdQuickGroup.style.display = supported ? 'block' : 'none';
-          });
-        }
-
-        faceIdQuickBtn.addEventListener('click', async () => {
-          const doQuickAuth = async () => {
-            const result = await authenticateWithPasskey();
-            if (result.phone) {
-              const phoneInput = document.getElementById('clientPhone');
-              if (phoneInput) phoneInput.value = result.phone;
-              if (!AppState.formData.clientBasics) AppState.formData.clientBasics = {};
-              AppState.formData.clientBasics.phone = result.phone;
-
-              const apiResult = await apiCall(`/api/clients/phone/${result.phone}`);
-              if (!apiResult.error && apiResult.data) {
-                AppState.formData = apiResult.data.formData || AppState.formData;
-                AppState.formData.clientBasics.phone = result.phone;
-                AppState.currentClientId = apiResult.data._id;
-                restoreFormValues();
-                checkReturningClient(result.phone, apiResult.data);
-                showToast('Welcome back! 欢迎回来!', 'success');
-              }
-              validateForm();
-            } else if (result.error) {
-              showFaceIdModal(
-                'Face ID Failed / 面容ID识别失败',
-                'Face ID authentication failed. Would you like to try again? / 面容ID识别失败,是否重试?',
-                [
-                  {
-                    text: 'Try Again 重试',
-                    class: 'btn btn-primary',
-                    onClick: () => doQuickAuth()
-                  },
-                  {
-                    text: 'Enter Manually 手动输入',
-                    class: 'btn btn-ghost',
-                    onClick: () => {}
-                  }
-                ]
-              );
-            }
-          };
-          doQuickAuth();
-        });
-      }
-
       // Prior Surgery detail toggle
       document.querySelectorAll('input[name="priorSurgery"]').forEach(input => {
         input.addEventListener('change', () => {
@@ -6527,7 +6191,7 @@
 
       function getIncompletePages() {
         const sections = [
-          { id: 'client-basics', dataKey: 'clientBasics', fields: ['name', 'gender', 'age', 'phone', 'clientType'] },
+          { id: 'client-basics', dataKey: 'clientBasics', fields: ['name', 'gender', 'age', 'phone'] },
           { id: 'basic-info', dataKey: 'basicInfo', fields: ['workType', 'exerciseFreq', 'exerciseTypes', 'injuryHistory', 'priorSurgery'] },
           { id: 'contraindications', dataKey: 'contraindications', fields: ['signature'] }
         ];
@@ -6560,7 +6224,6 @@
             else if (field === 'age') el = page.querySelector('#clientAge');
             else if (field === 'phone') el = page.querySelector('#clientPhone');
             else if (field === 'gender') el = page.querySelector('input[name="gender"]:not(:checked)');
-            else if (field === 'clientType') el = page.querySelector('input[name="clientType"]:not(:checked)');
             else if (field === 'workType') el = page.querySelector('#workType');
             else if (field === 'exerciseFreq') el = page.querySelector('#exerciseFreq');
             else if (field === 'exerciseTypes') el = page.querySelector('[data-field="basicInfo.exerciseTypes"] .tag-select');
@@ -6644,14 +6307,6 @@
         if (AppState.entryMode === 'new' && AppState.currentClientId) {
           setTimeout(() => showPinSetupModal(), 400);
         }
-
-        // Prompt to enable Face ID / passkey login
-        if (phoneForStorage) {
-          setTimeout(() => showFaceIDEnablePrompt(phoneForStorage), 900);
-        }
-
-        // Show Face ID setup button on home screen for returning clients
-        setTimeout(() => showHomeScreenFaceIDButton(), 1400);
       });
 
       // View inbox
@@ -6671,75 +6326,6 @@
       document.getElementById('inboxBackBtn')?.addEventListener('click', () => {
         navigateTo('success');
       });
-
-      // Face ID login button
-      const faceIdSection = document.getElementById('faceIdLoginSection');
-      const faceIdBtn = document.getElementById('faceIdLoginBtn');
-      if (faceIdSection && faceIdBtn) {
-        const storedPasskeys = JSON.parse(localStorage.getItem('mf_passkeys') || '{}');
-        const hasPasskeys = Object.keys(storedPasskeys).length > 0;
-        faceIdSection.style.display = 'none';
-        if (hasPasskeys) {
-          isWebAuthnSupported().then(supported => {
-            faceIdSection.style.display = supported ? 'block' : 'none';
-          });
-        }
-
-        faceIdBtn.addEventListener('click', async () => {
-          const doAuth = async () => {
-            const result = await authenticateWithPasskey();
-            if (result.phone) {
-              const savedInbox = localStorage.getItem('mf_inbox_' + result.phone);
-              AppState.clientInbox = savedInbox ? JSON.parse(savedInbox) : [];
-              AppState.clientPhone = result.phone;
-              AppState.isClientLoggedIn = true;
-              const storedData = JSON.parse(localStorage.getItem('mf_formData_' + result.phone) || '{}');
-              if (storedData.clientBasics) {
-                AppState.formData = storedData;
-                restoreFormValues();
-              }
-              renderInbox();
-              navigateTo('inbox');
-            } else if (result.error) {
-              showFaceIdModal(
-                AppState.language === 'zh' ? '面容ID识别失败' : 'Face ID Failed',
-                AppState.language === 'zh'
-                  ? '面容ID识别失败,是否重试?'
-                  : 'Face ID authentication failed. Would you like to try again?',
-                [
-                  {
-                    text: AppState.language === 'zh' ? '重试' : 'Try Again',
-                    class: 'btn btn-primary',
-                    onClick: () => doAuth()
-                  },
-                  {
-                    text: AppState.language === 'zh' ? '使用手机号' : 'Use Phone Number',
-                    class: 'btn btn-ghost',
-                    onClick: () => {
-                      // Let user type phone number via prompt
-                      const phone = prompt(AppState.language === 'zh' ? '请输入您的手机号:' : 'Please enter your phone number:');
-                      if (phone && phone.trim()) {
-                        const savedInbox = localStorage.getItem('mf_inbox_' + phone.trim());
-                        AppState.clientInbox = savedInbox ? JSON.parse(savedInbox) : [];
-                        AppState.clientPhone = phone.trim();
-                        AppState.isClientLoggedIn = true;
-                        const storedData = JSON.parse(localStorage.getItem('mf_formData_' + phone.trim()) || '{}');
-                        if (storedData.clientBasics) {
-                          AppState.formData = storedData;
-                          restoreFormValues();
-                        }
-                        renderInbox();
-                        navigateTo('inbox');
-                      }
-                    }
-                  }
-                ]
-              );
-            }
-          };
-          doAuth();
-        });
-      }
 
       // Signature date
       document.getElementById('signatureDate').textContent = new Date().toLocaleDateString(AppState.language === 'zh' ? 'zh-CN' : 'en-US');
@@ -7020,6 +6606,7 @@ ${client.formData.postural?.observations?.join(', ') || 'None'}
       if (cb.name) document.getElementById('clientName').value = cb.name;
       if (cb.age) document.getElementById('clientAge').value = cb.age;
       if (cb.phone) document.getElementById('clientPhone').value = cb.phone;
+      if (cb.countryCode) document.getElementById('clientCountryCode').value = cb.countryCode;
       if (cb.gender) {
         const radio = document.querySelector(`input[name="gender"][value="${cb.gender}"]`);
         if (radio) radio.checked = true;
