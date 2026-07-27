@@ -4218,14 +4218,13 @@
     // ========================================
     // API Configuration
     // ========================================
-    // IMPORTANT: Set this to your deployed API URL
-    // For local testing: 'http://localhost:3000'
-    // For production: 'https://your-api-url.onrender.com'
-    //
-    // For this demo, the API is running on the same server
-    const API_BASE = (window.location.hostname === 'localhost' || window.location.hostname === '127.0.0.1')
-      ? 'http://localhost:3000'
-      : 'https://masterfit-api.onrender.com';
+    // server.js serves both this static file and the /api/* routes from
+    // the same Express app/port, in every environment - so API calls must
+    // always be relative to whatever host served this page. A hardcoded
+    // absolute URL here previously pointed at the wrong Render hostname
+    // in production, silently sending every submission to a different
+    // server than the one connected to MongoDB.
+    const API_BASE = '';
 
     // API Helper Functions
     async function apiCall(endpoint, method = 'GET', body = null) {
@@ -6451,8 +6450,26 @@
           clientData.id = AppState.currentClientId;
         }
 
+        const submitBtnEl = document.getElementById('submitForm');
+        if (submitBtnEl) submitBtnEl.disabled = true;
+
         // Save to API
         const result = await apiCall('/api/clients', 'POST', clientData);
+
+        // A failed save (network error, wrong host, server 500, etc.) must
+        // never look like a successful submission - the client would walk
+        // away believing their intake was recorded while nothing reached
+        // MongoDB. Stop here, show a clear error, and let them retry.
+        if (result.error) {
+          if (submitBtnEl) submitBtnEl.disabled = false;
+          showToast(
+            AppState.language === 'zh'
+              ? '提交失败,请检查网络连接后重试。您的信息尚未保存。'
+              : 'Submission failed. Please check your connection and try again - your information has not been saved yet.',
+            'error'
+          );
+          return;
+        }
 
         if (result.data?._id) {
           AppState.currentClientId = result.data._id;
