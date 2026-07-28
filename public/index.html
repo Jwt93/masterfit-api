@@ -5723,7 +5723,13 @@
     function initEventHandlers() {
       try {
       // Branch selection
-      document.querySelectorAll('.branch-card').forEach(card => {
+      // Scoped to #page-branch specifically - the New/Returning cards on
+      // the entry-type page reuse the .branch-card class purely for
+      // styling and have no data-branch attribute, so a plain
+      // .branch-card query would also catch them here, null out
+      // AppState.branch on every "New Client" / "Returning Member" click,
+      // and cause every subsequent save/submit to be rejected server-side.
+      document.querySelectorAll('#page-branch .branch-card').forEach(card => {
         card.addEventListener('click', () => {
           AppState.branch = card.getAttribute('data-branch');
           localStorage.setItem('mf_branch', AppState.branch);
