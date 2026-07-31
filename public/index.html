@@ -2444,7 +2444,7 @@
           </div>
         </div>
 
-        <p style="text-align:center;margin-top:24px;font-size:11px;color:var(--text-secondary);opacity:0.6;">Build 2026-07-28-01</p>
+        <p style="text-align:center;margin-top:24px;font-size:11px;color:var(--text-secondary);opacity:0.6;">Build 2026-07-31-01</p>
       </div>
     </div>
 
@@ -2523,7 +2523,7 @@
             <span data-i18n="fields.name">Name</span>
             <span class="required">*</span>
           </label>
-          <input type="text" class="input" id="clientName" data-field="clientBasics.name" data-i18n-placeholder="fields.namePlaceholder" placeholder="Enter your full name">
+          <input type="text" class="input" id="clientName" data-field="clientBasics.name" data-required="true" data-i18n-placeholder="fields.namePlaceholder" placeholder="Enter your full name">
         </div>
 
         <div class="field-group">
@@ -2531,7 +2531,7 @@
             <span data-i18n="fields.gender">Gender</span>
             <span class="required">*</span>
           </label>
-          <div class="radio-group" data-field="clientBasics.gender">
+          <div class="radio-group" data-field="clientBasics.gender" data-required="true">
             <label class="radio-item">
               <input type="radio" class="radio-input" name="gender" value="male">
               <span class="radio-custom"></span>
@@ -2551,7 +2551,7 @@
               <span data-i18n="fields.age">Age</span>
               <span class="required">*</span>
             </label>
-            <input type="number" class="input" id="clientAge" data-field="clientBasics.age" min="1" max="120" data-i18n-placeholder="fields.agePlaceholder" placeholder="Age">
+            <input type="number" class="input" id="clientAge" data-field="clientBasics.age" data-required="true" min="1" max="120" data-i18n-placeholder="fields.agePlaceholder" placeholder="Age">
           </div>
 
           <div class="field-group">
@@ -2761,7 +2761,7 @@
                 <option value="+260">+260 Zambia</option>
                 <option value="+263">+263 Zimbabwe</option>
               </select>
-              <input type="tel" class="input" id="clientPhone" data-field="clientBasics.phone" data-i18n-placeholder="fields.phonePlaceholder" placeholder="Phone number" style="flex:1;">
+              <input type="tel" class="input" id="clientPhone" data-field="clientBasics.phone" data-required="true" data-i18n-placeholder="fields.phonePlaceholder" placeholder="Phone number" style="flex:1;">
             </div>
           </div>
         </div>
@@ -2784,7 +2784,7 @@
             <span data-i18n="fields.workType">Work Type</span>
             <span class="required">*</span>
           </label>
-          <select class="input select" id="workType" data-field="basicInfo.workType">
+          <select class="input select" id="workType" data-field="basicInfo.workType" data-required="true">
             <option value="" data-i18n="fields.selectOption">Please select...</option>
             <option value="sedentary" data-i18n="fields.sedentary">Sedentary office</option>
             <option value="standing" data-i18n="fields.standing">Standing long periods</option>
@@ -2798,7 +2798,7 @@
             <span data-i18n="fields.exerciseFreq">Exercise Frequency</span>
             <span class="required">*</span>
           </label>
-          <select class="input select" id="exerciseFreq" data-field="basicInfo.exerciseFreq">
+          <select class="input select" id="exerciseFreq" data-field="basicInfo.exerciseFreq" data-required="true">
             <option value="" data-i18n="fields.selectOption">Please select...</option>
             <option value="never" data-i18n="fields.never">Almost never</option>
             <option value="monthly" data-i18n="fields.monthly">1x per month</option>
@@ -2814,7 +2814,7 @@
             <span class="required">*</span>
           </label>
           <p class="field-hint secondary-text" data-i18n="fields.exerciseTypesHint">Select all that apply</p>
-          <div class="tag-select" data-field="basicInfo.exerciseTypes">
+          <div class="tag-select" data-field="basicInfo.exerciseTypes" data-required="true">
             <span class="tag-option" data-value="running" data-i18n="fields.running">Running</span>
             <span class="tag-option" data-value="fitness" data-i18n="fields.fitness">Fitness & strength training</span>
             <span class="tag-option" data-value="cycling" data-i18n="fields.cycling">Cycling</span>
@@ -2834,7 +2834,7 @@
             <span class="required">*</span>
           </label>
           <p class="field-hint secondary-text" data-i18n="fields.injuryHint">Select all that apply</p>
-          <div class="tag-select" data-field="basicInfo.injuryHistory">
+          <div class="tag-select" data-field="basicInfo.injuryHistory" data-required="true">
             <span class="tag-option" data-value="muscle" data-i18n="fields.muscle">Muscle strain</span>
             <span class="tag-option" data-value="tendon" data-i18n="fields.tendon">Tendon strain</span>
             <span class="tag-option" data-value="meniscus" data-i18n="fields.meniscus">Meniscus injury</span>
@@ -2853,7 +2853,7 @@
             <span data-i18n="fields.priorSurgery">Prior Surgery</span>
             <span class="required">*</span>
           </label>
-          <div class="radio-group" data-field="basicInfo.priorSurgery">
+          <div class="radio-group" data-field="basicInfo.priorSurgery" data-required="true">
             <label class="radio-item">
               <input type="radio" class="radio-input" name="priorSurgery" value="no">
               <span class="radio-custom"></span>
@@ -2943,7 +2943,7 @@
               <span class="checkbox-label" style="text-align: left; font-size: 13px;" data-i18n="fields.statementAgree">Client Statement: For any items not checked above, I confirm I have no related symptoms. I understand that after treatment, normal muscle soreness or localized bruising may occur for 1-7 days. If this does not improve within 3-5 days, I will contact the store promptly.</span>
             </label>
 
-            <input type="text" class="signature-input" id="clientSignature" data-field="contraindications.signature" data-i18n-placeholder="fields.signaturePlaceholder" placeholder="Type your name as signature">
+            <input type="text" class="signature-input" id="clientSignature" data-field="contraindications.signature" data-required="true" data-i18n-placeholder="fields.signaturePlaceholder" placeholder="Type your name as signature">
 
             <div class="signature-date" id="signatureDate"></div>
           </div>
@@ -4473,40 +4473,33 @@
       document.body.classList.toggle('dark-mode', newDark);
     }
 
+    // Single source of truth for which fields are required and whether
+    // they're filled in. Reads directly off the DOM (any element carrying
+    // both data-field="section.name" and data-required="true") instead of
+    // a hardcoded field list, so validateForm(), updateNavItems(),
+    // getIncompletePages(), and the missing-field highlighter all stay in
+    // sync automatically - marking a new field data-required="true" in the
+    // HTML is the only step needed to make it participate everywhere.
+    function getRequiredFieldStatus() {
+      return Array.from(document.querySelectorAll('[data-field][data-required="true"]')).map(el => {
+        const fieldPath = el.getAttribute('data-field');
+        const [section, name] = fieldPath.split('.');
+        const val = AppState.formData[section]?.[name];
+        let missing;
+        if (Array.isArray(val)) {
+          missing = val.length === 0;
+        } else if (typeof val === 'string') {
+          missing = !val.trim();
+        } else {
+          missing = !val;
+        }
+        const pageEl = el.closest('.page');
+        return { el, fieldPath, section, name, pageId: pageEl ? pageEl.id.replace('page-', '') : null, missing };
+      });
+    }
+
     function validateForm() {
-      let isValid = true;
-      const required = {
-        clientBasics: ['name', 'gender', 'age', 'phone'],
-        basicInfo: ['workType', 'exerciseFreq', 'exerciseTypes', 'injuryHistory', 'priorSurgery'],
-        contraindications: ['signature']
-      };
-
-      // Check client basics
-      for (const field of required.clientBasics) {
-        if (field === 'gender') {
-          const val = AppState.formData.clientBasics?.[field];
-          if (!val) isValid = false;
-        } else {
-          const val = AppState.formData.clientBasics?.[field];
-          if (!val || (typeof val === 'string' && !val.trim())) isValid = false;
-        }
-      }
-
-      // Check basic info
-      for (const field of required.basicInfo) {
-        if (field === 'exerciseTypes' || field === 'injuryHistory') {
-          const val = AppState.formData.basicInfo?.[field];
-          if (!val || val.length === 0) isValid = false;
-        } else {
-          const val = AppState.formData.basicInfo?.[field];
-          if (!val) isValid = false;
-        }
-      }
-
-      // Check signature
-      if (!AppState.formData.contraindications?.signature) {
-        isValid = false;
-      }
+      const isValid = getRequiredFieldStatus().every(f => !f.missing);
 
       const submitBtn = document.getElementById('submitForm');
       if (submitBtn) {
@@ -4528,31 +4521,23 @@
       if (!nav) return;
 
       const pages = [
-        { id: 'client-basics', labelKey: 'nav.clientBasics', required: ['clientBasics'] },
-        { id: 'basic-info', labelKey: 'nav.basicInfo', required: ['basicInfo'] },
-        { id: 'contraindications', labelKey: 'nav.contraindications', required: ['contraindications'] },
-        { id: 'pain-assessment', labelKey: 'nav.painAssessment', required: [] },
-        { id: 'treatment-prefs', labelKey: 'nav.treatmentPrefs', required: [] },
-        { id: 'postural', labelKey: 'nav.postural', required: [] },
-        { id: 'review', labelKey: 'nav.review', required: [] }
+        { id: 'client-basics', labelKey: 'nav.clientBasics' },
+        { id: 'basic-info', labelKey: 'nav.basicInfo' },
+        { id: 'contraindications', labelKey: 'nav.contraindications' },
+        { id: 'pain-assessment', labelKey: 'nav.painAssessment' },
+        { id: 'treatment-prefs', labelKey: 'nav.treatmentPrefs' },
+        { id: 'postural', labelKey: 'nav.postural' },
+        { id: 'review', labelKey: 'nav.review' }
       ];
+
+      const missingByPage = {};
+      getRequiredFieldStatus().forEach(f => {
+        if (f.missing && f.pageId) missingByPage[f.pageId] = true;
+      });
 
       // Reset button added to mobile menu below
       nav.innerHTML = pages.map(page => {
-        const hasError = page.required.some(req => {
-          const data = AppState.formData[req] || {};
-          if (req === 'clientBasics') {
-            return !data.name || !data.gender || !data.age || !data.phone;
-          }
-          if (req === 'basicInfo') {
-            return !data.workType || !data.exerciseFreq || !data.exerciseTypes?.length || !data.injuryHistory?.length || !data.priorSurgery;
-          }
-          if (req === 'contraindications') {
-            return !data.signature;
-          }
-          return false;
-        });
-
+        const hasError = !!missingByPage[page.id];
         return `<div class="nav-item ${AppState.currentPage === page.id ? 'active' : ''} ${hasError ? 'has-error' : ''}" data-page="${page.id}">${t(page.labelKey)}</div>`;
       }).join('');
 
@@ -6382,21 +6367,21 @@
       // Show Missing Fields button
       let showMissingPageIndex = 0;
 
+      // Groups the same DOM-derived required-field status used by
+      // validateForm()/updateNavItems() by page, in page order, so this
+      // never drifts out of sync with what's actually in the form.
       function getIncompletePages() {
-        const sections = [
-          { id: 'client-basics', dataKey: 'clientBasics', fields: ['name', 'gender', 'age', 'phone'] },
-          { id: 'basic-info', dataKey: 'basicInfo', fields: ['workType', 'exerciseFreq', 'exerciseTypes', 'injuryHistory', 'priorSurgery'] },
-          { id: 'contraindications', dataKey: 'contraindications', fields: ['signature'] }
-        ];
-        return sections.filter(section => {
-          return section.fields.some(field => {
-            const data = AppState.formData[section.dataKey];
-            if (!data) return true;
-            const val = data[field];
-            if (Array.isArray(val)) return !val || val.length === 0;
-            return !val || (typeof val === 'string' && !val.trim());
-          });
+        const pageOrder = ['client-basics', 'basic-info', 'contraindications', 'pain-assessment', 'treatment-prefs', 'postural'];
+        const missingByPage = {};
+        getRequiredFieldStatus().forEach(f => {
+          if (f.missing && f.pageId) {
+            if (!missingByPage[f.pageId]) missingByPage[f.pageId] = [];
+            missingByPage[f.pageId].push(f.el);
+          }
         });
+        return pageOrder
+          .filter(id => missingByPage[id])
+          .map(id => ({ id, elements: missingByPage[id] }));
       }
 
       function showNextMissing() {
@@ -6406,24 +6391,10 @@
         const target = incomplete[showMissingPageIndex % incomplete.length];
         showMissingPageIndex++;
         navigateTo(target.id);
-        // Highlight missing fields after navigation
+        // Highlight missing fields after navigation - target.elements are
+        // the actual DOM elements already, no selector guessing needed.
         setTimeout(() => {
-          const page = document.getElementById('page-' + target.id);
-          if (!page) return;
-          target.fields.forEach(field => {
-            let el = null;
-            // Try various selectors for different field types
-            if (field === 'name') el = page.querySelector('#clientName');
-            else if (field === 'age') el = page.querySelector('#clientAge');
-            else if (field === 'phone') el = page.querySelector('#clientPhone');
-            else if (field === 'gender') el = page.querySelector('input[name="gender"]:not(:checked)');
-            else if (field === 'workType') el = page.querySelector('#workType');
-            else if (field === 'exerciseFreq') el = page.querySelector('#exerciseFreq');
-            else if (field === 'exerciseTypes') el = page.querySelector('[data-field="basicInfo.exerciseTypes"] .tag-select');
-            else if (field === 'injuryHistory') el = page.querySelector('[data-field="basicInfo.injuryHistory"] .tag-select');
-            else if (field === 'priorSurgery') el = page.querySelector('[data-field="basicInfo.priorSurgery"]');
-            else if (field === 'signature') el = page.querySelector('#clientSignature');
-
+          target.elements.forEach(el => {
             if (el && !el.classList.contains('field-missing-highlight')) {
               el.classList.add('field-missing-highlight');
               const requiredMsg = document.createElement('span');
