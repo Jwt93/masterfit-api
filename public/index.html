@@ -6317,51 +6317,19 @@
       });
 
       document.getElementById('resetConfirmBtn')?.addEventListener('click', () => {
-        // Clear all form data
-        AppState.formData = {
-          clientBasics: {},
-          basicInfo: {},
-          contraindications: {},
-          painAssessment: { points: [] },
-          treatmentPreferences: {},
-          postural: {}
-        };
-        AppState.currentClientId = null;
-        AppState.clientPhone = null;
-        AppState.isClientLoggedIn = false;
-        AppState.clientInbox = [];
-
-        // Clear localStorage
+        // Full kiosk reset: this must send the NEXT client all the way back to
+        // branch selection with zero trace of the previous client's data -
+        // including selections (branch, entry mode) that a plain formData
+        // wipe doesn't touch. Rather than manually unsetting every DOM field
+        // one by one (the exact pattern that caused the last three recurring
+        // validation bugs, since any newly added field is silently missed),
+        // clear storage/state completely and reload so the app re-inits from
+        // nothing - every field goes back to its untouched HTML default.
         localStorage.removeItem('mf_formData');
         localStorage.removeItem('mf_clientPhone');
-
-        // Reset form fields in DOM
-        document.getElementById('clientName').value = '';
-        document.getElementById('clientAge').value = '';
-        document.getElementById('clientPhone').value = '';
-        document.querySelectorAll('input[name="gender"]').forEach(r => r.checked = false);
-        document.querySelectorAll('input[name="clientType"]').forEach(r => r.checked = false);
-        document.getElementById('workType').value = '';
-        document.getElementById('exerciseFreq').value = '';
-        document.querySelectorAll('.tag-select').forEach(container => {
-          container.querySelectorAll('.tag-option').forEach(tag => tag.classList.remove('selected'));
-        });
-        document.getElementById('clientStatementAgree').checked = false;
-        document.getElementById('clientSignature').value = '';
-        document.getElementById('signatureDate').textContent = '';
-
-        // Clear pain points display
-        const painPointsList = document.getElementById('painPointsList');
-        if (painPointsList) painPointsList.innerHTML = '';
-
-        // Close modal
-        document.getElementById('resetModal').classList.remove('active');
-
-        // Navigate to first page
-        navigateTo('client-basics');
-
-        // Re-validate
-        validateForm();
+        localStorage.removeItem('mf_branch');
+        window.location.hash = '';
+        window.location.reload();
       });
 
       // Show Missing Fields button
