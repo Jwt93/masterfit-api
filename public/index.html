@@ -6453,8 +6453,15 @@
         navigateTo('success');
         fireConfetti();
 
-        // Prompt new clients to set a PIN for faster access next time
-        if (AppState.entryMode === 'new' && AppState.currentClientId) {
+        // Prompt to set a PIN for faster access next time. Derived directly
+        // from the server's saved record (does it already have a pinHash?)
+        // rather than the client-side entryMode flag - a flag has to be set
+        // at exactly the right moment and survive every reset/reload/branch
+        // of the session to stay correct, and this app's validation bugs
+        // have repeatedly come from exactly that kind of drift. Whether a
+        // PIN already exists is a fact from the database, so it can't go
+        // stale no matter what happened earlier in the session.
+        if (AppState.currentClientId && !result.data?.pinHash) {
           setTimeout(() => showPinSetupModal(), 400);
         }
       });
