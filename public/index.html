@@ -42,378 +42,62 @@
       --transition-normal: 250ms ease;
       --transition-slow: 350ms ease-out;
       --font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', 'PingFang SC', 'Hiragino Sans GB', 'Microsoft YaHei', sans-serif;
-      --base-font-size: 15px;
-    }
-
-    /* ========================================
-       ASSISTED MODE - 30-40% larger, more readable
-       ======================================== */
-    html.assisted-mode {
       --base-font-size: 20px;
-    }
-
-    html.assisted-mode body {
-      font-size: var(--base-font-size);
-      line-height: 1.8;
-    }
-
-    /* Navigation in assisted mode */
-    html.assisted-mode .nav-inner {
-      height: 72px;
-    }
-
-    html.assisted-mode .nav-logo {
-      font-size: 22px;
-    }
-
-    html.assisted-mode .nav-logo svg {
-      width: 36px;
-      height: 36px;
-    }
-
-    html.assisted-mode .nav-item {
-      padding: 14px 20px !important;
-      font-size: 15px !important;
-      border-radius: 10px;
-    }
-
-    html.assisted-mode .nav-btn {
-      width: 48px;
-      height: 48px;
-    }
-
-    html.assisted-mode .nav-btn svg {
-      width: 24px;
-      height: 24px;
-    }
-
-    /* Buttons in assisted mode - 40-50% larger */
-    html.assisted-mode .btn {
-      padding: 16px 32px !important;
-      font-size: 17px !important;
-      border-radius: 14px;
-      min-height: 56px;
-    }
-
-    html.assisted-mode .btn-sm {
-      padding: 12px 24px !important;
-      font-size: 15px !important;
-      min-height: 48px;
-    }
-
-    /* Cards in assisted mode */
-    html.assisted-mode .form-card {
-      padding: 36px !important;
-      border-radius: 20px;
-    }
-
-    /* Form fields in assisted mode */
-    html.assisted-mode .field-group {
-      margin-bottom: 28px !important;
-    }
-
-    html.assisted-mode .field-label {
-      font-size: 15px;
-      margin-bottom: 10px;
-    }
-
-    html.assisted-mode .input {
-      padding: 16px 18px;
-      font-size: 17px;
-      border-radius: 12px;
-      min-height: 56px;
-    }
-
-    html.assisted-mode .tag-option {
-      padding: 12px 18px;
-      font-size: 15px;
-      border-radius: 24px;
-    }
-
-    html.assisted-mode .radio-item, html.assisted-mode .checkbox-item {
-      padding: 8px 0;
-    }
-
-    html.assisted-mode .radio-custom, html.assisted-mode .checkbox-custom {
-      width: 28px;
-      height: 28px;
-    }
-
-    html.assisted-mode .radio-label, html.assisted-mode .checkbox-label {
-      font-size: 16px;
-    }
-
-    /* Hide secondary/tooltip text in assisted mode */
-    html.assisted-mode .secondary-text,
-    html.assisted-mode .field-hint,
-    html.assisted-mode .card-subtitle,
-    html.assisted-mode .review-title,
-    html.assisted-mode .pain-chart-title {
-      display: none !important;
-    }
-
-    /* Larger touch targets in assisted mode */
-    html.assisted-mode .branch-card {
-      padding: 56px 40px;
-      border-radius: 20px;
-    }
-
-    html.assisted-mode .branch-card-icon {
-      width: 96px;
-      height: 96px;
-    }
-
-    html.assisted-mode .branch-card-title {
-      font-size: 24px;
-    }
-
-    html.assisted-mode .card-title {
-      font-size: 28px;
-    }
-
-    html.assisted-mode .pain-point-card {
-      padding: 20px;
-      border-radius: 14px;
-    }
-
-    html.assisted-mode .message-item {
-      padding: 20px;
-      border-radius: 14px;
-    }
-
-    /* Page nav buttons in assisted mode */
-    html.assisted-mode .page-nav {
-      padding-top: 32px;
-      margin-top: 40px;
-    }
-
-    html.assisted-mode .page-nav .btn {
-      min-width: 160px;
-    }
-
-    /* Body diagram in assisted mode */
-    html.assisted-mode .body-diagram-container {
-      gap: 48px;
-      margin: 40px 0;
-    }
-
-    html.assisted-mode .body-diagram {
-      width: 240px;
-      height: 540px;
     }
 
     body {
       font-family: var(--font-family);
       font-size: var(--base-font-size);
-      line-height: 1.6;
+      line-height: 1.8;
       color: var(--text-primary);
       background: linear-gradient(135deg, #f5f5f5 0%, #ffffff 50%, #fafafa 100%);
       min-height: 100vh;
     }
 
-    /* ========================================
-       DARK MODE - Near-black background, light text
-       ======================================== */
-    body.dark-mode {
-      --bg-white: #1A1A1A;
-      --bg-light: #1E1E1E;
-      --bg-card: rgba(35, 35, 35, 0.98);
-      --text-primary: #F0F0F0;
-      --text-secondary: #B0B0B0;
-      --text-muted: #808080;
-      --border: rgba(255, 255, 255, 0.12);
-      background: linear-gradient(135deg, #121212 0%, #1a1a1a 50%, #121212 100%);
-    }
 
-    body.dark-mode .top-nav {
-      background: rgba(30, 30, 30, 0.95);
-      border-bottom-color: rgba(255, 255, 255, 0.1);
-    }
 
-    body.dark-mode .nav-item:hover {
-      background: rgba(139, 0, 0, 0.2);
-    }
 
-    body.dark-mode .nav-item.active {
-      background: rgba(139, 0, 0, 0.25);
-    }
 
-    body.dark-mode .nav-btn:hover {
-      background: rgba(139, 0, 0, 0.2);
-    }
 
-    body.dark-mode #resetFormBtn:hover {
-      background: rgba(239, 68, 68, 0.2);
-    }
 
-    body.dark-mode .form-card {
-      background: var(--bg-card);
-      border-color: var(--border);
-    }
 
-    body.dark-mode .input {
-      background: var(--bg-light);
-      border-color: var(--border);
-      color: var(--text-primary);
-    }
 
-    body.dark-mode .input:focus {
-      background: rgba(50, 50, 50, 0.98);
-      border-color: var(--primary);
-    }
 
-    body.dark-mode .radio-custom, body.dark-mode .checkbox-custom {
-      border-color: var(--text-muted);
-    }
 
-    body.dark-mode .tag-option {
-      border-color: var(--border);
-      color: var(--text-secondary);
-    }
 
-    body.dark-mode .tag-option:hover {
-      border-color: var(--primary);
-    }
 
-    body.dark-mode .branch-card {
-      background: var(--bg-card);
-      border-color: var(--border);
-    }
 
-    body.dark-mode .branch-card:hover {
-      border-color: var(--primary);
-    }
 
-    body.dark-mode .client-item {
-      background: var(--bg-light);
-    }
 
-    body.dark-mode .client-item:hover {
-      background: rgba(139, 0, 0, 0.15);
-    }
 
-    body.dark-mode .message-item {
-      background: var(--bg-light);
-    }
 
-    body.dark-mode .pain-chart-container {
-      background: var(--bg-light);
-    }
 
-    body.dark-mode .qr-section {
-      background: var(--bg-light);
-    }
 
-    body.dark-mode .signature-area {
-      border-color: var(--border);
-    }
 
-    body.dark-mode .page-nav {
-      border-top-color: var(--border);
-    }
 
-    body.dark-mode .review-section {
-      border-bottom-color: var(--border);
-    }
 
-    body.dark-mode .review-tag {
-      background: rgba(139, 0, 0, 0.2);
-      color: #ff6b6b;
-    }
 
-    body.dark-mode .pain-point-card {
-      background: var(--bg-light);
-      border-color: var(--border);
-    }
 
-    body.dark-mode .modal {
-      background: var(--bg-card);
-    }
 
-    body.dark-mode .modal-close {
-      background: var(--bg-light);
-    }
 
-    body.dark-mode .ai-panel {
-      background: linear-gradient(135deg, rgba(139, 0, 0, 0.15) 0%, rgba(30, 30, 30, 0.95) 100%);
-      border-color: var(--primary);
-    }
 
-    body.dark-mode .ai-suggestion {
-      background: var(--bg-light);
-    }
 
-    body.dark-mode .login-error {
-      background: rgba(239, 68, 68, 0.15);
-    }
 
-    body.dark-mode .staff-search .input {
-      background: var(--bg-light);
-      border-color: var(--border);
-      color: var(--text-primary);
-    }
 
-    body.dark-mode .inbox-header {
-      border-bottom-color: var(--border);
-    }
 
-    body.dark-mode .qr-code {
-      background: white;
-    }
 
-    body.dark-mode .appointment-card {
-      background: linear-gradient(135deg, #6b0000 0%, #8B0000 100%);
-    }
 
-    body.dark-mode .inbox-tab.active {
-      background: var(--primary);
-      color: white;
-    }
 
-    body.dark-mode .inbox-back-btn {
-      color: var(--text-secondary);
-    }
 
-    body.dark-mode .inbox-header {
-      border-bottom: 1px solid var(--border);
-    }
 
-    body.dark-mode .success-icon {
-      background: var(--success);
-    }
 
-    body.dark-mode .success-title {
-      color: var(--text-primary);
-    }
 
-    body.dark-mode .success-message {
-      color: var(--text-secondary);
-    }
 
-    body.dark-mode .pain-point-severity {
-      background: var(--primary);
-    }
 
-    body.dark-mode #resetModal .modal {
-      background: var(--bg-card);
-    }
 
-    body.dark-mode #resetModal .modal-title {
-      color: #ff6b6b;
-    }
 
-    body.dark-mode .toast {
-      background: #333;
-      color: white;
-    }
 
-    body.dark-mode .toast.success {
-      background: #16a34a;
-    }
 
-    body.dark-mode .toast.error {
-      background: #dc2626;
-    }
 
     /* Navigation */
     .top-nav {
@@ -444,11 +128,14 @@
       display: flex;
       align-items: center;
       gap: 8px;
+      white-space: nowrap;
+      flex-shrink: 0;
     }
 
     .nav-logo svg {
       width: 32px;
       height: 32px;
+      flex-shrink: 0;
     }
 
     .nav-logo-img {
@@ -461,8 +148,11 @@
     }
 
     .nav-logo-fallback {
+      display: flex;
       align-items: center;
       gap: 8px;
+      white-space: nowrap;
+      flex-shrink: 0;
     }
 
     .nav-links {
@@ -507,31 +197,7 @@
       border-radius: 50%;
     }
 
-    .nav-item.assisted-mode {
-      padding: 12px 18px !important;
-      font-size: 14px !important;
-    }
 
-    .inbox-nav-item {
-      background: var(--primary-light) !important;
-      color: var(--primary) !important;
-      font-weight: 600 !important;
-    }
-
-    .inbox-nav-item:hover {
-      background: var(--primary) !important;
-      color: white !important;
-    }
-
-    body.dark-mode .inbox-nav-item {
-      background: rgba(139, 0, 0, 0.2) !important;
-      color: #ff6b6b !important;
-    }
-
-    body.dark-mode .inbox-nav-item:hover {
-      background: var(--primary) !important;
-      color: white !important;
-    }
 
     .nav-controls {
       display: flex;
@@ -653,18 +319,11 @@
       }
     }
 
-    body.dark-mode .nav-links {
-      background: #1a1a1a;
-    }
 
-    body.dark-mode .nav-item {
-      background: #1a1a1a;
-      border-color: rgba(255,255,255,0.1);
-    }
 
     /* Main Content */
     .main-content {
-      max-width: 800px;
+      max-width: 1080px;
       margin: 0 auto;
       padding: 32px 24px;
       min-height: calc(100vh - 64px);
@@ -1018,9 +677,6 @@
       box-shadow: 0 1px 3px rgba(0,0,0,0.06);
     }
 
-    body.dark-mode .body-diagram-card {
-      background: rgba(255,255,255,0.06);
-    }
 
     .body-diagram-view-label {
       text-align: center;
@@ -1051,9 +707,6 @@
       opacity: 0.5;
     }
 
-    body.dark-mode .body-silhouette {
-      fill: rgba(255,255,255,0.04);
-    }
 
     .body-zone {
       fill: url(#bodyZoneGradient);
@@ -1063,10 +716,6 @@
       transition: fill var(--transition-fast), stroke var(--transition-fast);
     }
 
-    body.dark-mode .body-zone {
-      fill: rgba(255,255,255,0.14);
-      stroke: rgba(255,255,255,0.28);
-    }
 
     .body-zone:hover {
       fill: var(--primary-light);
@@ -1074,10 +723,6 @@
     }
 
     .body-zone.active,
-    body.dark-mode .body-zone.active {
-      fill: var(--primary);
-      stroke: var(--primary);
-    }
 
     .body-label {
       font-size: 10px;
@@ -1593,14 +1238,8 @@
       color: var(--success);
     }
 
-    /* Client Inbox */
-    .inbox-header {
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-      margin-bottom: 24px;
-    }
-
+    /* Shared tab-strip style (used by the staff panel's dashboard/clients/
+       calendar/etc tabs) */
     .inbox-tabs {
       display: flex;
       gap: 8px;
@@ -1623,42 +1262,6 @@
       color: white;
     }
 
-    .message-list {
-      display: flex;
-      flex-direction: column;
-      gap: 12px;
-    }
-
-    .message-item {
-      padding: 16px;
-      background: var(--bg-light);
-      border-radius: var(--radius-md);
-      border-left: 4px solid var(--primary);
-    }
-
-    .message-header {
-      display: flex;
-      justify-content: space-between;
-      margin-bottom: 8px;
-    }
-
-    .message-from {
-      font-size: 14px;
-      font-weight: 600;
-      color: var(--text-primary);
-    }
-
-    .message-date {
-      font-size: 12px;
-      color: var(--text-muted);
-    }
-
-    .message-body {
-      font-size: 14px;
-      color: var(--text-secondary);
-      line-height: 1.5;
-    }
-
     .pain-chart-container {
       background: var(--bg-light);
       border-radius: var(--radius-md);
@@ -1675,25 +1278,6 @@
     .pain-chart {
       height: 200px;
       position: relative;
-    }
-
-    .appointment-card {
-      background: linear-gradient(135deg, var(--primary) 0%, var(--primary-hover) 100%);
-      color: white;
-      padding: 20px;
-      border-radius: var(--radius-md);
-      margin-bottom: 24px;
-    }
-
-    .appointment-title {
-      font-size: 14px;
-      opacity: 0.9;
-      margin-bottom: 4px;
-    }
-
-    .appointment-datetime {
-      font-size: 20px;
-      font-weight: 700;
     }
 
     /* QR Code Section */
@@ -1801,137 +1385,6 @@
       margin-top: 24px;
     }
 
-    /* AI Assistant */
-    .ai-panel {
-      background: linear-gradient(135deg, var(--primary-light) 0%, rgba(139, 0, 0, 0.05) 100%);
-      border: 2px solid var(--primary);
-      border-radius: var(--radius-lg);
-      padding: 24px;
-      margin-top: 24px;
-    }
-
-    .ai-header {
-      display: flex;
-      align-items: center;
-      gap: 12px;
-      margin-bottom: 16px;
-    }
-
-    .ai-icon {
-      width: 40px;
-      height: 40px;
-      background: var(--primary);
-      border-radius: 50%;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      color: white;
-    }
-
-    .ai-title {
-      font-size: 16px;
-      font-weight: 700;
-    }
-
-    .ai-subtitle {
-      font-size: 12px;
-      color: var(--text-secondary);
-    }
-
-    .ai-suggestions {
-      display: flex;
-      flex-direction: column;
-      gap: 12px;
-    }
-
-    .ai-suggestion {
-      background: white;
-      padding: 16px;
-      border-radius: var(--radius-md);
-      font-size: 14px;
-      line-height: 1.5;
-    }
-
-    .ai-suggestion strong {
-      color: var(--primary);
-    }
-
-    .ai-lang-section {
-      display: flex;
-      flex-direction: column;
-      gap: 4px;
-    }
-
-    .ai-lang-label {
-      font-weight: 600;
-      font-size: 13px;
-      color: var(--text-secondary);
-      margin-bottom: 4px;
-    }
-
-    .ai-lang-divider {
-      height: 1px;
-      background: #e0e0e0;
-      margin: 8px 0;
-    }
-
-    .ai-section-title {
-      font-weight: 700;
-      color: var(--primary);
-      margin: 10px 0 4px;
-    }
-    .ai-section-title:first-child {
-      margin-top: 0;
-    }
-
-    .ai-suggestion p {
-      margin: 0 0 8px;
-    }
-    .ai-suggestion ul {
-      margin: 0 0 8px 18px;
-    }
-
-    .ai-loading {
-      display: flex;
-      align-items: center;
-      gap: 10px;
-      padding: 16px;
-      color: var(--text-secondary);
-      font-size: 14px;
-    }
-    .ai-spinner {
-      width: 18px;
-      height: 18px;
-      border: 2px solid var(--primary-light);
-      border-top-color: var(--primary);
-      border-radius: 50%;
-      animation: ai-spin 0.8s linear infinite;
-      flex-shrink: 0;
-    }
-    @keyframes ai-spin {
-      to { transform: rotate(360deg); }
-    }
-
-    .ai-error {
-      padding: 16px;
-      border-radius: var(--radius-md);
-      background: rgba(239, 68, 68, 0.1);
-      color: var(--error);
-      font-size: 14px;
-    }
-
-    .ai-meta-row {
-      display: flex;
-      align-items: center;
-      justify-content: space-between;
-      gap: 12px;
-      margin-top: 4px;
-    }
-    .ai-cached-badge {
-      font-size: 12px;
-      color: var(--text-muted);
-    }
-
     .session-notes-list {
       display: flex;
       flex-direction: column;
@@ -1942,9 +1395,6 @@
       background: var(--bg-light);
       border-radius: var(--radius-sm);
       padding: 10px 14px;
-    }
-    body.dark-mode .session-note-item {
-      background: rgba(255,255,255,0.06);
     }
     .session-note-meta {
       font-size: 12px;
@@ -1973,9 +1423,6 @@
       padding: 16px;
       text-align: center;
     }
-    body.dark-mode .stat-card {
-      background: rgba(255,255,255,0.06);
-    }
     .stat-card-value {
       font-size: 28px;
       font-weight: 800;
@@ -1998,9 +1445,6 @@
       background: var(--bg-light);
       border-radius: var(--radius-md);
       padding: 16px;
-    }
-    body.dark-mode .stats-chart-card {
-      background: rgba(255,255,255,0.06);
     }
     .stats-chart-title {
       font-size: 13px;
@@ -2026,91 +1470,6 @@
     .heatmap-zone { flex: 1; color: var(--text-primary); }
     .heatmap-count { font-weight: 600; color: var(--text-secondary); white-space: nowrap; }
 
-    /* Appointment Calendar */
-    .calendar-header {
-      display: flex;
-      align-items: center;
-      justify-content: space-between;
-      margin-bottom: 16px;
-    }
-    .calendar-month-label {
-      font-size: 16px;
-      font-weight: 700;
-    }
-    .calendar-grid {
-      display: grid;
-      grid-template-columns: repeat(7, 1fr);
-      gap: 4px;
-      margin-bottom: 16px;
-    }
-    .calendar-day-label {
-      text-align: center;
-      font-size: 11px;
-      font-weight: 700;
-      color: var(--text-muted);
-      padding: 4px 0;
-    }
-    .calendar-day-cell {
-      aspect-ratio: 1;
-      border-radius: var(--radius-sm);
-      background: var(--bg-light);
-      padding: 6px 4px;
-      cursor: pointer;
-      position: relative;
-      transition: var(--transition-fast);
-    }
-    body.dark-mode .calendar-day-cell {
-      background: rgba(255,255,255,0.06);
-    }
-    .calendar-day-cell.empty {
-      background: transparent;
-      cursor: default;
-    }
-    .calendar-day-cell:not(.empty):hover {
-      background: var(--primary-light);
-    }
-    .calendar-day-cell.is-today {
-      border: 2px solid var(--primary);
-    }
-    .calendar-day-cell.has-appt {
-      background: rgba(139, 0, 0, 0.12);
-    }
-    .calendar-day-number {
-      font-size: 12px;
-      font-weight: 600;
-    }
-    .calendar-day-count {
-      position: absolute;
-      bottom: 4px;
-      right: 4px;
-      background: var(--primary);
-      color: #fff;
-      font-size: 10px;
-      font-weight: 700;
-      border-radius: 999px;
-      min-width: 16px;
-      height: 16px;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      padding: 0 3px;
-    }
-    .calendar-appt-item {
-      background: var(--bg-light);
-      border-radius: var(--radius-sm);
-      padding: 12px 14px;
-      margin-bottom: 10px;
-      font-size: 14px;
-    }
-    body.dark-mode .calendar-appt-item {
-      background: rgba(255,255,255,0.06);
-    }
-    .calendar-appt-actions {
-      display: flex;
-      gap: 8px;
-      margin-top: 8px;
-    }
-
     /* Staff Accounts */
     .staff-account-item {
       display: flex;
@@ -2121,9 +1480,6 @@
       padding: 12px 14px;
       margin-bottom: 8px;
       font-size: 14px;
-    }
-    body.dark-mode .staff-account-item {
-      background: rgba(255,255,255,0.06);
     }
 
     /* Toast */
@@ -2198,13 +1554,6 @@
         #navLinks .nav-item:hover {
           background: rgba(139,0,0,0.08) !important;
         }
-        body.dark-mode #navLinks {
-          background: #1a1a1a !important;
-        }
-        body.dark-mode #navLinks .nav-item {
-          color: #ffffff !important;
-          border-bottom-color: rgba(255,255,255,0.1) !important;
-        }
       }
 
   
@@ -2225,14 +1574,6 @@
           color: #8B0000 !important;
           background: #fff5f5 !important;
           font-weight: 600 !important;
-        }
-        body.dark-mode #navLinks {
-          background: #1a1a1a !important;
-        }
-        body.dark-mode #navLinks .nav-item {
-          color: #ffffff !important;
-          background: #1a1a1a !important;
-          border-bottom-color: rgba(255,255,255,0.1) !important;
         }
       }
       /* END MOBILE NAV FIX */
@@ -2292,10 +1633,6 @@
         padding: 18px 20px;
         margin-bottom: 20px;
       }
-      body.dark-mode .returning-client-card {
-        background: linear-gradient(135deg, rgba(34,197,94,0.2), rgba(34,197,94,0.07));
-        border-color: rgba(34,197,94,0.4);
-      }
       .returning-client-card .rc-header {
         font-size: 16px;
         font-weight: 700;
@@ -2338,10 +1675,140 @@
         border-color: var(--success);
         color: #fff;
       }
-      body.dark-mode .improvement-btn {
-        background: var(--bg-card-dark);
-        color: var(--text-inverse);
-      }
+    /* Larger kiosk-friendly sizing (promoted from the old assisted-mode
+       styles, now applied unconditionally) - placed last so it wins the
+       cascade over the base component rules above. */
+    .nav-inner {
+      height: 72px;
+    }
+
+    .nav-logo {
+      font-size: 22px;
+    }
+
+    .nav-logo svg {
+      width: 36px;
+      height: 36px;
+    }
+
+    .nav-item {
+      padding: 14px 20px !important;
+      font-size: 15px !important;
+      border-radius: 10px;
+    }
+
+    .nav-btn {
+      width: 48px;
+      height: 48px;
+    }
+
+    .nav-btn svg {
+      width: 24px;
+      height: 24px;
+    }
+
+    /* Buttons in assisted mode - 40-50% larger */
+    .btn {
+      padding: 16px 32px !important;
+      font-size: 17px !important;
+      border-radius: 14px;
+      min-height: 56px;
+    }
+
+    .btn-sm {
+      padding: 12px 24px !important;
+      font-size: 15px !important;
+      min-height: 48px;
+    }
+
+    /* Cards in assisted mode */
+    .form-card {
+      padding: 36px !important;
+      border-radius: 20px;
+    }
+
+    /* Form fields in assisted mode */
+    .field-group {
+      margin-bottom: 28px !important;
+    }
+
+    .field-label {
+      font-size: 15px;
+      margin-bottom: 10px;
+    }
+
+    .input {
+      padding: 16px 18px;
+      font-size: 17px;
+      border-radius: 12px;
+      min-height: 56px;
+    }
+
+    .tag-option {
+      padding: 12px 18px;
+      font-size: 15px;
+      border-radius: 24px;
+    }
+
+    .radio-item, .checkbox-item {
+      padding: 8px 0;
+    }
+
+    .radio-custom, .checkbox-custom {
+      width: 28px;
+      height: 28px;
+    }
+
+    .radio-label, .checkbox-label {
+      font-size: 16px;
+    }
+
+
+    /* Larger touch targets in assisted mode */
+    .branch-card {
+      padding: 56px 40px;
+      border-radius: 20px;
+    }
+
+    .branch-card-icon {
+      width: 96px;
+      height: 96px;
+    }
+
+    .branch-card-title {
+      font-size: 24px;
+    }
+
+    .card-title {
+      font-size: 28px;
+    }
+
+    .pain-point-card {
+      padding: 20px;
+      border-radius: 14px;
+    }
+
+    /* Page nav buttons in assisted mode */
+    .page-nav {
+      padding-top: 32px;
+      margin-top: 40px;
+    }
+
+    .page-nav .btn {
+      min-width: 160px;
+    }
+
+    /* Body diagram in assisted mode */
+    .body-diagram-container {
+      gap: 48px;
+      margin: 40px 0;
+    }
+
+    .body-diagram {
+      width: 240px;
+      height: 540px;
+    }
+
 </style>
 </head>
 <body>
@@ -2366,17 +1833,6 @@
           <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
             <circle cx="12" cy="12" r="10"/>
             <path d="M2 12h20M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10z"/>
-          </svg>
-        </button>
-        <button class="nav-btn" id="darkModeToggle" title="Toggle Dark Mode">
-          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-            <path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"/>
-          </svg>
-        </button>
-        <button class="nav-btn" id="assistedToggle" title="Assisted Mode">
-          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-            <circle cx="12" cy="12" r="3"/>
-            <path d="M12 1v4M12 19v4M4.22 4.22l2.83 2.83M16.95 16.95l2.83 2.83M1 12h4M19 12h4M4.22 19.78l2.83-2.83M16.95 7.05l2.83-2.83"/>
           </svg>
         </button>
         <button class="nav-btn" id="staffLoginBtn" title="Staff Login" style="display: none;">
@@ -2784,13 +2240,13 @@
             <span data-i18n="fields.workType">Work Type</span>
             <span class="required">*</span>
           </label>
-          <select class="input select" id="workType" data-field="basicInfo.workType" data-required="true">
-            <option value="" data-i18n="fields.selectOption">Please select...</option>
-            <option value="sedentary" data-i18n="fields.sedentary">Sedentary office</option>
-            <option value="standing" data-i18n="fields.standing">Standing long periods</option>
-            <option value="physical" data-i18n="fields.physical">High-intensity physical labor</option>
-            <option value="other" data-i18n="fields.other">Other</option>
-          </select>
+          <div class="tag-select" id="workType" data-field="basicInfo.workType" data-required="true" data-select="single">
+            <span class="tag-option" data-value="sedentary" data-i18n="fields.sedentary">Sedentary office</span>
+            <span class="tag-option" data-value="standing" data-i18n="fields.standing">Standing long periods</span>
+            <span class="tag-option" data-value="physical" data-i18n="fields.physical">High-intensity physical labor</span>
+            <span class="tag-option" data-value="other" data-i18n="fields.other">Other</span>
+          </div>
+          <input type="text" class="input" id="workTypeOtherInput" data-field="basicInfo.workTypeOther" data-i18n-placeholder="fields.otherSpecify" placeholder="Please specify 其他(请说明)" style="margin-top:12px;display:none;">
         </div>
 
         <div class="field-group">
@@ -2798,14 +2254,13 @@
             <span data-i18n="fields.exerciseFreq">Exercise Frequency</span>
             <span class="required">*</span>
           </label>
-          <select class="input select" id="exerciseFreq" data-field="basicInfo.exerciseFreq" data-required="true">
-            <option value="" data-i18n="fields.selectOption">Please select...</option>
-            <option value="never" data-i18n="fields.never">Almost never</option>
-            <option value="monthly" data-i18n="fields.monthly">1x per month</option>
-            <option value="weekly" data-i18n="fields.weekly">1x per week</option>
-            <option value="2-3weekly" data-i18n="fields.2-3weekly">2-3x per week</option>
-            <option value="5+" data-i18n="fields.5plus">5+ times per week</option>
-          </select>
+          <div class="tag-select" id="exerciseFreq" data-field="basicInfo.exerciseFreq" data-required="true" data-select="single">
+            <span class="tag-option" data-value="never" data-i18n="fields.never">Almost never</span>
+            <span class="tag-option" data-value="monthly" data-i18n="fields.monthly">1x per month</span>
+            <span class="tag-option" data-value="weekly" data-i18n="fields.weekly">1x per week</span>
+            <span class="tag-option" data-value="2-3weekly" data-i18n="fields.2-3weekly">2-3x per week</span>
+            <span class="tag-option" data-value="5+" data-i18n="fields.5plus">5+ times per week</span>
+          </div>
         </div>
 
         <div class="field-group">
@@ -3282,34 +2737,7 @@
           </div>
           <h2 class="success-title" data-i18n="pages.success.title">Submission Complete!</h2>
           <p class="success-message" data-i18n="pages.success.message">Thank you for completing the intake form. Our staff will review your information and contact you shortly.</p>
-          <button class="btn btn-primary" id="viewInboxBtn" data-i18n="buttons.viewInbox">View My Inbox</button>
         </div>
-      </div>
-    </div>
-
-    <!-- Client Inbox -->
-    <div class="page" id="page-inbox">
-      <div class="form-card">
-        <div class="inbox-header">
-          <h1 class="card-title" data-i18n="pages.inbox.title">My Messages</h1>
-          <button class="btn btn-ghost btn-sm inbox-back-btn" id="inboxBackBtn" data-i18n="buttons.back">Back to Form</button>
-        </div>
-
-        <div class="appointment-card" id="nextAppointment" style="display: none;">
-          <div class="appointment-title" data-i18n="fields.nextAppointment">Next Appointment</div>
-          <div class="appointment-datetime" id="appointmentDateTime"></div>
-        </div>
-
-        <div class="pain-chart-container">
-          <h3 class="pain-chart-title" data-i18n="fields.painTrend">Pain Progress</h3>
-          <div class="pain-chart" id="painChart"></div>
-        </div>
-
-        <div class="inbox-tabs">
-          <button class="inbox-tab active" data-tab="messages" data-i18n="fields.messages">Messages</button>
-        </div>
-
-        <div class="message-list" id="messageList"></div>
       </div>
     </div>
 
@@ -3354,7 +2782,6 @@
         <div class="inbox-tabs" id="staffPanelTabs" style="margin-bottom: 20px; flex-wrap: wrap;">
           <button class="inbox-tab active" data-staff-tab="dashboard">Dashboard 数据看板</button>
           <button class="inbox-tab" data-staff-tab="clients">Clients 客户列表</button>
-          <button class="inbox-tab" data-staff-tab="calendar">Calendar 预约日历</button>
           <button class="inbox-tab" data-staff-tab="heatmap">Pain Heatmap 疼痛热力图</button>
           <button class="inbox-tab" data-staff-tab="staff" id="staffAccountsTabBtn" style="display:none;">Staff Accounts 员工账户</button>
         </div>
@@ -3422,64 +2849,8 @@
             <div class="qr-code" id="qrCode"></div>
             <button class="btn btn-secondary btn-sm" id="printQR" data-i18n="buttons.printQR">Print QR Code</button>
           </div>
-
-          <!-- AI Assistant -->
-          <div class="ai-panel" id="aiPanel" style="display: none;">
-            <div class="ai-header">
-              <div class="ai-icon">
-                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-                  <path d="M12 2a10 10 0 0 1 10 10c0 5.52-4.48 10-10 10S2 17.52 2 12 6.48 2 12 2z"/>
-                  <path d="M12 8v4M12 16h.01"/>
-                </svg>
-              </div>
-              <div>
-                <div class="ai-title" data-i18n="pages.ai.title">AI Treatment Assistant</div>
-                <div class="ai-subtitle" data-i18n="pages.ai.subtitle">Staff only - Helps draft assessments and suggestions</div>
-              </div>
-            </div>
-            <div class="ai-suggestions" id="aiSuggestions">
-              <div class="ai-suggestion" data-i18n="pages.ai.ready">Select a client to see AI-powered assessment suggestions.</div>
-            </div>
-          </div>
         </div>
 
-        <!-- Appointment Calendar -->
-        <div id="staffCalendarTab" style="display: none;">
-          <div class="calendar-header">
-            <button type="button" class="btn btn-ghost btn-sm" id="calendarPrevMonth">&larr;</button>
-            <div class="calendar-month-label" id="calendarMonthLabel"></div>
-            <button type="button" class="btn btn-ghost btn-sm" id="calendarNextMonth">&rarr;</button>
-          </div>
-          <div class="calendar-grid" id="calendarGrid"></div>
-
-          <div class="assessment-section" style="margin-top: 24px;">
-            <h3 class="assessment-title">Schedule Appointment 安排预约</h3>
-            <div class="field-group">
-              <label class="field-label">Client 客户</label>
-              <select class="input" id="apptClientSelect"></select>
-            </div>
-            <div class="input-row">
-              <div class="field-group">
-                <label class="field-label">Date 日期</label>
-                <input type="date" class="input" id="apptDate">
-              </div>
-              <div class="field-group">
-                <label class="field-label">Time 时间</label>
-                <input type="time" class="input" id="apptTime">
-              </div>
-            </div>
-            <div class="field-group">
-              <label class="field-label">Note (optional) 备注(可选)</label>
-              <input type="text" class="input" id="apptNote" placeholder="e.g. Follow-up on lower back">
-            </div>
-            <button type="button" class="btn btn-primary btn-sm" id="apptScheduleBtn">Schedule 安排预约</button>
-          </div>
-
-          <div class="assessment-section" id="calendarDaySection" style="display: none;">
-            <h3 class="assessment-title" id="calendarDayTitle"></h3>
-            <div id="calendarDayList"></div>
-          </div>
-        </div>
 
         <!-- Pain Heatmap -->
         <div id="staffHeatmapTab" style="display: none;">
@@ -3653,6 +3024,32 @@
     </div>
   </div>
 
+  <!-- Delete Client Confirmation Modal (Admin Only) -->
+  <div class="modal-overlay" id="deleteClientModal">
+    <div class="modal" style="max-width: 420px; text-align: center;">
+      <div class="modal-header">
+        <h3 class="modal-title" style="color: var(--error);">⚠️ Delete Client / 删除客户</h3>
+        <button class="modal-close" id="deleteClientModalClose">
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+            <path d="M18 6L6 18M6 6l12 12"/>
+          </svg>
+        </button>
+      </div>
+      <div style="padding: 8px 0 24px; text-align: left;">
+        <p style="margin-bottom: 16px; line-height: 1.6; color: var(--text-primary);">
+          <strong>English:</strong> Are you sure you want to permanently delete <strong id="deleteClientName"></strong>? This removes all of their intake data, pain history, and session notes. This cannot be undone.
+        </p>
+        <p style="margin-bottom: 16px; line-height: 1.6; color: var(--text-primary);">
+          <strong>中文:</strong> 您确定要永久删除该客户吗?这将删除其所有登记信息、疼痛记录和训练记录。此操作无法撤销。
+        </p>
+        <div style="display: flex; gap: 12px; margin-top: 24px;">
+          <button class="btn" id="deleteClientConfirmBtn" style="flex: 1; background: var(--error); color: #fff;">Delete 删除</button>
+          <button class="btn btn-ghost" id="deleteClientCancelBtn" style="flex: 1;">Cancel 取消</button>
+        </div>
+      </div>
+    </div>
+  </div>
+
   <!-- Confetti canvas for success screen -->
   <canvas id="confettiCanvas" style="position:fixed;inset:0;width:100%;height:100%;pointer-events:none;z-index:9999;display:none;"></canvas>
 
@@ -3680,8 +3077,7 @@
         {id:'pain-assessment', label:'Pain Map 疼痛评估'},
         {id:'treatment-prefs', label:'Treatment Prefs 治疗偏好'},
         {id:'postural', label:'Body Observations 身体观察'},
-        {id:'review', label:'Review 确认提交'},
-        {id:'inbox', label:'Inbox 收件箱'}
+        {id:'review', label:'Review 确认提交'}
       ];
       function closeMenu() {
         menu.style.display = 'none';
@@ -3769,9 +3165,6 @@
             title: 'Submission Complete!',
             message: 'Thank you for completing the intake form. Our staff will review your information and contact you shortly.'
           },
-          inbox: {
-            title: 'My Messages'
-          },
           staffLogin: {
             title: 'Staff Login',
             subtitle: 'Enter your password to access the staff panel',
@@ -3779,11 +3172,6 @@
           },
           staffPanel: {
             title: 'Staff Panel'
-          },
-          ai: {
-            title: 'AI Treatment Assistant',
-            subtitle: 'Staff only - Helps draft assessments and suggestions',
-            ready: 'Select a client to see AI-powered assessment suggestions.'
           }
         },
         fields: {
@@ -3899,9 +3287,7 @@
           password: 'Password',
           passwordPlaceholder: 'Enter password',
           searchPlaceholder: 'Search by name or phone...',
-          messages: 'Messages',
           painTrend: 'Pain Progress',
-          nextAppointment: 'Next Appointment',
           checkinQR: 'Front Desk Check-in QR Code',
           qrHint: 'Print this QR code and place it at the front desk for clients to scan',
           edit: 'Edit',
@@ -3921,21 +3307,16 @@
           login: 'Login',
           logout: 'Logout',
           search: 'Search',
-          viewInbox: 'View My Inbox',
           exportPdf: 'Export PDF',
           exportExcel: 'Export Excel',
           printQR: 'Print QR Code',
-          sendMessage: 'Send Message',
-          scheduleAppointment: 'Schedule Appointment',
           delete: 'Delete',
           showMissing: 'Show me what\'s missing →'
         },
         messages: {
           saved: 'Progress saved',
           submitError: 'Please fill in all required fields',
-          loginSuccess: 'Login successful',
-          messageSent: 'Message sent to client',
-          appointmentScheduled: 'Appointment scheduled'
+          loginSuccess: 'Login successful'
         },
         zones: {
           head: 'Head',
@@ -4014,9 +3395,6 @@
             title: '提交完成!',
             message: '感谢您填写信息表。我们的工作人员将审核您的信息并尽快与您联系。'
           },
-          inbox: {
-            title: '我的消息'
-          },
           staffLogin: {
             title: '员工登录',
             subtitle: '输入密码以访问员工面板',
@@ -4024,11 +3402,6 @@
           },
           staffPanel: {
             title: '员工面板'
-          },
-          ai: {
-            title: 'AI治疗助手',
-            subtitle: '仅限员工使用 - 帮助起草评估和建议',
-            ready: '选择客户以查看AI驱动的评估建议。'
           }
         },
         fields: {
@@ -4144,9 +3517,7 @@
           password: '密码',
           passwordPlaceholder: '输入密码',
           searchPlaceholder: '按姓名或电话搜索...',
-          messages: '消息',
           painTrend: '疼痛趋势',
-          nextAppointment: '下次预约',
           checkinQR: '前台签到二维码',
           qrHint: '打印此二维码并放置在前台供客户扫描',
           edit: '编辑',
@@ -4166,21 +3537,16 @@
           login: '登录',
           logout: '退出',
           search: '搜索',
-          viewInbox: '查看我的消息',
           exportPdf: '导出PDF',
           exportExcel: '导出Excel',
           printQR: '打印二维码',
-          sendMessage: '发送消息',
-          scheduleAppointment: '预约',
           delete: '删除',
           showMissing: '查看未完成项目 →'
         },
         messages: {
           saved: '进度已保存',
           submitError: '请填写所有必填项',
-          loginSuccess: '登录成功',
-          messageSent: '消息已发送至客户',
-          appointmentScheduled: '预约已安排'
+          loginSuccess: '登录成功'
         },
         zones: {
           head: '头部',
@@ -4267,8 +3633,6 @@
     const AppState = {
       branch: localStorage.getItem('mf_branch') || null,
       language: localStorage.getItem('mf_language') || (navigator.language.startsWith('zh') ? 'zh' : 'en'),
-      assistedMode: localStorage.getItem('mf_assisted') === 'true',
-      darkMode: localStorage.getItem('mf_darkmode') === 'true',
       currentPage: 'branch',
       isStaffLoggedIn: false,
       staffBranch: null,
@@ -4283,17 +3647,15 @@
         treatmentPreferences: {},
         postural: {}
       },
-      clientInbox: [],
       staffClients: [],
       selectedClientId: null,
       currentPainZone: null,
       editingPainIndex: -1,
-      isClientLoggedIn: false,
-      clientPhone: null,
       currentClientId: null, // Server-side client ID for updates
       welcomeShownForPhone: null,
       entryMode: null, // 'new' | 'returning'
-      pinAttempts: {} // phone -> { count, lockUntil }
+      pinAttempts: {}, // phone -> { count, lockUntil }
+      pendingPin: null // PIN chosen at start of the new-client flow, before a client record exists to attach it to
     };
 
     // Contraindications that require staff to confirm with the client in person
@@ -4344,6 +3706,20 @@
             AppState.currentClientId = result.data._id;
           }
         }
+
+        // A PIN chosen before the client record existed (right after
+        // picking "New Client") gets attached here, the first moment a
+        // real client id and phone are both available.
+        if (AppState.pendingPin && AppState.currentClientId && AppState.formData.clientBasics?.phone) {
+          const pinResult = await apiCall('/api/clients/pin', 'POST', {
+            id: AppState.currentClientId,
+            phone: AppState.formData.clientBasics.phone,
+            pin: AppState.pendingPin
+          });
+          if (!pinResult.error) {
+            AppState.pendingPin = null;
+          }
+        }
       }
     }
 
@@ -4382,25 +3758,6 @@
       if (!result.error && result.data) {
         AppState.staffClients = result.data;
       }
-    }
-
-    async function loadClientMessages(phone) {
-      const result = await apiCall(`/api/messages/${phone}`);
-      if (!result.error && result.data) {
-        AppState.clientInbox = result.data;
-        return result.data;
-      }
-      return [];
-    }
-
-    async function sendClientMessage(clientPhone, message, from = 'Staff') {
-      const result = await apiCall('/api/messages', 'POST', {
-        clientPhone,
-        from,
-        message,
-        type: 'feedback'
-      });
-      return result;
     }
 
     async function syncToDingTalk(clientData) {
@@ -4447,7 +3804,7 @@
       // Re-render nav items to update language
       updateNavItems();
 
-      // Re-render dynamic content if on review or inbox page
+      // Re-render dynamic content if on the review page
       if (AppState.currentPage === 'review' || document.getElementById('reviewClientBasics')) {
         updateReviewPage();
       }
@@ -4456,22 +3813,6 @@
       }
     }
 
-    function toggleAssistedMode() {
-      // Always read current state from localStorage to ensure toggle works on first click
-      const newAssisted = !AppState.assistedMode;
-      AppState.assistedMode = newAssisted;
-      localStorage.setItem('mf_assisted', newAssisted.toString());
-      document.documentElement.classList.toggle('assisted-mode', newAssisted);
-      updateNavItems();
-    }
-
-    function toggleDarkMode() {
-      // Always read current state from localStorage to ensure toggle works on first click
-      const newDark = !AppState.darkMode;
-      AppState.darkMode = newDark;
-      localStorage.setItem('mf_darkmode', newDark.toString());
-      document.body.classList.toggle('dark-mode', newDark);
-    }
 
     // Single source of truth for which fields are required and whether
     // they're filled in. Reads directly off the DOM (any element carrying
@@ -4541,9 +3882,6 @@
         return `<div class="nav-item ${AppState.currentPage === page.id ? 'active' : ''} ${hasError ? 'has-error' : ''}" data-page="${page.id}">${t(page.labelKey)}</div>`;
       }).join('');
 
-      // Add Inbox nav item for client access
-      nav.innerHTML += `<div class="nav-item inbox-nav-item" data-page="inbox">${t('fields.messages')}</div>`;
-
       // Add click handlers - using event delegation for reliability
       nav.onclick = function(e) {
         const item = e.target.closest('.nav-item');
@@ -4554,30 +3892,6 @@
 
         // Close mobile menu
         nav.classList.remove('open');
-
-        // If clicking Inbox, check if client is logged in
-        if (pageId === 'inbox') {
-          const phone = AppState.formData.clientBasics?.phone || AppState.clientPhone;
-          if (phone) {
-            const savedInbox = localStorage.getItem('mf_inbox_' + phone);
-            AppState.clientInbox = savedInbox ? JSON.parse(savedInbox) : [];
-            AppState.clientPhone = phone;
-            AppState.isClientLoggedIn = true;
-            renderInbox();
-          } else {
-            const promptMsg = AppState.language === 'zh' ? '请输入您的电话号码查看消息:' : 'Enter your phone number to view messages:';
-            const inputPhone = prompt(promptMsg);
-            if (inputPhone) {
-              const savedInbox = localStorage.getItem('mf_inbox_' + inputPhone);
-              AppState.clientInbox = savedInbox ? JSON.parse(savedInbox) : [];
-              AppState.clientPhone = inputPhone;
-              AppState.isClientLoggedIn = true;
-              renderInbox();
-            } else {
-              return;
-            }
-          }
-        }
 
         navigateTo(pageId);
       };
@@ -4669,67 +3983,85 @@
     }
 
     function updateReviewPage() {
-      const reviewClientBasics = document.getElementById('reviewClientBasics');
-      const reviewBasicInfo = document.getElementById('reviewBasicInfo');
-      const reviewContraindications = document.getElementById('reviewContraindications');
-      const reviewPainAssessment = document.getElementById('reviewPainAssessment');
-      const reviewTreatmentPrefs = document.getElementById('reviewTreatmentPrefs');
-      const reviewPostural = document.getElementById('reviewPostural');
+      // Each section is rendered independently and wrapped so one bad
+      // section (an unexpected data shape, a missing i18n key) can't throw
+      // partway through and leave every other section blank too - a single
+      // point of failure previously meant "review page shows nothing" with
+      // no trace of why. renderSection() also runs standalone so a section
+      // failure can never abort validateForm() on the caller's next line.
+      function renderSection(id, fn) {
+        const el = document.getElementById(id);
+        if (!el) return;
+        try {
+          el.innerHTML = fn();
+        } catch (err) {
+          console.error('updateReviewPage: failed to render #' + id, err);
+          el.innerHTML = '<span class="review-value">-</span>';
+        }
+      }
 
-      const cb = AppState.formData.clientBasics || {};
-      reviewClientBasics.innerHTML = `
-        <div class="review-item"><span class="review-label">${t('fields.name')}:</span><span class="review-value">${cb.name || '-'}</span></div>
-        <div class="review-item"><span class="review-label">${t('fields.gender')}:</span><span class="review-value">${cb.gender ? t('fields.' + cb.gender) : '-'}</span></div>
-        <div class="review-item"><span class="review-label">${t('fields.age')}:</span><span class="review-value">${cb.age || '-'}</span></div>
-        <div class="review-item"><span class="review-label">${t('fields.phone')}:</span><span class="review-value">${cb.phone ? `${cb.countryCode || '+86'} ${cb.phone}` : '-'}</span></div>
-        <div class="review-item"><span class="review-label">${t('fields.clientType')}:</span><span class="review-value">${cb.clientType ? t('fields.' + cb.clientType) : '-'}</span></div>
-      `;
+      renderSection('reviewClientBasics', () => {
+        const cb = AppState.formData.clientBasics || {};
+        return `
+          <div class="review-item"><span class="review-label">${t('fields.name')}:</span><span class="review-value">${cb.name || '-'}</span></div>
+          <div class="review-item"><span class="review-label">${t('fields.gender')}:</span><span class="review-value">${cb.gender ? t('fields.' + cb.gender) : '-'}</span></div>
+          <div class="review-item"><span class="review-label">${t('fields.age')}:</span><span class="review-value">${cb.age || '-'}</span></div>
+          <div class="review-item"><span class="review-label">${t('fields.phone')}:</span><span class="review-value">${cb.phone ? `${cb.countryCode || '+86'} ${cb.phone}` : '-'}</span></div>
+          <div class="review-item"><span class="review-label">${t('fields.clientType')}:</span><span class="review-value">${cb.clientType ? t('fields.' + cb.clientType) : '-'}</span></div>
+        `;
+      });
 
-      const bi = AppState.formData.basicInfo || {};
-      reviewBasicInfo.innerHTML = `
-        <div class="review-item"><span class="review-label">${t('fields.workType')}:</span><span class="review-value">${bi.workType ? t('fields.' + bi.workType) : '-'}</span></div>
-        <div class="review-item"><span class="review-label">${t('fields.exerciseFreq')}:</span><span class="review-value">${bi.exerciseFreq ? t('fields.' + bi.exerciseFreq) : '-'}</span></div>
-        <div class="review-item"><span class="review-label">${t('fields.exerciseTypes')}:</span></div>
-        <div class="review-tags">${(bi.exerciseTypes || []).map(e => `<span class="review-tag">${t('fields.' + e)}</span>`).join('')}</div>
-        ${bi.exerciseTypesOther ? `<div class="review-item"><span class="review-label">${t('fields.otherSpecify')}:</span><span class="review-value">${bi.exerciseTypesOther}</span></div>` : ''}
-        <div class="review-item"><span class="review-label">${t('fields.injuryHistory')}:</span></div>
-        <div class="review-tags">${(bi.injuryHistory || []).map(e => `<span class="review-tag">${t('fields.' + e)}</span>`).join('')}</div>
-        ${bi.injuryHistoryOther ? `<div class="review-item"><span class="review-label">${t('fields.otherSpecify')}:</span><span class="review-value">${bi.injuryHistoryOther}</span></div>` : ''}
-        <div class="review-item"><span class="review-label">${t('fields.previousTreatments')}:</span></div>
-        <div class="review-tags">${(bi.previousTreatments || []).map(e => `<span class="review-tag">${t('fields.' + e)}</span>`).join('')}</div>
-        ${bi.previousTreatmentsOther ? `<div class="review-item"><span class="review-label">${t('fields.otherSpecify')}:</span><span class="review-value">${bi.previousTreatmentsOther}</span></div>` : ''}
-        <div class="review-item"><span class="review-label">${t('fields.priorSurgery')}:</span><span class="review-value">${bi.priorSurgery ? t('fields.' + bi.priorSurgery) : '-'}</span></div>
-        ${bi.surgeryDetails ? `<div class="review-item"><span class="review-label">${t('fields.surgeryDetails')}:</span><span class="review-value">${bi.surgeryDetails}</span></div>` : ''}
-      `;
+      renderSection('reviewBasicInfo', () => {
+        const bi = AppState.formData.basicInfo || {};
+        return `
+          <div class="review-item"><span class="review-label">${t('fields.workType')}:</span><span class="review-value">${bi.workType ? t('fields.' + bi.workType) : '-'}</span></div>
+          ${bi.workTypeOther ? `<div class="review-item"><span class="review-label">${t('fields.otherSpecify')}:</span><span class="review-value">${bi.workTypeOther}</span></div>` : ''}
+          <div class="review-item"><span class="review-label">${t('fields.exerciseFreq')}:</span><span class="review-value">${bi.exerciseFreq ? t('fields.' + bi.exerciseFreq) : '-'}</span></div>
+          <div class="review-item"><span class="review-label">${t('fields.exerciseTypes')}:</span></div>
+          <div class="review-tags">${(bi.exerciseTypes || []).map(e => `<span class="review-tag">${t('fields.' + e)}</span>`).join('')}</div>
+          ${bi.exerciseTypesOther ? `<div class="review-item"><span class="review-label">${t('fields.otherSpecify')}:</span><span class="review-value">${bi.exerciseTypesOther}</span></div>` : ''}
+          <div class="review-item"><span class="review-label">${t('fields.injuryHistory')}:</span></div>
+          <div class="review-tags">${(bi.injuryHistory || []).map(e => `<span class="review-tag">${t('fields.' + e)}</span>`).join('')}</div>
+          ${bi.injuryHistoryOther ? `<div class="review-item"><span class="review-label">${t('fields.otherSpecify')}:</span><span class="review-value">${bi.injuryHistoryOther}</span></div>` : ''}
+          <div class="review-item"><span class="review-label">${t('fields.previousTreatments')}:</span></div>
+          <div class="review-tags">${(bi.previousTreatments || []).map(e => `<span class="review-tag">${t('fields.' + e)}</span>`).join('')}</div>
+          ${bi.previousTreatmentsOther ? `<div class="review-item"><span class="review-label">${t('fields.otherSpecify')}:</span><span class="review-value">${bi.previousTreatmentsOther}</span></div>` : ''}
+          <div class="review-item"><span class="review-label">${t('fields.priorSurgery')}:</span><span class="review-value">${bi.priorSurgery ? t('fields.' + bi.priorSurgery) : '-'}</span></div>
+          ${bi.surgeryDetails ? `<div class="review-item"><span class="review-label">${t('fields.surgeryDetails')}:</span><span class="review-value">${bi.surgeryDetails}</span></div>` : ''}
+        `;
+      });
 
-      const ci = AppState.formData.contraindications || {};
-      reviewContraindications.innerHTML = `
-        <div class="review-tags">${(ci.conditions || []).map(c => `<span class="review-tag">${t('fields.' + c)}</span>`).join('')}</div>
-      `;
+      renderSection('reviewContraindications', () => {
+        const ci = AppState.formData.contraindications || {};
+        return `<div class="review-tags">${(ci.conditions || []).map(c => `<span class="review-tag">${t('fields.' + c)}</span>`).join('')}</div>`;
+      });
 
-      const pa = AppState.formData.painAssessment || {};
-      const painPoints = pa.points || [];
-      if (painPoints.length > 0) {
-        reviewPainAssessment.innerHTML = painPoints.map(p => `
+      renderSection('reviewPainAssessment', () => {
+        const pa = AppState.formData.painAssessment || {};
+        const painPoints = pa.points || [];
+        if (painPoints.length === 0) return '<span class="review-value">-</span>';
+        return painPoints.map(p => `
           <div class="review-item">
             <span class="review-label">${t('zones.' + p.zone)}:</span>
             <span class="review-value">${t('fields.severity')}: ${p.severity}/10</span>
           </div>
         `).join('');
-      } else {
-        reviewPainAssessment.innerHTML = '<span class="review-value">-</span>';
-      }
+      });
 
-      const tp = AppState.formData.treatmentPreferences || {};
-      const tpZones = tp.zones || [];
-      const tpOther = tp.other || '';
-      const tpDisplay = tpZones.length > 0 ? tpZones.map(z => `<span class="review-tag">${t('zones.' + z)}</span>`).join('') : '<span class="review-value">-</span>';
-      reviewTreatmentPrefs.innerHTML = tpOther ? `${tpDisplay}<div class="review-item"><span class="review-label">${t('fields.otherSpecify')}:</span><span class="review-value">${tpOther}</span></div>` : tpDisplay;
+      renderSection('reviewTreatmentPrefs', () => {
+        const tp = AppState.formData.treatmentPreferences || {};
+        const tpZones = tp.zones || [];
+        const tpOther = tp.other || '';
+        const tpDisplay = tpZones.length > 0 ? tpZones.map(z => `<span class="review-tag">${t('zones.' + z)}</span>`).join('') : '<span class="review-value">-</span>';
+        return tpOther ? `${tpDisplay}<div class="review-item"><span class="review-label">${t('fields.otherSpecify')}:</span><span class="review-value">${tpOther}</span></div>` : tpDisplay;
+      });
 
-      const po = AppState.formData.postural || {};
-      const poOther = po.observationsOther || '';
-      const poDisplay = po.observations?.length > 0 ? po.observations.map(o => `<span class="review-tag">${t('fields.' + o)}</span>`).join('') : '';
-      reviewPostural.innerHTML = poOther ? `${poDisplay}<div class="review-item"><span class="review-label">${t('fields.otherSpecify')}:</span><span class="review-value">${poOther}</span></div>` : (poDisplay || '<span class="review-value">-</span>');
+      renderSection('reviewPostural', () => {
+        const po = AppState.formData.postural || {};
+        const poOther = po.observationsOther || '';
+        const poDisplay = po.observations?.length > 0 ? po.observations.map(o => `<span class="review-tag">${t('fields.' + o)}</span>`).join('') : '';
+        return poOther ? `${poDisplay}<div class="review-item"><span class="review-label">${t('fields.otherSpecify')}:</span><span class="review-value">${poOther}</span></div>` : (poDisplay || '<span class="review-value">-</span>');
+      });
     }
 
     // Show the "create a PIN" prompt after a new client's first submission
@@ -4743,6 +4075,17 @@
       modal.style.display = 'flex';
       modal.classList.add('active');
       input.focus();
+    }
+
+    // Admin-only delete-client confirmation (see showClientDetail()'s
+    // Danger Zone section, manager role only).
+    let pendingDeleteClientId = null;
+
+    function showDeleteClientConfirm(clientId, name) {
+      pendingDeleteClientId = clientId;
+      const nameEl = document.getElementById('deleteClientName');
+      if (nameEl) nameEl.textContent = name;
+      document.getElementById('deleteClientModal')?.classList.add('active');
     }
 
     // ========================================
@@ -4959,12 +4302,11 @@
     }
 
     // ========================================
-    // Staff Panel Tabs (Dashboard / Clients / Calendar / Staff Accounts)
+    // Staff Panel Tabs (Dashboard / Clients / Staff Accounts)
     // ========================================
     const STAFF_TAB_CONTAINERS = {
       dashboard: 'staffDashboardTab',
       clients: 'staffClientsTab',
-      calendar: 'staffCalendarTab',
       heatmap: 'staffHeatmapTab',
       staff: 'staffAccountsTab'
     };
@@ -4978,7 +4320,6 @@
         b.classList.toggle('active', b.getAttribute('data-staff-tab') === tab);
       });
       if (tab === 'dashboard') renderStatsDashboard();
-      if (tab === 'calendar') renderAppointmentCalendar();
       if (tab === 'heatmap') renderPainHeatmap();
       if (tab === 'staff') renderStaffAccounts();
     }
@@ -5020,145 +4361,6 @@
         ranked.map(r => zoneOrFieldLabel(r.zone)),
         ranked.map(r => r.count)
       );
-    }
-
-    // ========================================
-    // Appointment Calendar
-    // ========================================
-    let calendarViewDate = new Date();
-    let calendarAppointmentsByDay = {};
-
-    async function renderAppointmentCalendar() {
-      const year = calendarViewDate.getFullYear();
-      const month = calendarViewDate.getMonth(); // 0-indexed
-      const monthStr = `${year}-${String(month + 1).padStart(2, '0')}`;
-
-      const monthLabelEl = document.getElementById('calendarMonthLabel');
-      if (monthLabelEl) {
-        monthLabelEl.textContent = calendarViewDate.toLocaleDateString(
-          AppState.language === 'zh' ? 'zh-CN' : 'en-US',
-          { year: 'numeric', month: 'long' }
-        );
-      }
-
-      // Managers see every branch; staff are scoped to their own.
-      const branchParam = (AppState.staffRole !== 'manager' && AppState.staffBranch) ? `&branch=${AppState.staffBranch}` : '';
-      const result = await apiCall(`/api/appointments?month=${monthStr}${branchParam}`);
-      const appointments = (!result.error && result.data) ? result.data : [];
-
-      calendarAppointmentsByDay = {};
-      appointments.forEach(a => {
-        if (!calendarAppointmentsByDay[a.date]) calendarAppointmentsByDay[a.date] = [];
-        calendarAppointmentsByDay[a.date].push(a);
-      });
-
-      renderCalendarGrid(year, month);
-      populateApptClientSelect();
-
-      const daySection = document.getElementById('calendarDaySection');
-      if (daySection) daySection.style.display = 'none';
-    }
-
-    function renderCalendarGrid(year, month) {
-      const grid = document.getElementById('calendarGrid');
-      if (!grid) return;
-
-      const firstDay = new Date(year, month, 1);
-      const startWeekday = firstDay.getDay();
-      const daysInMonth = new Date(year, month + 1, 0).getDate();
-      const todayStr = new Date().toISOString().slice(0, 10);
-      const dayLabels = ['Sun', 'Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat'];
-
-      let html = dayLabels.map(d => `<div class="calendar-day-label">${d}</div>`).join('');
-
-      for (let i = 0; i < startWeekday; i++) {
-        html += '<div class="calendar-day-cell empty"></div>';
-      }
-
-      for (let day = 1; day <= daysInMonth; day++) {
-        const dateStr = `${year}-${String(month + 1).padStart(2, '0')}-${String(day).padStart(2, '0')}`;
-        const count = (calendarAppointmentsByDay[dateStr] || []).length;
-        html += `
-          <div class="calendar-day-cell${count > 0 ? ' has-appt' : ''}${dateStr === todayStr ? ' is-today' : ''}" data-date="${dateStr}">
-            <div class="calendar-day-number">${day}</div>
-            ${count > 0 ? `<div class="calendar-day-count">${count}</div>` : ''}
-          </div>
-        `;
-      }
-
-      grid.innerHTML = html;
-
-      grid.querySelectorAll('.calendar-day-cell[data-date]').forEach(cell => {
-        cell.addEventListener('click', () => showCalendarDay(cell.getAttribute('data-date')));
-      });
-    }
-
-    function showCalendarDay(dateStr) {
-      const section = document.getElementById('calendarDaySection');
-      const title = document.getElementById('calendarDayTitle');
-      const list = document.getElementById('calendarDayList');
-      if (!section || !title || !list) return;
-
-      const appts = calendarAppointmentsByDay[dateStr] || [];
-      title.textContent = `Appointments for ${dateStr} ${dateStr}的预约`;
-
-      const dateInput = document.getElementById('apptDate');
-      if (dateInput) dateInput.value = dateStr;
-
-      if (appts.length === 0) {
-        list.innerHTML = '<p class="secondary-text">No appointments on this day. 当天无预约。</p>';
-      } else {
-        list.innerHTML = appts.map(a => {
-          const client = AppState.staffClients.find(c => c.formData?.clientBasics?.phone === a.clientPhone);
-          const name = client?.formData?.clientBasics?.name || a.clientPhone;
-          return `
-            <div class="calendar-appt-item">
-              <div><strong>${escapeHtmlForAi(name)}</strong>${a.time ? ' · ' + escapeHtmlForAi(a.time) : ''}</div>
-              <div class="secondary-text">${escapeHtmlForAi(a.clientPhone)}</div>
-              ${a.note ? `<div class="secondary-text">${escapeHtmlForAi(a.note)}</div>` : ''}
-              <div class="calendar-appt-actions">
-                <button type="button" class="btn btn-ghost btn-sm" data-appt-id="${a._id}" data-action="reschedule">Reschedule 改期</button>
-                <button type="button" class="btn btn-ghost btn-sm" data-appt-id="${a._id}" data-action="delete">Delete 删除</button>
-              </div>
-            </div>
-          `;
-        }).join('');
-
-        list.querySelectorAll('[data-action="delete"]').forEach(btn => {
-          btn.addEventListener('click', async () => {
-            if (!confirm('Delete this appointment? 删除此预约?')) return;
-            await apiCall(`/api/appointments/${btn.getAttribute('data-appt-id')}`, 'DELETE');
-            showToast('Appointment deleted 预约已删除', 'success');
-            renderAppointmentCalendar();
-          });
-        });
-
-        list.querySelectorAll('[data-action="reschedule"]').forEach(btn => {
-          btn.addEventListener('click', () => {
-            const appt = appts.find(a => a._id === btn.getAttribute('data-appt-id'));
-            if (!appt) return;
-            const clientSelect = document.getElementById('apptClientSelect');
-            const timeInput = document.getElementById('apptTime');
-            const noteInput = document.getElementById('apptNote');
-            if (clientSelect) clientSelect.value = appt.clientPhone;
-            if (dateInput) dateInput.value = appt.date;
-            if (timeInput) timeInput.value = appt.time || '';
-            if (noteInput) noteInput.value = appt.note || '';
-            showToast('Edit below and click Schedule to reschedule 请在下方修改后点击"安排预约"以改期', 'info');
-          });
-        });
-      }
-
-      section.style.display = 'block';
-    }
-
-    function populateApptClientSelect() {
-      const select = document.getElementById('apptClientSelect');
-      if (!select) return;
-      select.innerHTML = AppState.staffClients.map(c => {
-        const cb = c.formData?.clientBasics || {};
-        return `<option value="${cb.phone || ''}">${escapeHtmlForAi(cb.name || 'Unknown')} (${escapeHtmlForAi(cb.phone || '')})</option>`;
-      }).join('');
     }
 
     // ========================================
@@ -5307,98 +4509,6 @@
         .replace(/>/g, '&gt;');
     }
 
-    function inlineFormatAi(str) {
-      return escapeHtmlForAi(str).replace(/\*\*(.+?)\*\*/g, '<strong>$1</strong>');
-    }
-
-    // Very small markdown-lite renderer for the AI response: "## " headers,
-    // "- " bullets, "**bold**", plain paragraphs.
-    function renderAiMarkdown(text) {
-      if (!text) return '';
-      const lines = text.split('\n');
-      let html = '';
-      let inList = false;
-      lines.forEach(rawLine => {
-        const line = rawLine.trim();
-        if (!line) {
-          if (inList) { html += '</ul>'; inList = false; }
-          return;
-        }
-        if (line.startsWith('## ')) {
-          if (inList) { html += '</ul>'; inList = false; }
-          html += `<div class="ai-section-title">${escapeHtmlForAi(line.slice(3))}</div>`;
-        } else if (line.startsWith('- ') || line.startsWith('* ')) {
-          if (!inList) { html += '<ul>'; inList = true; }
-          html += `<li>${inlineFormatAi(line.slice(2))}</li>`;
-        } else {
-          if (inList) { html += '</ul>'; inList = false; }
-          html += `<p>${inlineFormatAi(line)}</p>`;
-        }
-      });
-      if (inList) html += '</ul>';
-      return html;
-    }
-
-    function splitBilingualAiText(text) {
-      const marker = '## 中文';
-      const idx = text.indexOf(marker);
-      if (idx === -1) return { en: text.trim(), zh: '' };
-      return { en: text.slice(0, idx).trim(), zh: text.slice(idx + marker.length).trim() };
-    }
-
-    function renderAiAssessment(assessment, cached, clientId) {
-      const aiSuggestions = document.getElementById('aiSuggestions');
-      if (!aiSuggestions) return;
-      const { en, zh } = splitBilingualAiText(assessment.text || '');
-      const generatedLabel = assessment.generatedAt
-        ? new Date(assessment.generatedAt).toLocaleString(AppState.language === 'zh' ? 'zh-CN' : 'en-US')
-        : '';
-
-      aiSuggestions.innerHTML = `
-        <div class="ai-lang-section">
-          <div class="ai-lang-label">English:</div>
-          <div class="ai-suggestion">${renderAiMarkdown(en)}</div>
-        </div>
-        <div class="ai-lang-divider"></div>
-        <div class="ai-lang-section">
-          <div class="ai-lang-label">中文:</div>
-          <div class="ai-suggestion">${renderAiMarkdown(zh)}</div>
-        </div>
-        <div class="ai-meta-row">
-          <span class="ai-cached-badge">${cached ? 'Cached' : 'Generated'} ${generatedLabel} · 缓存/生成时间 ${generatedLabel}</span>
-          <button type="button" class="btn btn-ghost btn-sm" id="aiRegenerateBtn">Regenerate 重新生成</button>
-        </div>
-      `;
-
-      document.getElementById('aiRegenerateBtn')?.addEventListener('click', () => {
-        loadAiAssessment(clientId, true);
-      });
-    }
-
-    async function loadAiAssessment(clientId, force) {
-      const aiSuggestions = document.getElementById('aiSuggestions');
-      if (!aiSuggestions) return;
-
-      aiSuggestions.innerHTML = `
-        <div class="ai-loading">
-          <span class="ai-spinner"></span>
-          <span>Generating AI treatment assessment... 正在生成AI治疗建议...</span>
-        </div>
-      `;
-
-      const result = await apiCall(`/api/ai/assess/${clientId}`, 'POST', force ? { force: true } : {});
-
-      if (result.error || !result.data) {
-        aiSuggestions.innerHTML = `
-          <div class="ai-error">
-            AI assistant is unavailable right now (${result.error || 'unknown error'}). AI助手当前不可用。
-          </div>
-        `;
-        return;
-      }
-
-      renderAiAssessment(result.data, result.cached, clientId);
-    }
 
     // ========================================
     // Session Notes (private, staff-only)
@@ -5446,11 +4556,9 @@
       AppState.selectedClientId = clientId;
       const detail = document.getElementById('clientDetail');
       const exportBtns = document.getElementById('exportButtons');
-      const aiPanel = document.getElementById('aiPanel');
 
       detail.style.display = 'block';
       exportBtns.style.display = 'flex';
-      aiPanel.style.display = 'block';
 
       const cb = client.formData?.clientBasics || {};
       const bi = client.formData?.basicInfo || {};
@@ -5525,11 +4633,23 @@
           </div>
         </div>
 
+        ${AppState.staffRole === 'manager' ? `
         <div class="assessment-section">
-          <h3 class="assessment-title">${t('pages.staffPanel.title')}</h3>
-          <button class="btn btn-primary btn-sm" id="sendMsgBtn">${t('buttons.sendMessage')}</button>
-          <button class="btn btn-secondary btn-sm" id="scheduleBtn">${t('buttons.scheduleAppointment')}</button>
+          <h3 class="assessment-title">Client Password 客户密码 <span class="secondary-text" style="font-weight:400;">(Admin Only 仅管理员可见)</span></h3>
+          <div class="review-item">
+            <span class="review-label">Password 密码:</span>
+            <span class="review-value" id="clientPasswordDisplay" data-revealed="false">****</span>
+            <button type="button" class="btn btn-ghost btn-sm" id="togglePasswordBtn" style="margin-left:12px;">Show 显示</button>
+          </div>
+          <button type="button" class="btn btn-secondary btn-sm" id="resetPasswordBtn" style="margin-top:12px;">Reset Password 重置密码</button>
         </div>
+
+        <div class="assessment-section">
+          <h3 class="assessment-title" style="color:var(--error);">Danger Zone 危险操作</h3>
+          <button type="button" class="btn btn-sm" id="deleteClientBtn" style="background:var(--error);color:#fff;">Delete Client 删除客户</button>
+        </div>
+        ` : ''}
+
       `;
 
       // Render pain trend chart for staff panel
@@ -5544,8 +4664,6 @@
           }));
         renderPainChart(staffPainHistory.filter(p => p.severity > 0), 'staffPainChart', 'staffPainChartInstance');
       }
-
-      loadAiAssessment(clientId, false);
 
       // Session notes (private, staff-only)
       const noteStaffNameInput = document.getElementById('noteStaffName');
@@ -5572,48 +4690,50 @@
         }
       });
 
-      // Add event listeners
-      document.getElementById('sendMsgBtn')?.addEventListener('click', async () => {
-        const msg = prompt('Enter message for client:');
-        if (msg) {
-          // Send via API
-          await sendClientMessage(cb.phone, msg, 'Staff');
-
-          // Also save to localStorage for offline
-          const inbox = JSON.parse(localStorage.getItem('mf_inbox_' + cb.phone) || '[]');
-          inbox.push({
-            id: Date.now(),
-            from: 'Staff',
-            message: msg,
-            date: new Date().toISOString(),
-            type: 'feedback'
-          });
-          localStorage.setItem('mf_inbox_' + cb.phone, JSON.stringify(inbox));
-          showToast(t('messages.messageSent'), 'success');
+      // Admin-only: password reveal/reset and delete client. Rendered only
+      // for manager role (see the template above), so these elements simply
+      // won't exist for regular staff and the optional chaining below is a
+      // no-op for them.
+      const passwordDisplay = document.getElementById('clientPasswordDisplay');
+      const togglePasswordBtn = document.getElementById('togglePasswordBtn');
+      togglePasswordBtn?.addEventListener('click', () => {
+        const revealed = passwordDisplay.getAttribute('data-revealed') === 'true';
+        if (revealed) {
+          passwordDisplay.textContent = '****';
+          passwordDisplay.setAttribute('data-revealed', 'false');
+          togglePasswordBtn.textContent = 'Show 显示';
+        } else {
+          passwordDisplay.textContent = client.pin || 'Not set 未设置';
+          passwordDisplay.setAttribute('data-revealed', 'true');
+          togglePasswordBtn.textContent = 'Hide 隐藏';
         }
       });
 
-      document.getElementById('scheduleBtn')?.addEventListener('click', async () => {
-        const dateStr = prompt('Enter appointment date (YYYY-MM-DD):');
-        if (dateStr) {
-          // Save to API
-          await apiCall('/api/appointments', 'POST', {
-            clientPhone: cb.phone,
-            date: dateStr,
-            branch: AppState.staffBranch
-          });
-
-          // Also save locally
-          const appointment = {
-            id: Date.now(),
-            clientId: clientId,
-            date: dateStr,
-            reminderSent: false
-          };
-          client.appointment = appointment;
-          localStorage.setItem('mf_clients', JSON.stringify(AppState.staffClients));
-          showToast(t('messages.appointmentScheduled'), 'success');
+      document.getElementById('resetPasswordBtn')?.addEventListener('click', async () => {
+        const newPin = prompt('Enter new 4-digit password for this client 输入新的4位数密码:');
+        if (!newPin) return;
+        if (!/^\d{4}$/.test(newPin)) {
+          showToast('Password must be exactly 4 digits 密码必须是4位数字', 'error');
+          return;
         }
+        const result = await apiCall('/api/clients/pin', 'POST', { id: clientId, phone: cb.phone, pin: newPin });
+        if (!result.error) {
+          client.pin = newPin;
+          const cached = AppState.staffClients.find(c => (c._id || c.id) === clientId);
+          if (cached) cached.pin = newPin;
+          if (passwordDisplay) {
+            passwordDisplay.textContent = newPin;
+            passwordDisplay.setAttribute('data-revealed', 'true');
+          }
+          if (togglePasswordBtn) togglePasswordBtn.textContent = 'Hide 隐藏';
+          showToast('Password reset 密码已重置', 'success');
+        } else {
+          showToast(result.error || 'Failed to reset password 重置失败', 'error');
+        }
+      });
+
+      document.getElementById('deleteClientBtn')?.addEventListener('click', () => {
+        showDeleteClientConfirm(clientId, cb.name || cb.phone || 'this client');
       });
     }
 
@@ -5735,6 +4855,7 @@
       document.getElementById('newClientCard')?.addEventListener('click', () => {
         AppState.entryMode = 'new';
         AppState.currentClientId = null;
+        AppState.pendingPin = null;
         AppState.formData = {
           clientBasics: { clientType: 'firstTime', countryCode: '+86' },
           basicInfo: {},
@@ -5743,11 +4864,18 @@
           treatmentPreferences: {},
           postural: {}
         };
-        navigateTo('client-basics');
+        // Every new client sets up a PIN right away, before Client Basics -
+        // this is the one and only place showPinSetupModal() is called, so
+        // there's no session flag or timing condition that could skip it.
+        showPinSetupModal();
       });
 
       document.getElementById('returningMemberCard')?.addEventListener('click', () => {
         AppState.entryMode = 'returning';
+        // Clear any PIN chosen during an abandoned "New Client" attempt -
+        // otherwise saveToStorage() could later attach a stale PIN to this
+        // (different) returning client's record once their phone is known.
+        AppState.pendingPin = null;
         navigateTo('returning-login');
         document.getElementById('returningPhone')?.focus();
       });
@@ -5818,8 +4946,12 @@
         navigateTo('review');
       });
 
-      // PIN setup modal (shown after a new client's first submission)
-      document.getElementById('pinSetupSave')?.addEventListener('click', async () => {
+      // PIN setup modal - shown immediately when a new client starts, before
+      // they've entered a phone number, so there's no client record yet to
+      // attach the PIN to. Hold it in AppState.pendingPin and actually save
+      // it to the server as soon as saveToStorage() gets a client id back
+      // (see saveToStorage()).
+      document.getElementById('pinSetupSave')?.addEventListener('click', () => {
         const pin = document.getElementById('pinSetupInput').value.trim();
         const errorEl = document.getElementById('pinSetupError');
         if (!/^\d{4}$/.test(pin)) {
@@ -5827,16 +4959,14 @@
           errorEl.style.display = 'block';
           return;
         }
-        const phone = AppState.formData.clientBasics?.phone;
-        const result = await apiCall('/api/clients/pin', 'POST', { id: AppState.currentClientId, phone, pin });
+        AppState.pendingPin = pin;
         document.getElementById('pinSetupModal').classList.remove('active');
-        if (!result.error) {
-          showToast('PIN saved / PIN已保存', 'success');
-        }
+        navigateTo('client-basics');
       });
 
       document.getElementById('pinSetupSkip')?.addEventListener('click', () => {
         document.getElementById('pinSetupModal').classList.remove('active');
+        navigateTo('client-basics');
       });
 
       document.getElementById('heatmapBranchFilter')?.addEventListener('change', () => {
@@ -5855,16 +4985,6 @@
           updateNavItems();
         });
       }
-
-      // Dark mode toggle
-      document.getElementById('darkModeToggle')?.addEventListener('click', () => {
-        toggleDarkMode();
-      });
-
-      // Assisted mode toggle
-      document.getElementById('assistedToggle')?.addEventListener('click', () => {
-        toggleAssistedMode();
-      });
 
       // Mobile menu toggle
       const mobileMenuBtn = document.getElementById('mobileMenuBtn');
@@ -5970,51 +5090,14 @@
         AppState.selectedClientId = null;
         document.getElementById('clientDetail').style.display = 'none';
         document.getElementById('exportButtons').style.display = 'none';
-        document.getElementById('aiPanel').style.display = 'none';
         navigateTo('client-basics');
       });
 
-      // Staff Panel tabs (Dashboard / Clients / Calendar / Staff Accounts)
+      // Staff Panel tabs (Dashboard / Clients / Staff Accounts)
       document.querySelectorAll('#staffPanelTabs .inbox-tab').forEach(tabBtn => {
         tabBtn.addEventListener('click', () => {
           switchStaffTab(tabBtn.getAttribute('data-staff-tab'));
         });
-      });
-
-      // Calendar month navigation
-      document.getElementById('calendarPrevMonth')?.addEventListener('click', () => {
-        calendarViewDate = new Date(calendarViewDate.getFullYear(), calendarViewDate.getMonth() - 1, 1);
-        renderAppointmentCalendar();
-      });
-      document.getElementById('calendarNextMonth')?.addEventListener('click', () => {
-        calendarViewDate = new Date(calendarViewDate.getFullYear(), calendarViewDate.getMonth() + 1, 1);
-        renderAppointmentCalendar();
-      });
-
-      // Schedule appointment
-      document.getElementById('apptScheduleBtn')?.addEventListener('click', async () => {
-        const clientPhone = document.getElementById('apptClientSelect')?.value;
-        const date = document.getElementById('apptDate')?.value;
-        const time = document.getElementById('apptTime')?.value;
-        const noteInput = document.getElementById('apptNote');
-        const note = noteInput?.value.trim();
-
-        if (!clientPhone || !date) {
-          showToast('Please select a client and date 请选择客户和日期', 'error');
-          return;
-        }
-
-        const selectedClient = AppState.staffClients.find(c => c.formData?.clientBasics?.phone === clientPhone);
-        const branch = selectedClient?.branch || AppState.staffBranch || AppState.branch;
-
-        const result = await apiCall('/api/appointments', 'POST', { clientPhone, date, time, branch, note });
-        if (!result.error) {
-          showToast('Appointment scheduled 预约已安排', 'success');
-          if (noteInput) noteInput.value = '';
-          renderAppointmentCalendar();
-        } else {
-          showToast(result.error || 'Failed to schedule appointment 安排失败', 'error');
-        }
       });
 
       // Staff accounts (managers only)
@@ -6066,55 +5149,66 @@
       // Helper: toggle Other text input visibility and save value
       // Fixed: toggles the tag FIRST, then checks Other state after toggle
       // to ensure the input appears on the FIRST click (not second).
-      function setupOtherToggle(containerSelector, inputId) {
+      function setupOtherToggle(containerSelector, inputId, options = {}) {
+        const single = !!options.single;
         const container = document.querySelector(containerSelector);
         const input = document.getElementById(inputId);
         if (!container || !input) return;
-        
+
         // Mark this container so the general handler knows to skip it
         container.setAttribute('data-other-toggle', 'true');
-        
+
         container.querySelectorAll('.tag-option').forEach(tag => {
           tag.addEventListener('click', () => {
-            // Toggle FIRST so we can check the correct post-toggle state
-            tag.classList.toggle('selected');
-            
+            if (single) {
+              // Single-select: clicking any pill selects only that one.
+              container.querySelectorAll('.tag-option').forEach(t => t.classList.remove('selected'));
+              tag.classList.add('selected');
+            } else {
+              // Toggle FIRST so we can check the correct post-toggle state
+              tag.classList.toggle('selected');
+            }
+
             // Check if THIS tag is the "Other" tag and is now selected
             const isOtherTag = tag.getAttribute('data-value') === 'other';
-            if (isOtherTag) {
-              // Show input if Other is selected (classList.contains is read AFTER toggle)
-              if (tag.classList.contains('selected')) {
-                input.style.display = 'block';
-              } else {
-                input.style.display = 'none';
-                input.value = '';
-                const fieldPath = input.getAttribute('data-field');
-                if (fieldPath) {
-                  const [section, name] = fieldPath.split('.');
-                  if (AppState.formData[section]) {
-                    AppState.formData[section][name] = '';
-                    saveToStorage();
-                  }
+            if (isOtherTag && tag.classList.contains('selected')) {
+              input.style.display = 'block';
+            } else {
+              // Not selected (multi-select toggled off), or - in single-select -
+              // some other pill was just picked instead of Other: either way
+              // the Other text no longer applies, so hide and clear it.
+              input.style.display = 'none';
+              input.value = '';
+              const fieldPath = input.getAttribute('data-field');
+              if (fieldPath) {
+                const [section, name] = fieldPath.split('.');
+                if (AppState.formData[section]) {
+                  AppState.formData[section][name] = '';
+                  saveToStorage();
                 }
               }
             }
-            
-            // Save selected values
-            const values = [];
-            container.querySelectorAll('.tag-option.selected').forEach(t => {
-              values.push(t.getAttribute('data-value'));
-            });
+
+            // Save selected value(s)
             const fieldPath = container.getAttribute('data-field');
             if (fieldPath) {
               const [section, name] = fieldPath.split('.');
               if (!AppState.formData[section]) AppState.formData[section] = {};
-              AppState.formData[section][name] = values;
+              if (single) {
+                AppState.formData[section][name] = tag.getAttribute('data-value');
+              } else {
+                const values = [];
+                container.querySelectorAll('.tag-option.selected').forEach(t => {
+                  values.push(t.getAttribute('data-value'));
+                });
+                AppState.formData[section][name] = values;
+              }
               saveToStorage();
               validateForm();
             }
           });
         });
-        
+
         input.addEventListener('input', () => {
           const fieldPath = input.getAttribute('data-field');
           if (fieldPath) {
@@ -6125,6 +5219,7 @@
           }
         });
       }
+      setupOtherToggle('[data-field="basicInfo.workType"]', 'workTypeOtherInput', { single: true });
       setupOtherToggle('[data-field="basicInfo.exerciseTypes"]', 'exerciseTypesOtherInput');
       setupOtherToggle('[data-field="basicInfo.injuryHistory"]', 'injuryHistoryOtherInput');
       setupOtherToggle('[data-field="basicInfo.previousTreatments"]', 'previousTreatmentsOtherInput');
@@ -6138,16 +5233,23 @@
         if (field.classList.contains('tag-select')) {
           // Skip containers handled by setupOtherToggle (they manage their own toggling)
           if (field.hasAttribute('data-other-toggle')) return;
+          const isSingle = field.getAttribute('data-select') === 'single';
           field.querySelectorAll('.tag-option').forEach(tag => {
             tag.addEventListener('click', () => {
-              tag.classList.toggle('selected');
-              const values = [];
-              field.querySelectorAll('.tag-option.selected').forEach(t => {
-                values.push(t.getAttribute('data-value'));
-              });
               const [section, name] = fieldPath.split('.');
               if (!AppState.formData[section]) AppState.formData[section] = {};
-              AppState.formData[section][name] = values;
+              if (isSingle) {
+                field.querySelectorAll('.tag-option').forEach(t => t.classList.remove('selected'));
+                tag.classList.add('selected');
+                AppState.formData[section][name] = tag.getAttribute('data-value');
+              } else {
+                tag.classList.toggle('selected');
+                const values = [];
+                field.querySelectorAll('.tag-option.selected').forEach(t => {
+                  values.push(t.getAttribute('data-value'));
+                });
+                AppState.formData[section][name] = values;
+              }
               saveToStorage();
               validateForm();
             });
@@ -6332,9 +5434,37 @@
         window.location.reload();
       });
 
-      // Show Missing Fields button
-      let showMissingPageIndex = 0;
+      // Delete client modal handlers (admin only)
+      document.getElementById('deleteClientModalClose')?.addEventListener('click', () => {
+        document.getElementById('deleteClientModal').classList.remove('active');
+        pendingDeleteClientId = null;
+      });
 
+      document.getElementById('deleteClientCancelBtn')?.addEventListener('click', () => {
+        document.getElementById('deleteClientModal').classList.remove('active');
+        pendingDeleteClientId = null;
+      });
+
+      document.getElementById('deleteClientConfirmBtn')?.addEventListener('click', async () => {
+        if (!pendingDeleteClientId) return;
+        const idToDelete = pendingDeleteClientId;
+        const result = await apiCall(`/api/clients/${idToDelete}`, 'DELETE');
+        document.getElementById('deleteClientModal').classList.remove('active');
+        pendingDeleteClientId = null;
+
+        if (!result.error) {
+          AppState.staffClients = AppState.staffClients.filter(c => (c._id || c.id) !== idToDelete);
+          AppState.selectedClientId = null;
+          document.getElementById('clientDetail').style.display = 'none';
+          document.getElementById('exportButtons').style.display = 'none';
+          renderStaffClientList();
+          showToast('Client deleted 客户已删除', 'success');
+        } else {
+          showToast(result.error || 'Failed to delete client 删除失败', 'error');
+        }
+      });
+
+      // Show Missing Fields button
       // Groups the same DOM-derived required-field status used by
       // validateForm()/updateNavItems() by page, in page order, so this
       // never drifts out of sync with what's actually in the form.
@@ -6356,8 +5486,13 @@
         clearFieldHighlights();
         const incomplete = getIncompletePages();
         if (incomplete.length === 0) return;
-        const target = incomplete[showMissingPageIndex % incomplete.length];
-        showMissingPageIndex++;
+        // Always jump to the nearest actually-incomplete page, in page
+        // order. A previous version cycled through incomplete pages using
+        // a counter that kept incrementing across clicks - once the client
+        // fixed one page and the set of incomplete pages changed, that
+        // stale counter no longer pointed at the right page, sending them
+        // somewhere other than the true next thing to fix.
+        const target = incomplete[0];
         navigateTo(target.id);
         // Highlight missing fields after navigation - target.elements are
         // the actual DOM elements already, no selector guessing needed.
@@ -6452,36 +5587,6 @@
 
         navigateTo('success');
         fireConfetti();
-
-        // Prompt to set a PIN for faster access next time. Derived directly
-        // from the server's saved record (does it already have a pinHash?)
-        // rather than the client-side entryMode flag - a flag has to be set
-        // at exactly the right moment and survive every reset/reload/branch
-        // of the session to stay correct, and this app's validation bugs
-        // have repeatedly come from exactly that kind of drift. Whether a
-        // PIN already exists is a fact from the database, so it can't go
-        // stale no matter what happened earlier in the session.
-        if (AppState.currentClientId && !result.data?.pinHash) {
-          setTimeout(() => showPinSetupModal(), 400);
-        }
-      });
-
-      // View inbox
-      document.getElementById('viewInboxBtn')?.addEventListener('click', () => {
-        const phone = AppState.formData.clientBasics?.phone;
-        if (phone) {
-          const savedInbox = localStorage.getItem('mf_inbox_' + phone);
-          AppState.clientInbox = savedInbox ? JSON.parse(savedInbox) : [];
-          AppState.clientPhone = phone;
-          AppState.isClientLoggedIn = true;
-        }
-        renderInbox();
-        navigateTo('inbox');
-      });
-
-      // Inbox back
-      document.getElementById('inboxBackBtn')?.addEventListener('click', () => {
-        navigateTo('success');
       });
 
       // Signature date
@@ -6644,65 +5749,6 @@ ${client.formData.postural?.observations?.join(', ') || 'None'}
       });
     }
 
-    async function renderInbox() {
-      // Always reload messages from API to ensure freshness
-      const phone = AppState.clientPhone || AppState.formData.clientBasics?.phone;
-      if (phone) {
-        AppState.clientPhone = phone;
-        // Try to load from API
-        const messages = await loadClientMessages(phone);
-        if (messages.length === 0) {
-          // Fall back to localStorage
-          const savedInbox = localStorage.getItem('mf_inbox_' + phone);
-          AppState.clientInbox = savedInbox ? JSON.parse(savedInbox) : [];
-        }
-      }
-
-      const messages = AppState.clientInbox;
-      const messageList = document.getElementById('messageList');
-
-      if (messages.length === 0) {
-        messageList.innerHTML = '<p style="text-align:center;color:var(--text-muted);padding:24px;">No messages yet</p>';
-      } else {
-        messageList.innerHTML = messages.map(m => `
-          <div class="message-item">
-            <div class="message-header">
-              <span class="message-from">${m.from || m.fromName || 'Staff'}</span>
-              <span class="message-date">${new Date(m.createdAt || m.date).toLocaleDateString()}</span>
-            </div>
-            <div class="message-body">${m.message}</div>
-          </div>
-        `).join('');
-      }
-
-      // Render pain trend
-      const painHistory = AppState.formData.painAssessment?.points?.map(p => ({
-        severity: p.severity,
-        date: p.date
-      })) || [];
-      renderPainChart(painHistory.length > 0 ? painHistory : []);
-
-      // Show appointment if exists
-      if (phone) {
-        const result = await apiCall(`/api/appointments/${phone}`);
-        if (!result.error && result.data) {
-          document.getElementById('nextAppointment').style.display = 'block';
-          document.getElementById('appointmentDateTime').textContent = result.data.date + (result.data.time ? ' ' + result.data.time : '');
-        } else {
-          // Check local storage
-          const client = AppState.staffClients.find(c => c.formData?.clientBasics?.phone === phone);
-          if (client?.appointment) {
-            document.getElementById('nextAppointment').style.display = 'block';
-            document.getElementById('appointmentDateTime').textContent = client.appointment.date;
-          } else {
-            document.getElementById('nextAppointment').style.display = 'none';
-          }
-        }
-      } else {
-        document.getElementById('nextAppointment').style.display = 'none';
-      }
-    }
-
     // ========================================
     // Initialize Application
     // ========================================
@@ -6710,16 +5756,12 @@ ${client.formData.postural?.observations?.join(', ') || 'None'}
       // CRITICAL: Re-sync state from localStorage before anything else
       // This fixes the "first click does nothing" bug
       AppState.language = localStorage.getItem('mf_language') || (navigator.language.startsWith('zh') ? 'zh' : 'en');
-      AppState.darkMode = localStorage.getItem('mf_darkmode') === 'true';
-      AppState.assistedMode = localStorage.getItem('mf_assisted') === 'true';
 
       // Load saved state
       await loadFromStorage();
 
       // Apply all visual states synchronously
       document.documentElement.lang = AppState.language;
-      document.body.classList.toggle('dark-mode', AppState.darkMode);
-      document.documentElement.classList.toggle('assisted-mode', AppState.assistedMode);
 
       // Initialize event handlers FIRST, before any DOM updates
       initEventHandlers();
@@ -6775,8 +5817,23 @@ ${client.formData.postural?.observations?.join(', ') || 'None'}
 
       // Basic info
       const bi = AppState.formData.basicInfo || {};
-      if (bi.workType) document.getElementById('workType').value = bi.workType;
-      if (bi.exerciseFreq) document.getElementById('exerciseFreq').value = bi.exerciseFreq;
+      // Restore single-select pill fields
+      ['workType', 'exerciseFreq'].forEach(field => {
+        const value = bi[field];
+        const container = document.getElementById(field);
+        if (container) {
+          container.querySelectorAll('.tag-option').forEach(tag => {
+            tag.classList.toggle('selected', !!value && tag.getAttribute('data-value') === value);
+          });
+        }
+      });
+      if (bi.workType === 'other' && bi.workTypeOther) {
+        const workTypeOtherInput = document.getElementById('workTypeOtherInput');
+        if (workTypeOtherInput) {
+          workTypeOtherInput.value = bi.workTypeOther;
+          workTypeOtherInput.style.display = 'block';
+        }
+      }
       // Restore tag selections
       ['exerciseTypes', 'injuryHistory', 'previousTreatments'].forEach(field => {
         const values = bi[field] || [];
@@ -6849,10 +5906,9 @@ ${client.formData.postural?.observations?.join(', ') || 'None'}
         {id:'pain-assessment', label:'Pain Map / 疼痛评估'},
         {id:'treatment-prefs', label:'Treatment / 治疗偏好'},
         {id:'postural', label:'Posture / 姿态观察'},
-        {id:'review', label:'Review / 确认提交'},
-        {id:'inbox', label:'Inbox / 收件箱'}
+        {id:'review', label:'Review / 确认提交'}
       ];
-      
+
       pages.forEach(function(p) {
         var item = document.createElement('div');
         item.textContent = p.label;
