@@ -287,7 +287,14 @@ app.get('/api/clients/phone/:phone', async (req, res) => {
   }
 });
 
-// Set/update a client's 4-digit PIN for returning-member login
+// Set/update a client's 4-digit PIN for returning-member login. Also used by
+// admin (manager) staff to reset a forgotten PIN from the staff panel.
+//
+// Stores the PIN both hashed (pinHash, used for actual login verification)
+// and in plaintext (pin, used only so admin staff can look up/reveal a
+// client's PIN if they forget it - this is a low-stakes convenience PIN for
+// a shared kiosk, not an account password, so a plaintext copy for staff
+// support purposes is an accepted tradeoff here).
 app.post('/api/clients/pin', async (req, res) => {
   try {
     const { id, phone, pin } = req.body;
@@ -298,7 +305,7 @@ app.post('/api/clients/pin', async (req, res) => {
     const pinHash = await bcrypt.hash(pin, 10);
     const result = await clientsCollection.findOneAndUpdate(
       query,
-      { $set: { pinHash } },
+      { $set: { pinHash, pin } },
       { returnDocument: 'after' }
     );
     if (!result) {
@@ -390,6 +397,30 @@ app.get('/api/clients/:id', async (req, res) => {
     res.json({ data: client });
   } catch (error) {
     console.error('Error fetching client:', error);
+    res.status(500).json({ error: error.message });
+  }
+});
+
+// Permanently delete a client record (managers only) - used by the admin
+// panel's delete-client action, which gates this behind its own
+// confirmation warning on the frontend.
+app.delete('/api/clients/:id', requireAuth(['manager']), async (req, res) => {
+  try {
+    const { id } = req.params;
+
+    if (!ObjectId.isValid(id)) {
+      return res.status(400).json({ error: 'Invalid client ID' });
+    }
+
+    const result = await clientsCollection.deleteOne({ _id: new ObjectId(id) });
+
+    if (result.deletedCount === 0) {
+      return res.status(404).json({ error: 'Client not found' });
+    }
+
+    res.json({ data: { success: true } });
+  } catch (error) {
+    console.error('Error deleting client:', error);
     res.status(500).json({ error: error.message });
   }
 });
