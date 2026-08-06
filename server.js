@@ -1,5 +1,5 @@
 /**
- * Master Fit - Combined Server (MongoDB版)
+ * Master Fit - Combined Server (MongoDBç‰ˆ)
  * 
  * Serves both the API and the static frontend.
  * For production with multiple servers, split into API server + static file hosting.
@@ -218,7 +218,7 @@ app.post('/api/clients', async (req, res) => {
     // "junk" records from being created on every keystroke before the
     // client finishes typing their phone number. We still return a
     // success response with a temporary in-memory object (not saved)
-    // so the frontend doesn't error out — it just won't persist until
+    // so the frontend doesn't error out â€” it just won't persist until
     // the phone number is long enough or a real id exists.
     const digitsOnly = phone.replace(/\D/g, '');
     if (digitsOnly.length > 0 && digitsOnly.length < 7) {
@@ -233,25 +233,43 @@ app.post('/api/clients', async (req, res) => {
       });
     }
 
-    // Check for existing client by phone (only once phone is complete enough)
+    // Find-or-create by phone, done as a single atomic upsert rather than a
+    // separate findOne + insertOne/updateOne. The old two-step version had a
+    // race: if two requests for the same phone landed close together (e.g.
+    // an in-flight autosave and the final Submit, or a genuine accidental
+    // double-click before the frontend's guard kicked in), both could run
+    // their findOne before either had written anything, both would see "no
+    // existing client", and both would insert - producing two identical
+    // records. A single findOneAndUpdate with upsert:true is atomic at the
+    // database level, so only one of two concurrent calls for the same
+    // phone can ever actually insert; the other necessarily updates it.
     if (phone) {
-      const existing = await clientsCollection.findOne({
-        'formData.clientBasics.phone': phone
-      });
-      if (existing) {
-        const updateOps = { $set: { ...clientData, updatedAt: new Date().toISOString() } };
-        if (isSubmission) updateOps.$inc = { visitCount: 1 };
-        if (!existing.assignedStaff) {
-          const assignedStaff = await assignRandomStaff(branch);
-          if (assignedStaff) updateOps.$set.assignedStaff = assignedStaff;
-        }
-        await clientsCollection.updateOne({ _id: existing._id }, updateOps);
-        const updated = await clientsCollection.findOne({ _id: existing._id });
-        return res.json({ data: updated });
+      const preAssignedStaff = await assignRandomStaff(branch);
+      const updateOps = {
+        $set: { ...clientData, updatedAt: new Date().toISOString() },
+        // Only ever applied on the insert branch of the upsert - an
+        // existing client keeps its own createdAt/assignedStaff untouched.
+        $setOnInsert: { createdAt: new Date().toISOString(), assignedStaff: preAssignedStaff }
+      };
+      if (isSubmission) {
+        // $inc on a field that doesn't exist yet (a fresh insert) starts
+        // from 0, so this alone correctly yields 1 for a brand-new client
+        // and existing+1 for a returning one - no separate insert-time
+        // value needed.
+        updateOps.$inc = { visitCount: 1 };
+      } else {
+        updateOps.$setOnInsert.visitCount = 0;
       }
+      const updated = await clientsCollection.findOneAndUpdate(
+        { 'formData.clientBasics.phone': phone },
+        updateOps,
+        { upsert: true, returnDocument: 'after' }
+      );
+      return res.json({ data: updated });
     }
 
-    // Insert new client - randomly assign to a staff member in the same branch
+    // No phone at all (shouldn't normally happen - it's a required field) -
+    // fall back to a plain insert since there's no key to upsert on.
     const newClient = {
       ...clientData,
       visitCount: isSubmission ? 1 : 0,
@@ -525,7 +543,7 @@ app.post('/api/appointments', async (req, res) => {
     const saved = await appointmentsCollection.findOne({ _id: result.insertedId });
 
     // Push a notification to the client's inbox
-    const notifMessage = `Your appointment has been scheduled for ${date}${time ? ' at ' + time : ''}. 您的预约已安排在${date}${time ? ' ' + time : ''}。`;
+    const notifMessage = `Your appointment has been scheduled for ${date}${time ? ' at ' + time : ''}. æ‚¨çš„é¢„çº¦å·²å®‰æŽ’åœ¨${date}${time ? ' ' + time : ''}ã€‚`;
     await messagesCollection.insertOne({
       clientPhone,
       from: 'Staff',
@@ -903,7 +921,7 @@ Format your response in clear sections using "## " headers exactly as follows, i
 ## Contraindication Warnings
 ## Recommended Program Phase
 
-Use "**text**" for emphasis where helpful. After the English sections, repeat the exact same four sections translated into Simplified Chinese under a header "## 中文". Do not add any other top-level headers or preamble.`;
+Use "**text**" for emphasis where helpful. After the English sections, repeat the exact same four sections translated into Simplified Chinese under a header "## ä¸­æ–‡". Do not add any other top-level headers or preamble.`;
 }
 
 // Generate (or return cached) AI treatment assessment for a client.
